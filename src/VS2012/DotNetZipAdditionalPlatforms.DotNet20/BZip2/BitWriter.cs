@@ -5,14 +5,14 @@
 
     internal class BitWriter
     {
-        private uint accumulator;
-        private int nAccumulatedBits;
-        private Stream output;
-        private int totalBytesWrittenOut;
+        private uint accumulatorField;
+        private int numberOfAccumulatedBitsField;
+        private Stream outputStreamField;
+        private int totalBytesWrittenOutField;
 
         public BitWriter(Stream s)
         {
-            this.output = s;
+            this.outputStreamField = s;
         }
 
         /// <summary>
@@ -25,9 +25,9 @@
             this.Flush();
             if (this.NumRemainingBits > 0)
             {
-                byte num = (byte) ((this.accumulator >> 0x18) & 0xff);
-                this.output.WriteByte(num);
-                this.totalBytesWrittenOut++;
+                byte num = (byte) ((this.accumulatorField >> 0x18) & 0xff);
+                this.outputStreamField.WriteByte(num);
+                this.totalBytesWrittenOutField++;
             }
         }
 
@@ -65,11 +65,11 @@
         /// </remarks>
         public void Reset()
         {
-            this.accumulator = 0;
-            this.nAccumulatedBits = 0;
-            this.totalBytesWrittenOut = 0;
-            this.output.Seek(0L, SeekOrigin.Begin);
-            this.output.SetLength(0L);
+            this.accumulatorField = 0;
+            this.numberOfAccumulatedBitsField = 0;
+            this.totalBytesWrittenOutField = 0;
+            this.outputStreamField.Seek(0L, SeekOrigin.Begin);
+            this.outputStreamField.SetLength(0L);
         }
 
         /// <summary>
@@ -83,17 +83,17 @@
         /// </remarks>
         public void WriteBits(int nbits, uint value)
         {
-            int nAccumulatedBits = this.nAccumulatedBits;
-            uint accumulator = this.accumulator;
+            int nAccumulatedBits = this.numberOfAccumulatedBitsField;
+            uint accumulator = this.accumulatorField;
             while (nAccumulatedBits >= 8)
             {
-                this.output.WriteByte((byte) ((accumulator >> 0x18) & 0xff));
-                this.totalBytesWrittenOut++;
+                this.outputStreamField.WriteByte((byte) ((accumulator >> 0x18) & 0xff));
+                this.totalBytesWrittenOutField++;
                 accumulator = accumulator << 8;
                 nAccumulatedBits -= 8;
             }
-            this.accumulator = accumulator | (value << ((0x20 - nAccumulatedBits) - nbits));
-            this.nAccumulatedBits = nAccumulatedBits + nbits;
+            this.accumulatorField = accumulator | (value << ((0x20 - nAccumulatedBits) - nbits));
+            this.numberOfAccumulatedBitsField = nAccumulatedBits + nbits;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@
         {
             get
             {
-                return this.nAccumulatedBits;
+                return this.numberOfAccumulatedBitsField;
             }
         }
 
@@ -136,7 +136,7 @@
         {
             get
             {
-                return (byte) ((this.accumulator >> (0x20 - this.nAccumulatedBits)) & 0xff);
+                return (byte) ((this.accumulatorField >> (0x20 - this.numberOfAccumulatedBitsField)) & 0xff);
             }
         }
 
@@ -144,7 +144,7 @@
         {
             get
             {
-                return this.totalBytesWrittenOut;
+                return this.totalBytesWrittenOutField;
             }
         }
     }

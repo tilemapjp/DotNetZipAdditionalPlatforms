@@ -7,33 +7,33 @@
 
     internal class BZip2Compressor
     {
-        private bool blockRandomised;
-        private int blockSize100k;
-        private BitWriter bw;
+        private bool blockRandomisedField;
+        private int blockSize100kField;
+        private BitWriter bitWriterField;
         private const int CLEARMASK = ~SETMASK;
-        private readonly CRC32 crc;
-        private CompressionState cstate;
-        private int currentByte;
+        private readonly CRC32 crcField;
+        private CompressionState compressionStateField;
+        private int currentByteField;
         private const int DEPTH_THRESH = 10;
-        private bool firstAttempt;
+        private bool firstAttemptField;
         private const byte GREATER_ICOST = 15;
         /// Knuth's increments seem to work better than Incerpi-Sedgewick here.
         /// Possibly because the number of elems to sort is usually small, typically
         /// &lt;= 20.
-        private static readonly int[] increments = new int[] { 1, 4, 13, 40, 0x79, 0x16c, 0x445, 0xcd0, 0x2671, 0x7354, 0x159fd, 0x40df8, 0xc29e9, 0x247dbc };
-        private int last;
+        private static readonly int[] incrementsField = new int[] { 1, 4, 13, 40, 0x79, 0x16c, 0x445, 0xcd0, 0x2671, 0x7354, 0x159fd, 0x40df8, 0xc29e9, 0x247dbc };
+        private int lastField;
         private const byte LESSER_ICOST = 0;
-        private int nInUse;
-        private int nMTF;
-        private int origPtr;
-        private int outBlockFillThreshold;
-        private int runLength;
-        private int runs;
+        private int numberInUseField;
+        private int numberMTFField;
+        private int originalPointerField;
+        private int outBlockFillThresholdField;
+        private int runLengthField;
+        private int runsField;
         private const int SETMASK = 0x200000;
         private const int SMALL_THRESH = 20;
         private const int WORK_FACTOR = 30;
-        private int workDone;
-        private int workLimit;
+        private int workDoneField;
+        private int workLimitField;
 
         /// <summary>
         /// BZip2Compressor writes its compressed data out via a BitWriter. This
@@ -45,13 +45,13 @@
 
         public BZip2Compressor(BitWriter writer, int blockSize)
         {
-            this.currentByte = -1;
-            this.runLength = 0;
-            this.crc = new CRC32(true);
-            this.blockSize100k = blockSize;
-            this.bw = writer;
-            this.outBlockFillThreshold = (blockSize * BZip2.BlockSizeMultiple) - 20;
-            this.cstate = new CompressionState(blockSize);
+            this.currentByteField = -1;
+            this.runLengthField = 0;
+            this.crcField = new CRC32(true);
+            this.blockSize100kField = blockSize;
+            this.bitWriterField = writer;
+            this.outBlockFillThresholdField = (blockSize * BZip2.BlockSizeMultiple) - 20;
+            this.compressionStateField = new CompressionState(blockSize);
             this.Reset();
         }
 
@@ -71,74 +71,74 @@
         /// <returns>true if the block is now full; otherwise false.</returns>
         private bool AddRunToOutputBlock(bool final)
         {
-            this.runs++;
-            int last = this.last;
-            if (!((last < this.outBlockFillThreshold) || final))
+            this.runsField++;
+            int last = this.lastField;
+            if (!((last < this.outBlockFillThresholdField) || final))
             {
-                throw new Exception(string.Format(CultureInfo.InvariantCulture, "block overrun(final={2}): {0} >= threshold ({1})", last, this.outBlockFillThreshold, final));
+                throw new Exception(string.Format(CultureInfo.InvariantCulture, "block overrun(final={2}): {0} >= threshold ({1})", last, this.outBlockFillThresholdField, final));
             }
-            byte currentByte = (byte) this.currentByte;
-            byte[] block = this.cstate.block;
-            this.cstate.inUse[currentByte] = true;
-            int runLength = this.runLength;
-            this.crc.UpdateCRC(currentByte, runLength);
+            byte currentByte = (byte) this.currentByteField;
+            byte[] block = this.compressionStateField.block;
+            this.compressionStateField.inUse[currentByte] = true;
+            int runLength = this.runLengthField;
+            this.crcField.UpdateCRC(currentByte, runLength);
             switch (runLength)
             {
                 case 1:
                     block[last + 2] = currentByte;
-                    this.last = last + 1;
+                    this.lastField = last + 1;
                     break;
 
                 case 2:
                     block[last + 2] = currentByte;
                     block[last + 3] = currentByte;
-                    this.last = last + 2;
+                    this.lastField = last + 2;
                     break;
 
                 case 3:
                     block[last + 2] = currentByte;
                     block[last + 3] = currentByte;
                     block[last + 4] = currentByte;
-                    this.last = last + 3;
+                    this.lastField = last + 3;
                     break;
 
                 default:
                     runLength -= 4;
-                    this.cstate.inUse[runLength] = true;
+                    this.compressionStateField.inUse[runLength] = true;
                     block[last + 2] = currentByte;
                     block[last + 3] = currentByte;
                     block[last + 4] = currentByte;
                     block[last + 5] = currentByte;
                     block[last + 6] = (byte) runLength;
-                    this.last = last + 5;
+                    this.lastField = last + 5;
                     break;
             }
-            return (this.last >= this.outBlockFillThreshold);
+            return (this.lastField >= this.outBlockFillThresholdField);
         }
 
         private void blockSort()
         {
-            this.workLimit = WORK_FACTOR * this.last;
-            this.workDone = 0;
-            this.blockRandomised = false;
-            this.firstAttempt = true;
+            this.workLimitField = WORK_FACTOR * this.lastField;
+            this.workDoneField = 0;
+            this.blockRandomisedField = false;
+            this.firstAttemptField = true;
             this.mainSort();
-            if (this.firstAttempt && (this.workDone > this.workLimit))
+            if (this.firstAttemptField && (this.workDoneField > this.workLimitField))
             {
                 this.randomiseBlock();
-                this.workLimit = this.workDone = 0;
-                this.firstAttempt = false;
+                this.workLimitField = this.workDoneField = 0;
+                this.firstAttemptField = false;
                 this.mainSort();
             }
-            int[] fmap = this.cstate.fmap;
-            this.origPtr = -1;
+            int[] fmap = this.compressionStateField.fmap;
+            this.originalPointerField = -1;
             int index = 0;
-            int last = this.last;
+            int last = this.lastField;
             while (index <= last)
             {
                 if (fmap[index] == 0)
                 {
-                    this.origPtr = index;
+                    this.originalPointerField = index;
                     break;
                 }
                 index++;
@@ -157,23 +157,23 @@
         /// </remarks>
         public void CompressAndWrite()
         {
-            if (this.runLength > 0)
+            if (this.runLengthField > 0)
             {
                 this.AddRunToOutputBlock(true);
             }
-            this.currentByte = -1;
-            if (this.last != -1)
+            this.currentByteField = -1;
+            if (this.lastField != -1)
             {
                 this.blockSort();
-                this.bw.WriteByte(0x31);
-                this.bw.WriteByte(0x41);
-                this.bw.WriteByte(0x59);
-                this.bw.WriteByte(0x26);
-                this.bw.WriteByte(0x53);
-                this.bw.WriteByte(0x59);
-                this.Crc32 = (uint) this.crc.Crc32Result;
-                this.bw.WriteInt(this.Crc32);
-                this.bw.WriteBits(1, this.blockRandomised ? (uint)1 : (uint)0);
+                this.bitWriterField.WriteByte(0x31);
+                this.bitWriterField.WriteByte(0x41);
+                this.bitWriterField.WriteByte(0x59);
+                this.bitWriterField.WriteByte(0x26);
+                this.bitWriterField.WriteByte(0x53);
+                this.bitWriterField.WriteByte(0x59);
+                this.Crc32 = (uint) this.crcField.Crc32Result;
+                this.bitWriterField.WriteInt(this.Crc32);
+                this.bitWriterField.WriteBits(1, this.blockRandomisedField ? (uint)1 : (uint)0);
                 this.moveToFrontCodeAndSend();
                 this.Reset();
             }
@@ -191,7 +191,7 @@
         public int Fill(byte[] buffer, int offset, int count)
         {
             int num3;
-            if (this.last >= this.outBlockFillThreshold)
+            if (this.lastField >= this.outBlockFillThresholdField)
             {
                 return 0;
             }
@@ -212,8 +212,8 @@
         private void generateMTFValues()
         {
             int num3;
-            int last = this.last;
-            CompressionState cstate = this.cstate;
+            int last = this.lastField;
+            CompressionState cstate = this.compressionStateField;
             bool[] inUse = cstate.inUse;
             byte[] block = cstate.block;
             int[] fmap = cstate.fmap;
@@ -230,7 +230,7 @@
                     num2++;
                 }
             }
-            this.nInUse = num2;
+            this.numberInUseField = num2;
             int index = num2 + 1;
             for (num3 = index; num3 >= 0; num3--)
             {
@@ -326,7 +326,7 @@
             }
             sfmap[num5] = (char) index;
             mtfFreq[index]++;
-            this.nMTF = num5 + 1;
+            this.numberMTFField = num5 + 1;
         }
 
         private static void hbAssignCodes(int[] code, byte[] length, int minLen, int maxLen, int alphaSize)
@@ -620,24 +620,24 @@
             int num = (hi - lo) + 1;
             if (num < 2)
             {
-                return (this.firstAttempt && (this.workDone > this.workLimit));
+                return (this.firstAttemptField && (this.workDoneField > this.workLimitField));
             }
             int index = 0;
-            while (increments[index] < num)
+            while (incrementsField[index] < num)
             {
                 index++;
             }
             int[] fmap = dataShadow.fmap;
             char[] quadrant = dataShadow.quadrant;
             byte[] block = dataShadow.block;
-            int last = this.last;
+            int last = this.lastField;
             int num4 = last + 1;
-            bool firstAttempt = this.firstAttempt;
-            int workLimit = this.workLimit;
-            int workDone = this.workDone;
+            bool firstAttempt = this.firstAttemptField;
+            int workLimit = this.workLimitField;
+            int workDone = this.workDoneField;
             while (--index >= 0)
             {
-                int num7 = increments[index];
+                int num7 = incrementsField[index];
                 int num8 = (lo + num7) - 1;
                 int num9 = lo + num7;
                 while (num9 <= hi)
@@ -794,7 +794,7 @@
                     }
                 }
             }
-            this.workDone = workDone;
+            this.workDoneField = workDone;
             return (firstAttempt && (workDone > workLimit));
         }
 
@@ -803,7 +803,7 @@
             int num5;
             int num10;
             int num23;
-            CompressionState cstate = this.cstate;
+            CompressionState cstate = this.compressionStateField;
             int[] numArray = cstate.mainSort_runningOrder;
             int[] numArray2 = cstate.mainSort_copy;
             bool[] flagArray = cstate.mainSort_bigDone;
@@ -811,9 +811,9 @@
             byte[] block = cstate.block;
             int[] fmap = cstate.fmap;
             char[] quadrant = cstate.quadrant;
-            int last = this.last;
-            int workLimit = this.workLimit;
-            bool firstAttempt = this.firstAttempt;
+            int last = this.lastField;
+            int workLimit = this.workLimitField;
+            bool firstAttempt = this.firstAttemptField;
             int index = 0x10001;
             while (--index >= 0)
             {
@@ -895,7 +895,7 @@
                         if (hiSt > loSt)
                         {
                             this.mainQSort3(cstate, loSt, hiSt, 2);
-                            if (firstAttempt && (this.workDone > workLimit))
+                            if (firstAttempt && (this.workDoneField > workLimit))
                             {
                                 break;
                             }
@@ -959,16 +959,16 @@
 
         private void moveToFrontCodeAndSend()
         {
-            this.bw.WriteBits(0x18, (uint) this.origPtr);
+            this.bitWriterField.WriteBits(0x18, (uint) this.originalPointerField);
             this.generateMTFValues();
             this.sendMTFValues();
         }
 
         private void randomiseBlock()
         {
-            bool[] inUse = this.cstate.inUse;
-            byte[] block = this.cstate.block;
-            int last = this.last;
+            bool[] inUse = this.compressionStateField.inUse;
+            byte[] block = this.compressionStateField.block;
+            int last = this.lastField;
             int index = 0x100;
             while (--index >= 0)
             {
@@ -992,26 +992,26 @@
                 inUse[block[j] & 0xff] = true;
                 index = j;
             }
-            this.blockRandomised = true;
+            this.blockRandomisedField = true;
         }
 
         private void Reset()
         {
-            this.crc.Reset();
-            this.currentByte = -1;
-            this.runLength = 0;
-            this.last = -1;
+            this.crcField.Reset();
+            this.currentByteField = -1;
+            this.runLengthField = 0;
+            this.lastField = -1;
             int index = 0x100;
             while (--index >= 0)
             {
-                this.cstate.inUse[index] = false;
+                this.compressionStateField.inUse[index] = false;
             }
         }
 
         private void sendMTFValues()
         {
-            byte[][] bufferArray = this.cstate.sendMTFValues_len;
-            int alphaSize = this.nInUse + 2;
+            byte[][] bufferArray = this.compressionStateField.sendMTFValues_len;
+            int alphaSize = this.numberInUseField + 2;
             int nGroups = BZip2.NGroups;
             while (--nGroups >= 0)
             {
@@ -1022,7 +1022,7 @@
                     buffer[index] = GREATER_ICOST;
                 }
             }
-            int num4 = (this.nMTF < 200) ? 2 : ((this.nMTF < 600) ? 3 : ((this.nMTF < 0x4b0) ? 4 : ((this.nMTF < 0x960) ? 5 : 6)));
+            int num4 = (this.numberMTFField < 200) ? 2 : ((this.numberMTFField < 600) ? 3 : ((this.numberMTFField < 0x4b0) ? 4 : ((this.numberMTFField < 0x960) ? 5 : 6)));
             this.sendMTFValues0(num4, alphaSize);
             int nSelectors = this.sendMTFValues1(num4, alphaSize);
             this.sendMTFValues2(num4, nSelectors);
@@ -1035,9 +1035,9 @@
 
         private void sendMTFValues0(int nGroups, int alphaSize)
         {
-            byte[][] bufferArray = this.cstate.sendMTFValues_len;
-            int[] mtfFreq = this.cstate.mtfFreq;
-            int nMTF = this.nMTF;
+            byte[][] bufferArray = this.compressionStateField.sendMTFValues_len;
+            int[] mtfFreq = this.compressionStateField.mtfFreq;
+            int nMTF = this.numberMTFField;
             int num2 = 0;
             for (int i = nGroups; i > 0; i--)
             {
@@ -1073,7 +1073,7 @@
 
         private int sendMTFValues1(int nGroups, int alphaSize)
         {
-            CompressionState cstate = this.cstate;
+            CompressionState cstate = this.compressionStateField;
             int[][] numArray = cstate.sendMTFValues_rfreq;
             int[] numArray2 = cstate.sendMTFValues_fave;
             short[] numArray3 = cstate.sendMTFValues_cost;
@@ -1086,7 +1086,7 @@
             byte[] buffer5 = bufferArray[3];
             byte[] buffer6 = bufferArray[4];
             byte[] buffer7 = bufferArray[5];
-            int nMTF = this.nMTF;
+            int nMTF = this.numberMTFField;
             int index = 0;
             for (int i = 0; i < BZip2.N_ITERS; i++)
             {
@@ -1104,7 +1104,7 @@
                     }
                 }
                 index = 0;
-                for (int j = 0; j < this.nMTF; j = num7 + 1)
+                for (int j = 0; j < this.numberMTFField; j = num7 + 1)
                 {
                     int num8;
                     num7 = Math.Min((int) ((j + BZip2.G_SIZE) - 1), (int) (nMTF - 1));
@@ -1172,7 +1172,7 @@
                 }
                 for (num4 = 0; num4 < nGroups; num4++)
                 {
-                    hbMakeCodeLengths(bufferArray[num4], numArray[num4], this.cstate, alphaSize, 20);
+                    hbMakeCodeLengths(bufferArray[num4], numArray[num4], this.compressionStateField, alphaSize, 20);
                 }
             }
             return index;
@@ -1180,7 +1180,7 @@
 
         private void sendMTFValues2(int nGroups, int nSelectors)
         {
-            CompressionState cstate = this.cstate;
+            CompressionState cstate = this.compressionStateField;
             byte[] buffer = cstate.sendMTFValues2_pos;
             int index = nGroups;
             while (--index >= 0)
@@ -1206,8 +1206,8 @@
 
         private void sendMTFValues3(int nGroups, int alphaSize)
         {
-            int[][] numArray = this.cstate.sendMTFValues_code;
-            byte[][] bufferArray = this.cstate.sendMTFValues_len;
+            int[][] numArray = this.compressionStateField.sendMTFValues_code;
+            byte[][] bufferArray = this.compressionStateField.sendMTFValues_len;
             for (int i = 0; i < nGroups; i++)
             {
                 int minLen = 0x20;
@@ -1234,8 +1234,8 @@
         {
             int num2;
             int num3;
-            bool[] inUse = this.cstate.inUse;
-            bool[] flagArray2 = this.cstate.sentMTFValues4_inUse16;
+            bool[] inUse = this.compressionStateField.inUse;
+            bool[] flagArray2 = this.compressionStateField.sentMTFValues4_inUse16;
             int index = 0x10;
             while (--index >= 0)
             {
@@ -1258,7 +1258,7 @@
                     num4 |= ((uint) 1) << ((0x10 - index) - 1);
                 }
             }
-            this.bw.WriteBits(0x10, num4);
+            this.bitWriterField.WriteBits(0x10, num4);
             for (index = 0; index < 0x10; index++)
             {
                 if (flagArray2[index])
@@ -1272,62 +1272,62 @@
                             num4 |= ((uint) 1) << ((0x10 - num3) - 1);
                         }
                     }
-                    this.bw.WriteBits(0x10, num4);
+                    this.bitWriterField.WriteBits(0x10, num4);
                 }
             }
         }
 
         private void sendMTFValues5(int nGroups, int nSelectors)
         {
-            this.bw.WriteBits(3, (uint) nGroups);
-            this.bw.WriteBits(15, (uint) nSelectors);
-            byte[] selectorMtf = this.cstate.selectorMtf;
+            this.bitWriterField.WriteBits(3, (uint) nGroups);
+            this.bitWriterField.WriteBits(15, (uint) nSelectors);
+            byte[] selectorMtf = this.compressionStateField.selectorMtf;
             for (int i = 0; i < nSelectors; i++)
             {
                 int num2 = 0;
                 int num3 = selectorMtf[i] & 0xff;
                 while (num2 < num3)
                 {
-                    this.bw.WriteBits(1, 1);
+                    this.bitWriterField.WriteBits(1, 1);
                     num2++;
                 }
-                this.bw.WriteBits(1, 0);
+                this.bitWriterField.WriteBits(1, 0);
             }
         }
 
         private void sendMTFValues6(int nGroups, int alphaSize)
         {
-            byte[][] bufferArray = this.cstate.sendMTFValues_len;
+            byte[][] bufferArray = this.compressionStateField.sendMTFValues_len;
             for (int i = 0; i < nGroups; i++)
             {
                 byte[] buffer = bufferArray[i];
                 uint num2 = (uint) (buffer[0] & 0xff);
-                this.bw.WriteBits(5, num2);
+                this.bitWriterField.WriteBits(5, num2);
                 for (int j = 0; j < alphaSize; j++)
                 {
                     int num4 = buffer[j] & 0xff;
                     while (num2 < num4)
                     {
-                        this.bw.WriteBits(2, 2);
+                        this.bitWriterField.WriteBits(2, 2);
                         num2++;
                     }
                     while (num2 > num4)
                     {
-                        this.bw.WriteBits(2, 3);
+                        this.bitWriterField.WriteBits(2, 3);
                         num2--;
                     }
-                    this.bw.WriteBits(1, 0);
+                    this.bitWriterField.WriteBits(1, 0);
                 }
             }
         }
 
         private void sendMTFValues7(int nSelectors)
         {
-            byte[][] bufferArray = this.cstate.sendMTFValues_len;
-            int[][] numArray = this.cstate.sendMTFValues_code;
-            byte[] selector = this.cstate.selector;
-            char[] sfmap = this.cstate.sfmap;
-            int nMTF = this.nMTF;
+            byte[][] bufferArray = this.compressionStateField.sendMTFValues_len;
+            int[][] numArray = this.compressionStateField.sendMTFValues_code;
+            byte[] selector = this.compressionStateField.selector;
+            char[] sfmap = this.compressionStateField.sfmap;
+            int nMTF = this.numberMTFField;
             int index = 0;
             int num3 = 0;
             while (num3 < nMTF)
@@ -1340,7 +1340,7 @@
                 {
                     int num6 = sfmap[num3];
                     int nbits = buffer2[num6] & 0xff;
-                    this.bw.WriteBits(nbits, (uint) numArray2[num6]);
+                    this.bitWriterField.WriteBits(nbits, (uint) numArray2[num6]);
                     num3++;
                 }
                 num3 = num4 + 1;
@@ -1382,31 +1382,31 @@
         /// <returns>0 if the byte was not written, non-zero if written.</returns>
         private int write0(byte b)
         {
-            if (this.currentByte == -1)
+            if (this.currentByteField == -1)
             {
-                this.currentByte = b;
-                this.runLength++;
+                this.currentByteField = b;
+                this.runLengthField++;
                 return 1;
             }
-            if (this.currentByte == b)
+            if (this.currentByteField == b)
             {
-                if (++this.runLength > 0xfe)
+                if (++this.runLengthField > 0xfe)
                 {
                     bool flag = this.AddRunToOutputBlock(false);
-                    this.currentByte = -1;
-                    this.runLength = 0;
+                    this.currentByteField = -1;
+                    this.runLengthField = 0;
                     return (flag ? 2 : 1);
                 }
                 return 1;
             }
             if (this.AddRunToOutputBlock(false))
             {
-                this.currentByte = -1;
-                this.runLength = 0;
+                this.currentByteField = -1;
+                this.runLengthField = 0;
                 return 0;
             }
-            this.runLength = 1;
-            this.currentByte = b;
+            this.runLengthField = 1;
+            this.currentByteField = b;
             return 1;
         }
 
@@ -1416,7 +1416,7 @@
         {
             get
             {
-                return this.blockSize100k;
+                return this.blockSize100kField;
             }
         }
 
@@ -1440,7 +1440,7 @@
         {
             get
             {
-                return (this.last + 1);
+                return (this.lastField + 1);
             }
         }
 

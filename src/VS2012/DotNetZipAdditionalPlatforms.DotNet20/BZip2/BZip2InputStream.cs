@@ -10,34 +10,34 @@
     /// </summary>
     public class BZip2InputStream : Stream
     {
-        private bool _disposed;
-        private bool _leaveOpen;
-        private bool blockRandomised;
-        private int blockSize100k;
-        private int bsBuff;
-        private int bsLive;
-        private uint computedBlockCRC;
-        private uint computedCombinedCRC;
-        private readonly CRC32 crc;
-        private int currentChar;
-        private CState currentState;
-        private DecompressionState data;
-        private Stream input;
-        private int last;
-        private int nInUse;
-        private int origPtr;
-        private uint storedBlockCRC;
-        private uint storedCombinedCRC;
-        private int su_ch2;
-        private int su_chPrev;
-        private int su_count;
-        private int su_i2;
-        private int su_j2;
-        private int su_rNToGo;
-        private int su_rTPos;
-        private int su_tPos;
-        private char su_z;
-        private long totalBytesRead;
+        private bool disposedField;
+        private bool leaveOpenField;
+        private bool blockRandomisedField;
+        private int blockSize100kField;
+        private int bsBuffField;
+        private int bsLiveField;
+        private uint computedBlockCrcField;
+        private uint computedCombinedCrcField;
+        private readonly CRC32 crcfield;
+        private int currentCharacterField;
+        private CState currentStateField;
+        private DecompressionState dataField;
+        private Stream inputStreamField;
+        private int lastField;
+        private int numberInUseField;
+        private int originalPointerField;
+        private uint storedBlockCrcField;
+        private uint storedCombinedCrcField;
+        private int such2Field;
+        private int suchPrevField;
+        private int sucountField;
+        private int sui2Field;
+        private int suj2Field;
+        private int surnToGoField;
+        private int surtPosField;
+        private int sutPosField;
+        private char suzField;
+        private long totalBytesReadField;
 
         /// <summary>
         /// Create a BZip2InputStream, wrapping it around the given input Stream.
@@ -89,11 +89,11 @@
         /// </example>
         public BZip2InputStream(Stream input, bool leaveOpen)
         {
-            this.crc = new CRC32(true);
-            this.currentChar = -1;
-            this.currentState = CState.START_BLOCK;
-            this.input = input;
-            this._leaveOpen = leaveOpen;
+            this.crcfield = new CRC32(true);
+            this.currentCharacterField = -1;
+            this.currentStateField = CState.START_BLOCK;
+            this.inputStreamField = input;
+            this.leaveOpenField = leaveOpen;
             this.init();
         }
 
@@ -114,7 +114,7 @@
 
         private void CheckMagicChar(char expected, int position)
         {
-            int num = this.input.ReadByte();
+            int num = this.inputStreamField.ReadByte();
             if (num != expected)
             {
                 throw new IOException(string.Format(CultureInfo.InvariantCulture, "Not a valid BZip2 stream. byte {0}, expected '{1}', got '{2}'", position, (int) expected, num));
@@ -126,39 +126,39 @@
         /// </summary>
         public override void Close()
         {
-            Stream input = this.input;
+            Stream input = this.inputStreamField;
             if (input != null)
             {
                 try
                 {
-                    if (!this._leaveOpen)
+                    if (!this.leaveOpenField)
                     {
                         input.Close();
                     }
                 }
                 finally
                 {
-                    this.data = null;
-                    this.input = null;
+                    this.dataField = null;
+                    this.inputStreamField = null;
                 }
             }
         }
 
         private void complete()
         {
-            this.storedCombinedCRC = this.bsGetInt();
-            this.currentState = CState.EOF;
-            this.data = null;
-            if (this.storedCombinedCRC != this.computedCombinedCRC)
+            this.storedCombinedCrcField = this.bsGetInt();
+            this.currentStateField = CState.EOF;
+            this.dataField = null;
+            if (this.storedCombinedCrcField != this.computedCombinedCrcField)
             {
-                throw new IOException(string.Format(CultureInfo.InvariantCulture, "BZip2 CRC error (expected {0:X8}, computed {1:X8})", this.storedCombinedCRC, this.computedCombinedCRC));
+                throw new IOException(string.Format(CultureInfo.InvariantCulture, "BZip2 CRC error (expected {0:X8}, computed {1:X8})", this.storedCombinedCrcField, this.computedCombinedCrcField));
             }
         }
 
         /// Called by recvDecodingTables() exclusively.
         private void createHuffmanDecodingTables(int alphaSize, int nGroups)
         {
-            DecompressionState data = this.data;
+            DecompressionState data = this.dataField;
             char[][] chArray = data.temp_charArray2d;
             for (int i = 0; i < nGroups; i++)
             {
@@ -193,13 +193,13 @@
         {
             try
             {
-                if (!this._disposed)
+                if (!this.disposedField)
                 {
-                    if (disposing && (this.input != null))
+                    if (disposing && (this.inputStreamField != null))
                     {
-                        this.input.Close();
+                        this.inputStreamField.Close();
                     }
-                    this._disposed = true;
+                    this.disposedField = true;
                 }
             }
             finally
@@ -210,13 +210,13 @@
 
         private void EndBlock()
         {
-            this.computedBlockCRC = (uint) this.crc.Crc32Result;
-            if (this.storedBlockCRC != this.computedBlockCRC)
+            this.computedBlockCrcField = (uint) this.crcfield.Crc32Result;
+            if (this.storedBlockCrcField != this.computedBlockCrcField)
             {
-                throw new IOException(string.Format(CultureInfo.InvariantCulture, "BZip2 CRC error (expected {0:X8}, computed {1:X8})", this.storedBlockCRC, this.computedBlockCRC));
+                throw new IOException(string.Format(CultureInfo.InvariantCulture, "BZip2 CRC error (expected {0:X8}, computed {1:X8})", this.storedBlockCrcField, this.computedBlockCrcField));
             }
-            this.computedCombinedCRC = (this.computedCombinedCRC << 1) | (this.computedCombinedCRC >> 0x1f);
-            this.computedCombinedCRC ^= this.computedBlockCRC;
+            this.computedCombinedCrcField = (this.computedCombinedCrcField << 1) | (this.computedCombinedCrcField >> 0x1f);
+            this.computedCombinedCrcField ^= this.computedBlockCrcField;
         }
 
         /// <summary>
@@ -224,28 +224,28 @@
         /// </summary>
         public override void Flush()
         {
-            if (this._disposed)
+            if (this.disposedField)
             {
                 throw new ObjectDisposedException("BZip2Stream");
             }
-            this.input.Flush();
+            this.inputStreamField.Flush();
         }
 
         private void getAndMoveToFrontDecode()
         {
-            DecompressionState data = this.data;
-            this.origPtr = this.GetBits(0x18);
-            if (this.origPtr < 0)
+            DecompressionState data = this.dataField;
+            this.originalPointerField = this.GetBits(0x18);
+            if (this.originalPointerField < 0)
             {
                 throw new IOException("BZ_DATA_ERROR");
             }
-            if (this.origPtr > (10 + (DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple * this.blockSize100k)))
+            if (this.originalPointerField > (10 + (DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple * this.blockSize100kField)))
             {
                 throw new IOException("BZ_DATA_ERROR");
             }
             this.recvDecodingTables();
             byte[] src = data.getAndMoveToFrontDecode_yy;
-            int num = this.blockSize100k * DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple;
+            int num = this.blockSize100kField * DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple;
             int index = 0x100;
             while (--index >= 0)
             {
@@ -254,10 +254,10 @@
             }
             int num3 = 0;
             int num4 = DotNetZipAdditionalPlatforms.BZip2.BZip2.G_SIZE - 1;
-            int num5 = this.nInUse + 1;
+            int num5 = this.numberInUseField + 1;
             int num6 = this.getAndMoveToFrontDecode0(0);
-            int bsBuff = this.bsBuff;
-            int bsLive = this.bsLive;
+            int bsBuff = this.bsBuffField;
+            int bsLive = this.bsLiveField;
             int num9 = -1;
             int num10 = data.selector[num3] & 0xff;
             int[] numArray = data.gBase[num10];
@@ -304,7 +304,7 @@
                 int num14 = num11;
                 while (bsLive < num14)
                 {
-                    num15 = this.input.ReadByte();
+                    num15 = this.inputStreamField.ReadByte();
                     if (num15 < 0)
                     {
                         throw new IOException("unexpected end of stream");
@@ -319,7 +319,7 @@
                     num14++;
                     while (bsLive < 1)
                     {
-                        num15 = this.input.ReadByte();
+                        num15 = this.inputStreamField.ReadByte();
                         if (num15 < 0)
                         {
                             throw new IOException("unexpected end of stream");
@@ -383,7 +383,7 @@
                 num14 = num11;
                 while (bsLive < num14)
                 {
-                    num15 = this.input.ReadByte();
+                    num15 = this.inputStreamField.ReadByte();
                     if (num15 < 0)
                     {
                         throw new IOException("unexpected end of stream");
@@ -398,7 +398,7 @@
                     num14++;
                     while (bsLive < 1)
                     {
-                        num15 = this.input.ReadByte();
+                        num15 = this.inputStreamField.ReadByte();
                         if (num15 < 0)
                         {
                             throw new IOException("unexpected end of stream");
@@ -411,26 +411,26 @@
                 }
                 num6 = numArray3[num16 - numArray[num14]];
             }
-            this.last = num9;
-            this.bsLive = bsLive;
-            this.bsBuff = bsBuff;
+            this.lastField = num9;
+            this.bsLiveField = bsLive;
+            this.bsBuffField = bsBuff;
         }
 
         private int getAndMoveToFrontDecode0(int groupNo)
         {
-            DecompressionState data = this.data;
+            DecompressionState data = this.dataField;
             int index = data.selector[groupNo] & 0xff;
             int[] numArray = data.gLimit[index];
             int n = data.gMinlen[index];
             int bits = this.GetBits(n);
-            int bsLive = this.bsLive;
-            int bsBuff = this.bsBuff;
+            int bsLive = this.bsLiveField;
+            int bsBuff = this.bsBuffField;
             while (bits > numArray[n])
             {
                 n++;
                 while (bsLive < 1)
                 {
-                    int num6 = this.input.ReadByte();
+                    int num6 = this.inputStreamField.ReadByte();
                     if (num6 < 0)
                     {
                         throw new IOException("unexpected end of stream");
@@ -441,8 +441,8 @@
                 bsLive--;
                 bits = (bits << 1) | ((bsBuff >> bsLive) & 1);
             }
-            this.bsLive = bsLive;
-            this.bsBuff = bsBuff;
+            this.bsLiveField = bsLive;
+            this.bsBuffField = bsBuff;
             return data.gPerm[index][bits - data.gBase[index][n]];
         }
 
@@ -460,13 +460,13 @@
         /// </param>
         private int GetBits(int n)
         {
-            int bsLive = this.bsLive;
-            int bsBuff = this.bsBuff;
+            int bsLive = this.bsLiveField;
+            int bsBuff = this.bsBuffField;
             if (bsLive < n)
             {
                 do
                 {
-                    int num3 = this.input.ReadByte();
+                    int num3 = this.inputStreamField.ReadByte();
                     if (num3 < 0)
                     {
                         throw new IOException("unexpected end of stream");
@@ -475,9 +475,9 @@
                     bsLive += 8;
                 }
                 while (bsLive < n);
-                this.bsBuff = bsBuff;
+                this.bsBuffField = bsBuff;
             }
-            this.bsLive = bsLive - n;
+            this.bsLiveField = bsLive - n;
             return ((bsBuff >> (bsLive - n)) & ((((int) 1) << n) - 1));
         }
 
@@ -534,23 +534,23 @@
 
         private void init()
         {
-            if (null == this.input)
+            if (null == this.inputStreamField)
             {
                 throw new IOException("No input Stream");
             }
-            if (!this.input.CanRead)
+            if (!this.inputStreamField.CanRead)
             {
                 throw new IOException("Unreadable input Stream");
             }
             this.CheckMagicChar('B', 0);
             this.CheckMagicChar('Z', 1);
             this.CheckMagicChar('h', 2);
-            int num = this.input.ReadByte();
+            int num = this.inputStreamField.ReadByte();
             if ((num < 0x31) || (num > 0x39))
             {
                 throw new IOException("Stream is not BZip2 formatted: illegal blocksize " + ((char) num));
             }
-            this.blockSize100k = num - 0x30;
+            this.blockSize100kField = num - 0x30;
             this.InitBlock();
             this.SetupBlock();
         }
@@ -571,25 +571,25 @@
             {
                 if (((((ch != '1') || (ch2 != 'A')) || ((ch3 != 'Y') || (ch4 != '&'))) || (ch5 != 'S')) || (ch6 != 'Y'))
                 {
-                    this.currentState = CState.EOF;
-                    throw new IOException(string.Format(CultureInfo.InvariantCulture, "bad block header at offset 0x{0:X}", this.input.Position));
+                    this.currentStateField = CState.EOF;
+                    throw new IOException(string.Format(CultureInfo.InvariantCulture, "bad block header at offset 0x{0:X}", this.inputStreamField.Position));
                 }
-                this.storedBlockCRC = this.bsGetInt();
-                this.blockRandomised = this.GetBits(1) == 1;
-                if (this.data == null)
+                this.storedBlockCrcField = this.bsGetInt();
+                this.blockRandomisedField = this.GetBits(1) == 1;
+                if (this.dataField == null)
                 {
-                    this.data = new DecompressionState(this.blockSize100k);
+                    this.dataField = new DecompressionState(this.blockSize100kField);
                 }
                 this.getAndMoveToFrontDecode();
-                this.crc.Reset();
-                this.currentState = CState.START_BLOCK;
+                this.crcfield.Reset();
+                this.currentStateField = CState.START_BLOCK;
             }
         }
 
         private void MakeMaps()
         {
-            bool[] inUse = this.data.inUse;
-            byte[] seqToUnseq = this.data.seqToUnseq;
+            bool[] inUse = this.dataField.inUse;
+            byte[] seqToUnseq = this.dataField.seqToUnseq;
             int num = 0;
             for (int i = 0; i < 0x100; i++)
             {
@@ -598,7 +598,7 @@
                     seqToUnseq[num++] = (byte) i;
                 }
             }
-            this.nInUse = num;
+            this.numberInUseField = num;
         }
 
         /// <summary>
@@ -637,7 +637,7 @@
             {
                 throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "offset({0}) count({1}) bLength({2})", offset, count, buffer.Length));
             }
-            if (this.input == null)
+            if (this.inputStreamField == null)
             {
                 throw new IOException("the stream is not open");
             }
@@ -656,9 +656,9 @@
         /// <returns>the byte read from the stream, or -1 if EOF</returns>
         public override int ReadByte()
         {
-            int currentChar = this.currentChar;
-            this.totalBytesRead += 1L;
-            switch (this.currentState)
+            int currentChar = this.currentCharacterField;
+            this.totalBytesReadField += 1L;
+            switch (this.currentStateField)
             {
                 case CState.EOF:
                     return -1;
@@ -695,7 +695,7 @@
         {
             int num2;
             int num4;
-            DecompressionState data = this.data;
+            DecompressionState data = this.dataField;
             bool[] inUse = data.inUse;
             byte[] buffer = data.recvDecodingTables_pos;
             int num = 0;
@@ -728,7 +728,7 @@
                 }
             }
             this.MakeMaps();
-            int alphaSize = this.nInUse + 2;
+            int alphaSize = this.numberInUseField + 2;
             int bits = this.GetBits(3);
             int num7 = this.GetBits(15);
             for (num2 = 0; num2 < num7; num2++)
@@ -798,14 +798,14 @@
 
         private void SetupBlock()
         {
-            if (this.data != null)
+            if (this.dataField != null)
             {
                 int num;
-                DecompressionState data = this.data;
-                int[] numArray = data.initTT(this.last + 1);
+                DecompressionState data = this.dataField;
+                int[] numArray = data.initTT(this.lastField + 1);
                 for (num = 0; num <= 0xff; num++)
                 {
-                    if ((data.unzftab[num] < 0) || (data.unzftab[num] > this.last))
+                    if ((data.unzftab[num] < 0) || (data.unzftab[num] > this.lastField))
                     {
                         throw new Exception("BZ_DATA_ERROR");
                     }
@@ -821,9 +821,9 @@
                 }
                 for (num = 0; num <= 0x100; num++)
                 {
-                    if ((data.cftab[num] < 0) || (data.cftab[num] > (this.last + 1)))
+                    if ((data.cftab[num] < 0) || (data.cftab[num] > (this.lastField + 1)))
                     {
-                        throw new Exception(string.Format(CultureInfo.InvariantCulture, "BZ_DATA_ERROR: cftab[{0}]={1} last={2}", num, data.cftab[num], this.last));
+                        throw new Exception(string.Format(CultureInfo.InvariantCulture, "BZ_DATA_ERROR: cftab[{0}]={1} last={2}", num, data.cftab[num], this.lastField));
                     }
                 }
                 for (num = 1; num <= 0x100; num++)
@@ -834,24 +834,24 @@
                     }
                 }
                 num = 0;
-                int last = this.last;
+                int last = this.lastField;
                 while (num <= last)
                 {
                     numArray[data.cftab[data.ll8[num] & 0xff]++] = num;
                     num++;
                 }
-                if ((this.origPtr < 0) || (this.origPtr >= numArray.Length))
+                if ((this.originalPointerField < 0) || (this.originalPointerField >= numArray.Length))
                 {
                     throw new IOException("stream corrupted");
                 }
-                this.su_tPos = numArray[this.origPtr];
-                this.su_count = 0;
-                this.su_i2 = 0;
-                this.su_ch2 = 0x100;
-                if (this.blockRandomised)
+                this.sutPosField = numArray[this.originalPointerField];
+                this.sucountField = 0;
+                this.sui2Field = 0;
+                this.such2Field = 0x100;
+                if (this.blockRandomisedField)
                 {
-                    this.su_rNToGo = 0;
-                    this.su_rTPos = 0;
+                    this.surnToGoField = 0;
+                    this.surtPosField = 0;
                     this.SetupRandPartA();
                 }
                 else
@@ -863,20 +863,20 @@
 
         private void SetupNoRandPartA()
         {
-            if (this.su_i2 <= this.last)
+            if (this.sui2Field <= this.lastField)
             {
-                this.su_chPrev = this.su_ch2;
-                int num = this.data.ll8[this.su_tPos] & 0xff;
-                this.su_ch2 = num;
-                this.su_tPos = this.data.tt[this.su_tPos];
-                this.su_i2++;
-                this.currentChar = num;
-                this.currentState = CState.NO_RAND_PART_B;
-                this.crc.UpdateCRC((byte) num);
+                this.suchPrevField = this.such2Field;
+                int num = this.dataField.ll8[this.sutPosField] & 0xff;
+                this.such2Field = num;
+                this.sutPosField = this.dataField.tt[this.sutPosField];
+                this.sui2Field++;
+                this.currentCharacterField = num;
+                this.currentStateField = CState.NO_RAND_PART_B;
+                this.crcfield.UpdateCRC((byte) num);
             }
             else
             {
-                this.currentState = CState.NO_RAND_PART_A;
+                this.currentStateField = CState.NO_RAND_PART_A;
                 this.EndBlock();
                 this.InitBlock();
                 this.SetupBlock();
@@ -885,16 +885,16 @@
 
         private void SetupNoRandPartB()
         {
-            if (this.su_ch2 != this.su_chPrev)
+            if (this.such2Field != this.suchPrevField)
             {
-                this.su_count = 1;
+                this.sucountField = 1;
                 this.SetupNoRandPartA();
             }
-            else if (++this.su_count >= 4)
+            else if (++this.sucountField >= 4)
             {
-                this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-                this.su_tPos = this.data.tt[this.su_tPos];
-                this.su_j2 = 0;
+                this.suzField = (char) (this.dataField.ll8[this.sutPosField] & 0xff);
+                this.sutPosField = this.dataField.tt[this.sutPosField];
+                this.suj2Field = 0;
                 this.SetupNoRandPartC();
             }
             else
@@ -905,46 +905,46 @@
 
         private void SetupNoRandPartC()
         {
-            if (this.su_j2 < this.su_z)
+            if (this.suj2Field < this.suzField)
             {
-                int num = this.su_ch2;
-                this.currentChar = num;
-                this.crc.UpdateCRC((byte) num);
-                this.su_j2++;
-                this.currentState = CState.NO_RAND_PART_C;
+                int num = this.such2Field;
+                this.currentCharacterField = num;
+                this.crcfield.UpdateCRC((byte) num);
+                this.suj2Field++;
+                this.currentStateField = CState.NO_RAND_PART_C;
             }
             else
             {
-                this.su_i2++;
-                this.su_count = 0;
+                this.sui2Field++;
+                this.sucountField = 0;
                 this.SetupNoRandPartA();
             }
         }
 
         private void SetupRandPartA()
         {
-            if (this.su_i2 <= this.last)
+            if (this.sui2Field <= this.lastField)
             {
-                this.su_chPrev = this.su_ch2;
-                int num = this.data.ll8[this.su_tPos] & 0xff;
-                this.su_tPos = this.data.tt[this.su_tPos];
-                if (this.su_rNToGo == 0)
+                this.suchPrevField = this.such2Field;
+                int num = this.dataField.ll8[this.sutPosField] & 0xff;
+                this.sutPosField = this.dataField.tt[this.sutPosField];
+                if (this.surnToGoField == 0)
                 {
-                    this.su_rNToGo = Rand.Rnums(this.su_rTPos) - 1;
-                    if (++this.su_rTPos == 0x200)
+                    this.surnToGoField = Rand.Rnums(this.surtPosField) - 1;
+                    if (++this.surtPosField == 0x200)
                     {
-                        this.su_rTPos = 0;
+                        this.surtPosField = 0;
                     }
                 }
                 else
                 {
-                    this.su_rNToGo--;
+                    this.surnToGoField--;
                 }
-                this.su_ch2 = num ^= (this.su_rNToGo == 1) ? 1 : 0;
-                this.su_i2++;
-                this.currentChar = num;
-                this.currentState = CState.RAND_PART_B;
-                this.crc.UpdateCRC((byte) num);
+                this.such2Field = num ^= (this.surnToGoField == 1) ? 1 : 0;
+                this.sui2Field++;
+                this.currentCharacterField = num;
+                this.currentStateField = CState.RAND_PART_B;
+                this.crcfield.UpdateCRC((byte) num);
             }
             else
             {
@@ -956,56 +956,56 @@
 
         private void SetupRandPartB()
         {
-            if (this.su_ch2 != this.su_chPrev)
+            if (this.such2Field != this.suchPrevField)
             {
-                this.currentState = CState.RAND_PART_A;
-                this.su_count = 1;
+                this.currentStateField = CState.RAND_PART_A;
+                this.sucountField = 1;
                 this.SetupRandPartA();
             }
-            else if (++this.su_count >= 4)
+            else if (++this.sucountField >= 4)
             {
-                this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-                this.su_tPos = this.data.tt[this.su_tPos];
-                if (this.su_rNToGo == 0)
+                this.suzField = (char) (this.dataField.ll8[this.sutPosField] & 0xff);
+                this.sutPosField = this.dataField.tt[this.sutPosField];
+                if (this.surnToGoField == 0)
                 {
-                    this.su_rNToGo = Rand.Rnums(this.su_rTPos) - 1;
-                    if (++this.su_rTPos == 0x200)
+                    this.surnToGoField = Rand.Rnums(this.surtPosField) - 1;
+                    if (++this.surtPosField == 0x200)
                     {
-                        this.su_rTPos = 0;
+                        this.surtPosField = 0;
                     }
                 }
                 else
                 {
-                    this.su_rNToGo--;
+                    this.surnToGoField--;
                 }
-                this.su_j2 = 0;
-                this.currentState = CState.RAND_PART_C;
-                if (this.su_rNToGo == 1)
+                this.suj2Field = 0;
+                this.currentStateField = CState.RAND_PART_C;
+                if (this.surnToGoField == 1)
                 {
-                    this.su_z = (char) (this.su_z ^ '\x0001');
+                    this.suzField = (char) (this.suzField ^ '\x0001');
                 }
                 this.SetupRandPartC();
             }
             else
             {
-                this.currentState = CState.RAND_PART_A;
+                this.currentStateField = CState.RAND_PART_A;
                 this.SetupRandPartA();
             }
         }
 
         private void SetupRandPartC()
         {
-            if (this.su_j2 < this.su_z)
+            if (this.suj2Field < this.suzField)
             {
-                this.currentChar = this.su_ch2;
-                this.crc.UpdateCRC((byte) this.su_ch2);
-                this.su_j2++;
+                this.currentCharacterField = this.such2Field;
+                this.crcfield.UpdateCRC((byte) this.such2Field);
+                this.suj2Field++;
             }
             else
             {
-                this.currentState = CState.RAND_PART_A;
-                this.su_i2++;
-                this.su_count = 0;
+                this.currentStateField = CState.RAND_PART_A;
+                this.sui2Field++;
+                this.sucountField = 0;
                 this.SetupRandPartA();
             }
         }
@@ -1031,11 +1031,11 @@
         {
             get
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
                     throw new ObjectDisposedException("BZip2Stream");
                 }
-                return this.input.CanRead;
+                return this.inputStreamField.CanRead;
             }
         }
 
@@ -1063,11 +1063,11 @@
         {
             get
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
                     throw new ObjectDisposedException("BZip2Stream");
                 }
-                return this.input.CanWrite;
+                return this.inputStreamField.CanWrite;
             }
         }
 
@@ -1094,7 +1094,7 @@
         {
             get
             {
-                return this.totalBytesRead;
+                return this.totalBytesReadField;
             }
             set
             {
