@@ -29,14 +29,14 @@
     /// </para>
     /// 
     /// <para>
-    /// This class is similar to <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />, except that it adds the
+    /// This class is similar to <see cref="T:DeflateStream" />, except that it adds the
     /// RFC1950 header and trailer bytes to a compressed stream when compressing, or expects
     /// the RFC1950 header and trailer bytes when decompressing.  It is also similar to the
-    /// <see cref="T:DotNetZipAdditionalPlatforms.Zlib.GZipStream" />.
+    /// <see cref="T:GZipStream" />.
     /// </para>
     /// </remarks>
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.GZipStream" />
+    /// <seealso cref="T:DeflateStream" />
+    /// <seealso cref="T:GZipStream" />
     public class ZlibStream : Stream
     {
         internal ZlibBaseStream _baseStream;
@@ -290,11 +290,11 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressBuffer(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:ZlibStream.UncompressBuffer(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressString(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:ZlibStream.CompressString(System.String)" />
+        /// <seealso cref="M:ZlibStream.UncompressBuffer(System.Byte[])" />
         /// 
         /// <param name="b">
         /// A buffer to compress.
@@ -316,12 +316,12 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressString(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:ZlibStream.UncompressString(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressString(System.Byte[])" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressBuffer(System.Byte[])" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressString(System.String)" />
+        /// <seealso cref="M:ZlibStream.UncompressString(System.Byte[])" />
+        /// <seealso cref="M:ZlibStream.CompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.CompressString(System.String)" />
         /// 
         /// <param name="s">
         /// A string to compress.  The string will first be encoded
@@ -469,8 +469,8 @@
         /// Uncompress a ZLIB-compressed byte array into a byte array.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressBuffer(System.Byte[])" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressString(System.Byte[])" />
+        /// <seealso cref="M:ZlibStream.CompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:ZlibStream.UncompressString(System.Byte[])" />
         /// 
         /// <param name="compressed">
         /// A buffer containing ZLIB-compressed data.
@@ -490,8 +490,8 @@
         /// Uncompress a ZLIB-compressed byte array into a single string.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressString(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:ZlibStream.CompressString(System.String)" />
+        /// <seealso cref="M:ZlibStream.UncompressBuffer(System.Byte[])" />
         /// 
         /// <param name="compressed">
         /// A buffer containing ZLIB-compressed data.

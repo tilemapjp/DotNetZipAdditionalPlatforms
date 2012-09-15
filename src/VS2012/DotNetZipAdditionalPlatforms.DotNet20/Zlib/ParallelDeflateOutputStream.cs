@@ -21,7 +21,7 @@
     /// </para>
     /// 
     /// <para>
-    /// This class is similar to <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />, except
+    /// This class is similar to <see cref="T:DeflateStream" />, except
     /// that this class is for compression only, and this implementation uses an
     /// approach that employs multiple worker threads to perform the DEFLATE.  On
     /// a multi-cpu or multi-core computer, the performance of this class can be
@@ -44,7 +44,7 @@
     /// </para>
     /// 
     /// </remarks>
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />
+    /// <seealso cref="T:DeflateStream" />
     public class ParallelDeflateOutputStream : Stream
     {
         private int _bufferSize;
@@ -92,7 +92,7 @@
         /// </para>
         /// 
         /// <para>
-        /// This class is similar to <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />,
+        /// This class is similar to <see cref="T:DeflateStream" />,
         /// except that this implementation uses an approach that employs
         /// multiple worker threads to perform the DEFLATE.  On a multi-cpu or
         /// multi-core computer, the performance of this class can be
@@ -154,7 +154,7 @@
         /// Create a ParallelDeflateOutputStream using the specified CompressionLevel.
         /// </summary>
         /// <remarks>
-        /// See the <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
+        /// See the <see cref="M:ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
         /// constructor for example code.
         /// </remarks>
         /// <param name="stream">The stream to which compressed data will be written.</param>
@@ -168,7 +168,7 @@
         /// when the ParallelDeflateOutputStream is closed.
         /// </summary>
         /// <remarks>
-        /// See the <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
+        /// See the <see cref="M:ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
         /// constructor for example code.
         /// </remarks>
         /// <param name="stream">The stream to which compressed data will be written.</param>
@@ -184,7 +184,7 @@
         /// when the ParallelDeflateOutputStream is closed.
         /// </summary>
         /// <remarks>
-        /// See the <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
+        /// See the <see cref="M:ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
         /// constructor for example code.
         /// </remarks>
         /// <param name="stream">The stream to which compressed data will be written.</param>
@@ -203,7 +203,7 @@
         /// closed.
         /// </summary>
         /// <remarks>
-        /// See the <see cref="M:DotNetZipAdditionalPlatforms.Zlib.ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
+        /// See the <see cref="M:ParallelDeflateOutputStream.#ctor(System.IO.Stream)" />
         /// constructor for example code.
         /// </remarks>
         /// <param name="stream">The stream to which compressed data will be written.</param>
@@ -649,7 +649,7 @@
         /// </para>
         /// 
         /// <para>
-        /// To decompress data, use the <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" /> class.
+        /// To decompress data, use the <see cref="T:DeflateStream" /> class.
         /// </para>
         /// 
         /// </remarks>
@@ -741,7 +741,7 @@
         /// more efficient compression. Using smaller buffer sizes consumes less
         /// memory but may result in less effective compression.  For example,
         /// using the default buffer size of 128k, the compression delivered is
-        /// within 1% of the compression delivered by the single-threaded <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />.  On the other hand, using a
+        /// within 1% of the compression delivered by the single-threaded <see cref="T:DeflateStream" />.  On the other hand, using a
         /// BufferSize of 8k can result in a compressed data stream that is 5%
         /// larger than that delivered by the single-threaded
         /// <c>DeflateStream</c>.  Excessively small buffer sizes can also cause
@@ -893,7 +893,7 @@
         /// buffers allocated: one for input and one for output.  This property
         /// sets a limit for the number of pairs.  The total amount of storage
         /// space allocated for buffering will then be (N*S*2), where N is the
-        /// number of buffer pairs, S is the size of each buffer (<see cref="P:DotNetZipAdditionalPlatforms.Zlib.ParallelDeflateOutputStream.BufferSize" />).  By default, DotNetZip allocates 4 buffer
+        /// number of buffer pairs, S is the size of each buffer (<see cref="P:ParallelDeflateOutputStream.BufferSize" />).  By default, DotNetZip allocates 4 buffer
         /// pairs per CPU core, so if your machine has 4 cores, and you retain
         /// the default buffer size of 128k, then the
         /// ParallelDeflateOutputStream will use 4 * 4 * 2 * 128kb of buffer

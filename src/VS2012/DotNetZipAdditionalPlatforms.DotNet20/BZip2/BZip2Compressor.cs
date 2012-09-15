@@ -39,7 +39,7 @@
         /// BZip2Compressor writes its compressed data out via a BitWriter. This
         /// is necessary because BZip2 does byte shredding.
         /// </summary>
-        public BZip2Compressor(BitWriter writer) : this(writer, DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxBlockSize)
+        public BZip2Compressor(BitWriter writer) : this(writer, BZip2.MaxBlockSize)
         {
         }
 
@@ -50,7 +50,7 @@
             this.crc = new CRC32(true);
             this.blockSize100k = blockSize;
             this.bw = writer;
-            this.outBlockFillThreshold = (blockSize * DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple) - 20;
+            this.outBlockFillThreshold = (blockSize * BZip2.BlockSizeMultiple) - 20;
             this.cstate = new CompressionState(blockSize);
             this.Reset();
         }
@@ -270,15 +270,15 @@
             Label_0168:
                 if ((num6 & 1) == 0)
                 {
-                    sfmap[num5] = DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNA;
+                    sfmap[num5] = BZip2.RUNA;
                     num5++;
-                    mtfFreq[DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNA]++;
+                    mtfFreq[BZip2.RUNA]++;
                 }
                 else
                 {
-                    sfmap[num5] = DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNB;
+                    sfmap[num5] = BZip2.RUNB;
                     num5++;
-                    mtfFreq[DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNB]++;
+                    mtfFreq[BZip2.RUNB]++;
                 }
                 if (num6 >= 2)
                 {
@@ -304,15 +304,15 @@
                 {
                     if ((num6 & 1) == 0)
                     {
-                        sfmap[num5] = DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNA;
+                        sfmap[num5] = BZip2.RUNA;
                         num5++;
-                        mtfFreq[DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNA]++;
+                        mtfFreq[BZip2.RUNA]++;
                     }
                     else
                     {
-                        sfmap[num5] = DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNB;
+                        sfmap[num5] = BZip2.RUNB;
                         num5++;
-                        mtfFreq[DotNetZipAdditionalPlatforms.BZip2.BZip2.RUNB]++;
+                        mtfFreq[BZip2.RUNB]++;
                     }
                     if (num6 >= 2)
                     {
@@ -819,11 +819,11 @@
             {
                 ftab[index] = 0;
             }
-            for (index = 0; index < DotNetZipAdditionalPlatforms.BZip2.BZip2.NUM_OVERSHOOT_BYTES; index++)
+            for (index = 0; index < BZip2.NUM_OVERSHOOT_BYTES; index++)
             {
                 block[(last + index) + 2] = block[(index % (last + 1)) + 1];
             }
-            index = (last + DotNetZipAdditionalPlatforms.BZip2.BZip2.NUM_OVERSHOOT_BYTES) + 1;
+            index = (last + BZip2.NUM_OVERSHOOT_BYTES) + 1;
             while (--index >= 0)
             {
                 quadrant[index] = '\0';
@@ -943,7 +943,7 @@
                         int num22 = fmap[num19 + num10];
                         char ch = (char) (num10 >> num21);
                         quadrant[num22] = ch;
-                        if (num22 < DotNetZipAdditionalPlatforms.BZip2.BZip2.NUM_OVERSHOOT_BYTES)
+                        if (num22 < BZip2.NUM_OVERSHOOT_BYTES)
                         {
                             quadrant[(num22 + last) + 1] = ch;
                         }
@@ -1012,7 +1012,7 @@
         {
             byte[][] bufferArray = this.cstate.sendMTFValues_len;
             int alphaSize = this.nInUse + 2;
-            int nGroups = DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups;
+            int nGroups = BZip2.NGroups;
             while (--nGroups >= 0)
             {
                 byte[] buffer = bufferArray[nGroups];
@@ -1088,7 +1088,7 @@
             byte[] buffer7 = bufferArray[5];
             int nMTF = this.nMTF;
             int index = 0;
-            for (int i = 0; i < DotNetZipAdditionalPlatforms.BZip2.BZip2.N_ITERS; i++)
+            for (int i = 0; i < BZip2.N_ITERS; i++)
             {
                 int num5;
                 int num7;
@@ -1107,8 +1107,8 @@
                 for (int j = 0; j < this.nMTF; j = num7 + 1)
                 {
                     int num8;
-                    num7 = Math.Min((int) ((j + DotNetZipAdditionalPlatforms.BZip2.BZip2.G_SIZE) - 1), (int) (nMTF - 1));
-                    if (nGroups == DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups)
+                    num7 = Math.Min((int) ((j + BZip2.G_SIZE) - 1), (int) (nMTF - 1));
+                    if (nGroups == BZip2.NGroups)
                     {
                         int[] numArray5 = new int[6];
                         num5 = j;
@@ -1332,7 +1332,7 @@
             int num3 = 0;
             while (num3 < nMTF)
             {
-                int num4 = Math.Min((int) ((num3 + DotNetZipAdditionalPlatforms.BZip2.BZip2.G_SIZE) - 1), (int) (nMTF - 1));
+                int num4 = Math.Min((int) ((num3 + BZip2.G_SIZE) - 1), (int) (nMTF - 1));
                 int num5 = selector[index] & 0xff;
                 int[] numArray2 = numArray[num5];
                 byte[] buffer2 = bufferArray[num5];
@@ -1450,43 +1450,43 @@
             public int[] fmap;
             public readonly int[] ftab = new int[0x10001];
             public readonly byte[] generateMTFValues_yy = new byte[0x100];
-            public int[] heap = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize + 2];
+            public int[] heap = new int[BZip2.MaxAlphaSize + 2];
             public readonly bool[] inUse = new bool[0x100];
             public readonly bool[] mainSort_bigDone = new bool[0x100];
             public readonly int[] mainSort_copy = new int[0x100];
             public readonly int[] mainSort_runningOrder = new int[0x100];
-            public readonly int[] mtfFreq = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize];
-            public int[] parent = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize * 2];
+            public readonly int[] mtfFreq = new int[BZip2.MaxAlphaSize];
+            public int[] parent = new int[BZip2.MaxAlphaSize * 2];
             /// Array instance identical to sfmap, both are used only
             /// temporarily and independently, so we do not need to allocate
             /// additional memory.
             public char[] quadrant;
-            public readonly byte[] selector = new byte[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxSelectors];
-            public readonly byte[] selectorMtf = new byte[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxSelectors];
+            public readonly byte[] selector = new byte[BZip2.MaxSelectors];
+            public readonly byte[] selectorMtf = new byte[BZip2.MaxSelectors];
             public int[][] sendMTFValues_code;
-            public readonly short[] sendMTFValues_cost = new short[DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups];
-            public readonly int[] sendMTFValues_fave = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups];
+            public readonly short[] sendMTFValues_cost = new short[BZip2.NGroups];
+            public readonly int[] sendMTFValues_fave = new int[BZip2.NGroups];
             public byte[][] sendMTFValues_len;
             public int[][] sendMTFValues_rfreq;
-            public readonly byte[] sendMTFValues2_pos = new byte[DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups];
+            public readonly byte[] sendMTFValues2_pos = new byte[BZip2.NGroups];
             public readonly bool[] sentMTFValues4_inUse16 = new bool[0x10];
             public char[] sfmap;
-            public readonly int[] stack_dd = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.QSORT_STACK_SIZE];
-            public readonly int[] stack_hh = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.QSORT_STACK_SIZE];
-            public readonly int[] stack_ll = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.QSORT_STACK_SIZE];
+            public readonly int[] stack_dd = new int[BZip2.QSORT_STACK_SIZE];
+            public readonly int[] stack_hh = new int[BZip2.QSORT_STACK_SIZE];
+            public readonly int[] stack_ll = new int[BZip2.QSORT_STACK_SIZE];
             public readonly byte[] unseqToSeq = new byte[0x100];
-            public int[] weight = new int[DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize * 2];
+            public int[] weight = new int[BZip2.MaxAlphaSize * 2];
 
             public CompressionState(int blockSize100k)
             {
-                int num = blockSize100k * DotNetZipAdditionalPlatforms.BZip2.BZip2.BlockSizeMultiple;
-                this.block = new byte[(num + 1) + DotNetZipAdditionalPlatforms.BZip2.BZip2.NUM_OVERSHOOT_BYTES];
+                int num = blockSize100k * BZip2.BlockSizeMultiple;
+                this.block = new byte[(num + 1) + BZip2.NUM_OVERSHOOT_BYTES];
                 this.fmap = new int[num];
                 this.sfmap = new char[2 * num];
                 this.quadrant = this.sfmap;
-                this.sendMTFValues_len = DotNetZipAdditionalPlatforms.BZip2.BZip2.InitRectangularArray<byte>(DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups, DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize);
-                this.sendMTFValues_rfreq = DotNetZipAdditionalPlatforms.BZip2.BZip2.InitRectangularArray<int>(DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups, DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize);
-                this.sendMTFValues_code = DotNetZipAdditionalPlatforms.BZip2.BZip2.InitRectangularArray<int>(DotNetZipAdditionalPlatforms.BZip2.BZip2.NGroups, DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxAlphaSize);
+                this.sendMTFValues_len = BZip2.InitRectangularArray<byte>(BZip2.NGroups, BZip2.MaxAlphaSize);
+                this.sendMTFValues_rfreq = BZip2.InitRectangularArray<int>(BZip2.NGroups, BZip2.MaxAlphaSize);
+                this.sendMTFValues_code = BZip2.InitRectangularArray<int>(BZip2.NGroups, BZip2.MaxAlphaSize);
             }
         }
     }

@@ -296,7 +296,7 @@
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Set this at any point before calling <see cref="M:DotNetZipAdditionalPlatforms.Crc.CrcCalculatorStream.Close" />.
+        /// Set this at any point before calling <see cref="M:CrcCalculatorStream.Close" />.
         /// </para>
         /// </remarks>
         public bool LeaveOpen

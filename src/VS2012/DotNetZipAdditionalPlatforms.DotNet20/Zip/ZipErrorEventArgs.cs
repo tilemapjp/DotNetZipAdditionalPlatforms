@@ -7,13 +7,13 @@
     /// </summary>
     public class ZipErrorEventArgs : ZipProgressEventArgs
     {
-        private System.Exception _exc;
+        private Exception _exc;
 
         private ZipErrorEventArgs()
         {
         }
 
-        internal static ZipErrorEventArgs Saving(string archiveName, ZipEntry entry, System.Exception exception)
+        internal static ZipErrorEventArgs Saving(string archiveName, ZipEntry entry, Exception exception)
         {
             ZipErrorEventArgs args2 = new ZipErrorEventArgs();
             args2.EventType = ZipProgressEventType.Error_Saving;
@@ -26,7 +26,7 @@
         /// <summary>
         /// Returns the exception that occurred, if any.
         /// </summary>
-        public System.Exception Exception
+        public Exception Exception
         {
             get
             {

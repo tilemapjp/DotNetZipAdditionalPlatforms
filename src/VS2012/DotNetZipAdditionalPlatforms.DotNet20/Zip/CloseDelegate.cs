@@ -15,11 +15,11 @@
     /// <param name="stream">The stream to be closed.</param>
     /// 
     /// <remarks>
-    /// When you add an entry via <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.OpenDelegate,DotNetZipAdditionalPlatforms.Zip.CloseDelegate)" />, the application code provides the logic that
+    /// When you add an entry via <see cref="M:ZipFile.AddEntry(System.String,OpenDelegate,CloseDelegate)" />, the application code provides the logic that
     /// opens and closes the stream for the given ZipEntry.
     /// </remarks>
     /// 
-    /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.OpenDelegate,DotNetZipAdditionalPlatforms.Zip.CloseDelegate)" />
+    /// <seealso cref="M:ZipFile.AddEntry(System.String,OpenDelegate,CloseDelegate)" />
     public delegate void CloseDelegate(string entryName, Stream stream);
 }
 

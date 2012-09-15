@@ -291,7 +291,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// If true, and if there is a <see cref="P:DotNetZipAdditionalPlatforms.Zip.SelfExtractorSaveOptions.PostExtractCommandLine">
+        /// If true, and if there is a <see cref="P:SelfExtractorSaveOptions.PostExtractCommandLine">
         /// PostExtractCommandLine</see>, and if the command runs successfully,
         /// then the files that the SFX unpacked will be removed, afterwards.  If
         /// the command does not complete successfully (non-zero return code),

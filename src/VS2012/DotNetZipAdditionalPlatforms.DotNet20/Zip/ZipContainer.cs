@@ -7,14 +7,14 @@
 
     internal class ZipContainer
     {
-        private DotNetZipAdditionalPlatforms.Zip.ZipFile _zf;
+        private ZipFile _zf;
         private ZipInputStream _zis;
-        private DotNetZipAdditionalPlatforms.Zip.ZipOutputStream _zos;
+        private ZipOutputStream _zos;
 
         public ZipContainer(object o)
         {
-            this._zf = o as DotNetZipAdditionalPlatforms.Zip.ZipFile;
-            this._zos = o as DotNetZipAdditionalPlatforms.Zip.ZipOutputStream;
+            this._zf = o as ZipFile;
+            this._zos = o as ZipOutputStream;
             this._zis = o as ZipInputStream;
         }
 
@@ -88,11 +88,11 @@
             {
                 if (this._zf != null)
                 {
-                    return DotNetZipAdditionalPlatforms.Zip.ZipFile.DefaultEncoding;
+                    return ZipFile.DefaultEncoding;
                 }
                 if (this._zos != null)
                 {
-                    return DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.DefaultEncoding;
+                    return ZipOutputStream.DefaultEncoding;
                 }
                 return null;
             }
@@ -233,7 +233,7 @@
             }
         }
 
-        public DotNetZipAdditionalPlatforms.Zip.ZipFile ZipFile
+        public ZipFile ZipFile
         {
             get
             {
@@ -241,7 +241,7 @@
             }
         }
 
-        public DotNetZipAdditionalPlatforms.Zip.ZipOutputStream ZipOutputStream
+        public ZipOutputStream ZipOutputStream
         {
             get
             {

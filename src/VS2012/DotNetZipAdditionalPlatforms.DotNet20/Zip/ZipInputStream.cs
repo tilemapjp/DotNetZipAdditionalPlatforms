@@ -14,8 +14,8 @@
     /// <remarks>
     /// <para>
     /// This class provides an alternative programming model for reading zip files to
-    /// the one enabled by the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class.  Use this when reading zip
-    /// files, as an alternative to the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class, when you would
+    /// the one enabled by the <see cref="T:ZipFile" /> class.  Use this when reading zip
+    /// files, as an alternative to the <see cref="T:ZipFile" /> class, when you would
     /// like to use a Stream class to read the file.
     /// </para>
     /// 
@@ -33,7 +33,7 @@
     /// <c>ZipInputStream</c> class, the caller is responsible for creating the file,
     /// writing the bytes into the file, setting the attributes on the file, and
     /// setting the created, last modified, and last accessed timestamps on the
-    /// file. All of these things are done automatically by a call to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Extract">ZipEntry.Extract()</see>.  For this reason, the
+    /// file. All of these things are done automatically by a call to <see cref="M:ZipEntry.Extract">ZipEntry.Extract()</see>.  For this reason, the
     /// <c>ZipInputStream</c> is generally recommended for when your application wants
     /// to extract the data, without storing that data into a file.
     /// </para>
@@ -49,7 +49,7 @@
     /// <c>ZipFile</c> can be used to create or update zip files, or read and
     /// extract zip files. <c>ZipInputStream</c> can be used only to read and
     /// extract zip files. If you want to use a stream to create zip files, check
-    /// out the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream" />.
+    /// out the <see cref="T:ZipOutputStream" />.
     /// </item>
     /// 
     /// <item>
@@ -96,7 +96,7 @@
         /// <remarks>
         /// 
         /// <para>
-        /// While the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class is generally easier
+        /// While the <see cref="T:ZipFile" /> class is generally easier
         /// to use, this class provides an alternative to those
         /// applications that want to read from a zipfile directly,
         /// using a <see cref="T:System.IO.Stream" />.
@@ -111,7 +111,7 @@
         /// <c>ZipInputStream</c> class, the caller is responsible for creating the file,
         /// writing the bytes into the file, setting the attributes on the file, and
         /// setting the created, last modified, and last accessed timestamps on the
-        /// file. All of these things are done automatically by a call to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Extract">ZipEntry.Extract()</see>.  For this reason, the
+        /// file. All of these things are done automatically by a call to <see cref="M:ZipEntry.Extract">ZipEntry.Extract()</see>.  For this reason, the
         /// <c>ZipInputStream</c> is generally recommended for when your application wants
         /// to extract the data, without storing that data into a file.
         /// </para>
@@ -126,7 +126,7 @@
         /// <item>
         /// <c>ZipFile</c> can be used to create or update zip files, or read and extract
         /// zip files. <c>ZipInputStream</c> can be used only to read and extract zip
-        /// files. If you want to use a stream to create zip files, check out the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream" />.
+        /// files. If you want to use a stream to create zip files, check out the <see cref="T:ZipOutputStream" />.
         /// </item>
         /// 
         /// <item>
@@ -223,11 +223,11 @@
         /// <para>
         /// This constructor opens a <c>FileStream</c> for the given zipfile, and
         /// wraps a <c>ZipInputStream</c> around that.  See the documentation for the
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.#ctor(System.IO.Stream)" /> constructor for full details.
+        /// <see cref="M:ZipInputStream.#ctor(System.IO.Stream)" /> constructor for full details.
         /// </para>
         /// 
         /// <para>
-        /// While the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class is generally easier
+        /// While the <see cref="T:ZipFile" /> class is generally easier
         /// to use, this class provides an alternative to those
         /// applications that want to read from a zipfile directly,
         /// using a <see cref="T:System.IO.Stream" />.
@@ -302,7 +302,7 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// See the documentation for the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.#ctor(System.IO.Stream)">ZipInputStream(Stream)</see>
+        /// See the documentation for the <see cref="M:ZipInputStream.#ctor(System.IO.Stream)">ZipInputStream(Stream)</see>
         /// constructor for a discussion of the class, and an example of how to use the class.
         /// </remarks>
         /// 
@@ -397,7 +397,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// Call this method just before calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.Read(System.Byte[],System.Int32,System.Int32)" />,
+        /// Call this method just before calling <see cref="M:ZipInputStream.Read(System.Byte[],System.Int32,System.Int32)" />,
         /// to position the pointer in the zip file to the next entry that can be
         /// read.  Subsequent calls to <c>Read()</c>, will decrypt and decompress the
         /// data in the zip file, until <c>Read()</c> returns 0.
@@ -405,7 +405,7 @@
         /// 
         /// <para>
         /// Each time you call <c>GetNextEntry()</c>, the pointer in the wrapped
-        /// stream is moved to the next entry in the zip file.  If you call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.Seek(System.Int64,System.IO.SeekOrigin)" />, and thus re-position the pointer within
+        /// stream is moved to the next entry in the zip file.  If you call <see cref="M:ZipInputStream.Seek(System.Int64,System.IO.SeekOrigin)" />, and thus re-position the pointer within
         /// the file, you will need to call <c>GetNextEntry()</c> again, to insure
         /// that the file pointer is positioned at the beginning of a zip entry.
         /// </para>
@@ -414,7 +414,7 @@
         /// This method returns the <c>ZipEntry</c>. Using a stream approach, you will
         /// read the raw bytes for an entry in a zip file via calls to <c>Read()</c>.
         /// Alternatively, you can extract an entry into a file, or a stream, by
-        /// calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Extract" />, or one of its siblings.
+        /// calling <see cref="M:ZipEntry.Extract" />, or one of its siblings.
         /// </para>
         /// 
         /// </remarks>
@@ -456,9 +456,9 @@
         /// </para>
         /// 
         /// <para>
-        /// You must set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.Password" /> property before calling
+        /// You must set the <see cref="P:ZipInputStream.Password" /> property before calling
         /// <c>Read()</c> the first time for an encrypted entry.  To determine if an
-        /// entry is encrypted and requires a password, check the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Encryption">ZipEntry.Encryption</see> property.
+        /// entry is encrypted and requires a password, check the <see cref="P:ZipEntry.Encryption">ZipEntry.Encryption</see> property.
         /// </para>
         /// </remarks>
         /// 
@@ -503,7 +503,7 @@
         /// </para>
         /// 
         /// <para>
-        /// Applications can intermix calls to <c>Seek()</c> with calls to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipInputStream.GetNextEntry" />.  After a call to <c>Seek()</c>,
+        /// Applications can intermix calls to <c>Seek()</c> with calls to <see cref="M:ZipInputStream.GetNextEntry" />.  After a call to <c>Seek()</c>,
         /// <c>GetNextEntry()</c> will get the next <c>ZipEntry</c> that falls after
         /// the current position in the input stream. You're on your own for finding
         /// out just where to seek in the stream, to get to the various entries.

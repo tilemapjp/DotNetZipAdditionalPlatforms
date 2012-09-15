@@ -24,7 +24,7 @@
     /// </para>
     /// 
     /// <para>
-    /// This class is similar to <see cref="T:DotNetZipAdditionalPlatforms.Zlib.ZlibStream" />, except that
+    /// This class is similar to <see cref="T:ZlibStream" />, except that
     /// <c>ZlibStream</c> adds the <see href="http://www.ietf.org/rfc/rfc1950.txt">RFC
     /// 1950 - ZLIB</see> framing bytes to a compressed stream when compressing, or
     /// expects the RFC1950 framing bytes when decompressing. The <c>DeflateStream</c>
@@ -33,8 +33,8 @@
     /// 
     /// </remarks>
     /// 
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.ZlibStream" />
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.GZipStream" />
+    /// <seealso cref="T:ZlibStream" />
+    /// <seealso cref="T:GZipStream" />
     public class DeflateStream : Stream
     {
         internal ZlibBaseStream _baseStream;
@@ -284,13 +284,13 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressBuffer(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:DeflateStream.UncompressBuffer(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.CompressString(System.String)">DeflateStream.CompressString(string)</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressBuffer(System.Byte[])">DeflateStream.UncompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressBuffer(System.Byte[])">GZipStream.CompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressBuffer(System.Byte[])">ZlibStream.CompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:DeflateStream.CompressString(System.String)">DeflateStream.CompressString(string)</seealso>
+        /// <seealso cref="M:DeflateStream.UncompressBuffer(System.Byte[])">DeflateStream.UncompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:GZipStream.CompressBuffer(System.Byte[])">GZipStream.CompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:ZlibStream.CompressBuffer(System.Byte[])">ZlibStream.CompressBuffer(byte[])</seealso>
         /// 
         /// <param name="b">
         /// A buffer to compress.
@@ -312,13 +312,13 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressString(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:DeflateStream.UncompressString(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressString(System.Byte[])">DeflateStream.UncompressString(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.CompressBuffer(System.Byte[])">DeflateStream.CompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressString(System.String)">GZipStream.CompressString(string)</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.CompressString(System.String)">ZlibStream.CompressString(string)</seealso>
+        /// <seealso cref="M:DeflateStream.UncompressString(System.Byte[])">DeflateStream.UncompressString(byte[])</seealso>
+        /// <seealso cref="M:DeflateStream.CompressBuffer(System.Byte[])">DeflateStream.CompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:GZipStream.CompressString(System.String)">GZipStream.CompressString(string)</seealso>
+        /// <seealso cref="M:ZlibStream.CompressString(System.String)">ZlibStream.CompressString(string)</seealso>
         /// 
         /// <param name="s">
         /// A string to compress. The string will first be encoded
@@ -450,10 +450,10 @@
         /// Uncompress a DEFLATE'd byte array into a byte array.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.CompressBuffer(System.Byte[])">DeflateStream.CompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressString(System.Byte[])">DeflateStream.UncompressString(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressBuffer(System.Byte[])">GZipStream.UncompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressBuffer(System.Byte[])">ZlibStream.UncompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:DeflateStream.CompressBuffer(System.Byte[])">DeflateStream.CompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:DeflateStream.UncompressString(System.Byte[])">DeflateStream.UncompressString(byte[])</seealso>
+        /// <seealso cref="M:GZipStream.UncompressBuffer(System.Byte[])">GZipStream.UncompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:ZlibStream.UncompressBuffer(System.Byte[])">ZlibStream.UncompressBuffer(byte[])</seealso>
         /// 
         /// <param name="compressed">
         /// A buffer containing data that has been compressed with DEFLATE.
@@ -473,10 +473,10 @@
         /// Uncompress a DEFLATE'd byte array into a single string.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.CompressString(System.String)">DeflateStream.CompressString(String)</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.DeflateStream.UncompressBuffer(System.Byte[])">DeflateStream.UncompressBuffer(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressString(System.Byte[])">GZipStream.UncompressString(byte[])</seealso>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.ZlibStream.UncompressString(System.Byte[])">ZlibStream.UncompressString(byte[])</seealso>
+        /// <seealso cref="M:DeflateStream.CompressString(System.String)">DeflateStream.CompressString(String)</seealso>
+        /// <seealso cref="M:DeflateStream.UncompressBuffer(System.Byte[])">DeflateStream.UncompressBuffer(byte[])</seealso>
+        /// <seealso cref="M:GZipStream.UncompressString(System.Byte[])">GZipStream.UncompressString(byte[])</seealso>
+        /// <seealso cref="M:ZlibStream.UncompressString(System.Byte[])">ZlibStream.UncompressString(byte[])</seealso>
         /// 
         /// <param name="compressed">
         /// A buffer containing DEFLATE-compressed data.

@@ -20,8 +20,8 @@
     /// 
     /// <para>
     /// The FileSelector class is used internally by the ZipFile class for selecting
-    /// files for inclusion into the ZipFile, when the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String)" /> method, or one of
-    /// its overloads, is called.  It's also used for the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractSelectedEntries(System.String)" /> methods.  Typically, an
+    /// files for inclusion into the ZipFile, when the <see cref="M:ZipFile.AddSelectedFiles(System.String,System.String)" /> method, or one of
+    /// its overloads, is called.  It's also used for the <see cref="M:ZipFile.ExtractSelectedEntries(System.String)" /> methods.  Typically, an
     /// application that creates or manipulates Zip archives will not directly
     /// interact with the FileSelector class.
     /// </para>

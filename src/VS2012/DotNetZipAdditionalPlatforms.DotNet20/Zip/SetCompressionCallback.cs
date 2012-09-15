@@ -17,7 +17,7 @@
     /// on any other factor.
     /// </para>
     /// </remarks>
-    /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />
+    /// <seealso cref="P:ZipFile.SetCompression" />
     public delegate CompressionLevel SetCompressionCallback(string localFileName, string fileNameInArchive);
 }
 

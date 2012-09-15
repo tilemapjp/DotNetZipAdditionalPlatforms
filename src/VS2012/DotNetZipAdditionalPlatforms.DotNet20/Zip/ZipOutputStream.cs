@@ -23,8 +23,8 @@
     /// 
     /// <para>
     /// This class provides an alternative programming model to the one enabled by the
-    /// <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class. Use this when creating zip files, as an
-    /// alternative to the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class, when you would like to use a
+    /// <see cref="T:ZipFile" /> class. Use this when creating zip files, as an
+    /// alternative to the <see cref="T:ZipFile" /> class, when you would like to use a
     /// <c>Stream</c> type to write the zip file.
     /// </para>
     /// 
@@ -44,7 +44,7 @@
     /// those bytes into the <c>ZipOutputStream</c>, setting the attributes on the
     /// <c>ZipEntry</c>, and setting the created, last modified, and last accessed
     /// timestamps on the zip entry. All of these things are done automatically by a
-    /// call to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String,System.String)">ZipFile.AddFile()</see>.
+    /// call to <see cref="M:ZipFile.AddFile(System.String,System.String)">ZipFile.AddFile()</see>.
     /// For this reason, the <c>ZipOutputStream</c> is generally recommended for use
     /// only when your application emits arbitrary data, not necessarily data from a
     /// filesystem file, directly into a zip file, and does so using a <c>Stream</c>
@@ -60,7 +60,7 @@
     /// <item>
     /// <c>ZipFile</c> can be used to read and extract zip files, in addition to
     /// creating zip files. <c>ZipOutputStream</c> cannot read zip files. If you want
-    /// to use a stream to read zip files, check out the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipInputStream" /> class.
+    /// to use a stream to read zip files, check out the <see cref="T:ZipInputStream" /> class.
     /// </item>
     /// 
     /// <item>
@@ -89,7 +89,7 @@
     /// approach incurs a performance hit on smaller files. There's no way for the
     /// ZipOutputStream to know whether parallel compression will be beneficial,
     /// because the ZipOutputStream does not know how much data you will write
-    /// through the stream.  You may wish to set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.ParallelDeflateThreshold" /> property to zero, if you are compressing
+    /// through the stream.  You may wish to set the <see cref="P:ZipOutputStream.ParallelDeflateThreshold" /> property to zero, if you are compressing
     /// large files through <c>ZipOutputStream</c>.  This will cause parallel
     /// compression to be used, always.
     /// </para>
@@ -129,7 +129,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// The <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class is generally easier to use when creating
+        /// The <see cref="T:ZipFile" /> class is generally easier to use when creating
         /// zip files. The ZipOutputStream offers a different metaphor for creating a
         /// zip file, based on the <see cref="T:System.IO.Stream" /> class.
         /// </para>
@@ -220,7 +220,7 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// The <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipFile" /> class is generally easier to use when creating
+        /// The <see cref="T:ZipFile" /> class is generally easier to use when creating
         /// zip files. The ZipOutputStream offers a different metaphor for creating a
         /// zip file, based on the <see cref="T:System.IO.Stream" /> class.
         /// </remarks>
@@ -309,7 +309,7 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// See the documentation for the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.#ctor(System.IO.Stream)">ZipOutputStream(Stream)</see>
+        /// See the documentation for the <see cref="M:ZipOutputStream.#ctor(System.IO.Stream)">ZipOutputStream(Stream)</see>
         /// constructor for an example.
         /// </remarks>
         /// 
@@ -352,8 +352,8 @@
         private void _Init(Stream stream, bool leaveOpen, string name)
         {
             this._outputStream = stream.CanRead ? stream : new CountingStream(stream);
-            this.CompressionLevel = DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.Default;
-            this.CompressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this.CompressionLevel = CompressionLevel.Default;
+            this.CompressionMethod = CompressionMethod.Deflate;
             this._encryption = EncryptionAlgorithm.None;
             this._entriesWritten = new Dictionary<string, ZipEntry>(StringComparer.Ordinal);
             this._zip64 = Zip64Option.Default;
@@ -468,7 +468,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// Call this method just before calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Write(System.Byte[],System.Int32,System.Int32)" />, to
+        /// Call this method just before calling <see cref="M:ZipOutputStream.Write(System.Byte[],System.Int32,System.Int32)" />, to
         /// specify the name of the entry that the next set of bytes written to
         /// the <c>ZipOutputStream</c> belongs to. All subsequent calls to <c>Write</c>,
         /// until the next call to <c>PutNextEntry</c>,
@@ -496,7 +496,7 @@
         /// 
         /// <para>
         /// This method returns the <c>ZipEntry</c>.  You can modify public properties
-        /// on the <c>ZipEntry</c>, such as <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Password" />, and so on, until the first call to
+        /// on the <c>ZipEntry</c>, such as <see cref="P:ZipEntry.Encryption" />, <see cref="P:ZipEntry.Password" />, and so on, until the first call to
         /// <c>ZipOutputStream.Write()</c>, or until the next call to
         /// <c>PutNextEntry()</c>.  If you modify the <c>ZipEntry</c> <em>after</em>
         /// having called <c>Write()</c>, you may get a runtime exception, or you may
@@ -624,8 +624,8 @@
         /// <remarks>
         /// As the application writes data into this stream, the data may be
         /// compressed and encrypted before being written out to the underlying
-        /// stream, depending on the settings of the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.CompressionLevel" />
-        /// and the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Encryption" /> properties.
+        /// stream, depending on the settings of the <see cref="P:ZipOutputStream.CompressionLevel" />
+        /// and the <see cref="P:ZipOutputStream.Encryption" /> properties.
         /// </remarks>
         /// 
         /// <param name="buffer">The buffer holding data to write to the stream.</param>
@@ -670,7 +670,7 @@
         /// <remarks>
         /// <para>
         /// Whether the encoding specified here is used during the save depends
-        /// on <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.AlternateEncodingUsage" />.
+        /// on <see cref="P:ZipOutputStream.AlternateEncodingUsage" />.
         /// </para>
         /// </remarks>
         public Encoding AlternateEncoding
@@ -772,9 +772,9 @@
         /// Comment to be encoded with something else, for example using code page
         /// 950 "Big-5 Chinese". To fill that need, DotNetZip will encode the
         /// comment following the same procedure it follows for encoding
-        /// filenames: (a) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.AlternateEncodingUsage" /> is
-        /// <c>Never</c>, it uses the default encoding (IBM437). (b) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.AlternateEncodingUsage" /> is <c>Always</c>, it always uses the
-        /// alternate encoding (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.AlternateEncoding" />). (c) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.AlternateEncodingUsage" /> is <c>AsNecessary</c>, it uses the
+        /// filenames: (a) if <see cref="P:ZipOutputStream.AlternateEncodingUsage" /> is
+        /// <c>Never</c>, it uses the default encoding (IBM437). (b) if <see cref="P:ZipOutputStream.AlternateEncodingUsage" /> is <c>Always</c>, it always uses the
+        /// alternate encoding (<see cref="P:ZipOutputStream.AlternateEncoding" />). (c) if <see cref="P:ZipOutputStream.AlternateEncodingUsage" /> is <c>AsNecessary</c>, it uses the
         /// alternate encoding only if the default encoding is not sufficient for
         /// encoding the comment - in other words if decoding the result does not
         /// produce the original string.  This decision is taken at the time of
@@ -812,10 +812,10 @@
         /// </para>
         /// 
         /// <para>
-        /// As with some other properties on the <c>ZipOutputStream</c> class, like <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Password" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Encryption" />,
+        /// As with some other properties on the <c>ZipOutputStream</c> class, like <see cref="P:ZipOutputStream.Password" />, and <see cref="P:ZipOutputStream.Encryption" />,
         /// setting this property on a <c>ZipOutputStream</c>
         /// instance will cause the specified <c>CompressionLevel</c> to be used on all
-        /// <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> items that are subsequently added to the
+        /// <see cref="T:ZipEntry" /> items that are subsequently added to the
         /// <c>ZipOutputStream</c> instance.
         /// </para>
         /// 
@@ -829,18 +829,18 @@
         /// alone, and accept the default.
         /// </para>
         /// </remarks>
-        public DotNetZipAdditionalPlatforms.Zlib.CompressionLevel CompressionLevel { get; set; }
+        public CompressionLevel CompressionLevel { get; set; }
 
         /// <summary>
         /// The compression method used on each entry added to the ZipOutputStream.
         /// </summary>
-        public DotNetZipAdditionalPlatforms.Zip.CompressionMethod CompressionMethod { get; set; }
+        public CompressionMethod CompressionMethod { get; set; }
 
         /// <summary>
         /// The default text encoding used in zip archives.  It is numeric 437, also
         /// known as IBM437.
         /// </summary>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />
+        /// <seealso cref="P:ZipFile.ProvisionalAlternateEncoding" />
         public static Encoding DefaultEncoding
         {
             get
@@ -855,7 +855,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// The default value for the property is <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Never" />. <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> is
+        /// The default value for the property is <see cref="F:Zip64Option.Never" />. <see cref="F:Zip64Option.AsNecessary" /> is
         /// safest, in the sense that you will not get an Exception if a
         /// pre-ZIP64 limit is exceeded.
         /// </para>
@@ -895,14 +895,14 @@
         /// <para>
         /// If you set this to something other than
         /// EncryptionAlgorithm.None, you will also need to set the
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Password" /> to a non-null, non-empty value in
+        /// <see cref="P:ZipOutputStream.Password" /> to a non-null, non-empty value in
         /// order to actually get encryption on the entry.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Password">ZipOutputStream.Password</seealso>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Encryption">ZipEntry.Encryption</seealso>
+        /// <seealso cref="P:ZipOutputStream.Password">ZipOutputStream.Password</seealso>
+        /// <seealso cref="P:ZipEntry.Encryption">ZipEntry.Encryption</seealso>
         public EncryptionAlgorithm Encryption
         {
             get
@@ -935,7 +935,7 @@
         /// Though the zip specification doesn't prohibit zipfiles with duplicate
         /// entries, Sane zip files have no duplicates, and the DotNetZip library
         /// cannot create zip files with duplicate entries. If an application attempts
-        /// to call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.PutNextEntry(System.String)" /> with a name that duplicates one
+        /// to call <see cref="M:ZipOutputStream.PutNextEntry(System.String)" /> with a name that duplicates one
         /// already used within the archive, the library will throw an Exception.
         /// </para>
         /// <para>
@@ -1032,7 +1032,7 @@
         /// buffers allocated: one for input and one for output.  This property
         /// sets a limit for the number of pairs.  The total amount of storage
         /// space allocated for buffering will then be (N*S*2), where N is the
-        /// number of buffer pairs, S is the size of each buffer (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.CodecBufferSize" />).  By default, DotNetZip allocates 4 buffer
+        /// number of buffer pairs, S is the size of each buffer (<see cref="P:ZipOutputStream.CodecBufferSize" />).  By default, DotNetZip allocates 4 buffer
         /// pairs per CPU core, so if your machine has 4 cores, and you retain
         /// the default buffer size of 128k, then the
         /// ParallelDeflateOutputStream will use 4 * 4 * 2 * 128kb of buffer
@@ -1071,7 +1071,7 @@
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.ParallelDeflateThreshold" />
+        /// <seealso cref="P:ZipOutputStream.ParallelDeflateThreshold" />
         public int ParallelDeflateMaxBufferPairs
         {
             get
@@ -1135,7 +1135,7 @@
         /// Multi-threaded compression does not give as much an advantage when using
         /// Encryption. This is primarily because encryption tends to slow down
         /// the entire pipeline. Also, multi-threaded compression gives less of an
-        /// advantage when using lower compression levels, for example <see cref="F:DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.BestSpeed" />.  You may have to perform
+        /// advantage when using lower compression levels, for example <see cref="F:CompressionLevel.BestSpeed" />.  You may have to perform
         /// some tests to determine the best approach for your situation.
         /// </para>
         /// 
@@ -1193,9 +1193,9 @@
         /// </para>
         /// 
         /// <para>
-        /// When setting the <c>Password</c>, you may also want to explicitly set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Encryption" /> property, to specify how to encrypt the entries added
+        /// When setting the <c>Password</c>, you may also want to explicitly set the <see cref="P:ZipOutputStream.Encryption" /> property, to specify how to encrypt the entries added
         /// to the ZipFile.  If you set the <c>Password</c> to a non-null value and do not
-        /// set <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream.Encryption" />, then PKZip 2.0 ("Weak") encryption is used.
+        /// set <see cref="P:ZipOutputStream.Encryption" />, then PKZip 2.0 ("Weak") encryption is used.
         /// This encryption is relatively weak but is very interoperable. If
         /// you set the password to a <c>null</c> value (<c>Nothing</c> in VB),
         /// <c>Encryption</c> is reset to None.
@@ -1254,7 +1254,7 @@
         /// data for the entries in the zip archive. Different compression strategies
         /// work better on different sorts of data. The strategy parameter can affect
         /// the compression ratio and the speed of compression but not the correctness
-        /// of the compresssion.  For more information see <see cref="T:DotNetZipAdditionalPlatforms.Zlib.CompressionStrategy" />.
+        /// of the compresssion.  For more information see <see cref="T:CompressionStrategy" />.
         /// </remarks>
         public CompressionStrategy Strategy { get; set; }
 

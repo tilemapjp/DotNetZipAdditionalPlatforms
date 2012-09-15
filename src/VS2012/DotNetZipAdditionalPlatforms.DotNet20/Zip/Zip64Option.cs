@@ -24,7 +24,7 @@
     /// </para>
     /// 
     /// <para>
-    /// Set this property to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Always" /> to always use ZIP64
+    /// Set this property to <see cref="F:Zip64Option.Always" /> to always use ZIP64
     /// extensions when saving, regardless of whether your zip archive needs it.
     /// Suppose you add 5 files, each under 100k, to a ZipFile. If you specify Always
     /// for this flag, you will get a ZIP64 archive, though the archive does not need
@@ -32,19 +32,19 @@
     /// </para>
     /// 
     /// <para>
-    /// Set this property to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Never" /> to tell the DotNetZip
+    /// Set this property to <see cref="F:Zip64Option.Never" /> to tell the DotNetZip
     /// library to never use ZIP64 extensions.  This is useful for maximum
     /// compatibility and interoperability, at the expense of the capability of
     /// handling large files or large archives.  NB: Windows Explorer in Windows XP
     /// and Windows Vista cannot currently extract files from a zip64 archive, so if
     /// you want to guarantee that a zip archive produced by this library will work in
-    /// Windows Explorer, use <c>Never</c>. If you set this property to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Never" />, and your application creates a zip that would
+    /// Windows Explorer, use <c>Never</c>. If you set this property to <see cref="F:Zip64Option.Never" />, and your application creates a zip that would
     /// exceed one of the Zip limits, the library will throw an exception while saving
     /// the zip file.
     /// </para>
     /// 
     /// <para>
-    /// Set this property to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> to tell the
+    /// Set this property to <see cref="F:Zip64Option.AsNecessary" /> to tell the
     /// DotNetZip library to use the ZIP64 extensions when required by the
     /// entry. After the file is compressed, the original and compressed sizes are
     /// checked, and if they exceed the limits described above, then zip64 can be
@@ -59,8 +59,8 @@
     /// non-seekable output stream, the library cannot seek backward, so the header
     /// can never be changed. In other words, the archive's use of ZIP64 extensions is
     /// not alterable after the header is emitted.  Therefore, when saving to
-    /// non-seekable streams, using <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> is the same
-    /// as using <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Always" />: it will always produce a zip
+    /// non-seekable streams, using <see cref="F:Zip64Option.AsNecessary" /> is the same
+    /// as using <see cref="F:Zip64Option.Always" />: it will always produce a zip
     /// archive that uses ZIP64 extensions.
     /// </para>
     /// 

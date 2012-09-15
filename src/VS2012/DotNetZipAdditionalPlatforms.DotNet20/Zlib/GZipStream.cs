@@ -18,7 +18,7 @@
     /// 
     /// <para>
     /// Like the <c>System.IO.Compression.GZipStream</c> in the .NET Base Class Library, the
-    /// <c>DotNetZipAdditionalPlatforms.Zlib.GZipStream</c> can compress while writing, or decompress while
+    /// <c>GZipStream</c> can compress while writing, or decompress while
     /// reading, but not vice versa.  The compression method used is GZIP, which is
     /// documented in <see href="http://www.ietf.org/rfc/rfc1952.txt">IETF RFC
     /// 1952</see>, "GZIP file format specification version 4.3".</para>
@@ -44,15 +44,15 @@
     /// </para>
     /// 
     /// <para>
-    /// This class is similar to <see cref="T:DotNetZipAdditionalPlatforms.Zlib.ZlibStream" /> and <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />.
-    /// <c>ZlibStream</c> handles RFC1950-compliant streams.  <see cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />
+    /// This class is similar to <see cref="T:ZlibStream" /> and <see cref="T:DeflateStream" />.
+    /// <c>ZlibStream</c> handles RFC1950-compliant streams.  <see cref="T:DeflateStream" />
     /// handles RFC1951-compliant streams. This class handles RFC1952-compliant streams.
     /// </para>
     /// 
     /// </remarks>
     /// 
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.DeflateStream" />
-    /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zlib.ZlibStream" />
+    /// <seealso cref="T:DeflateStream" />
+    /// <seealso cref="T:ZlibStream" />
     public class GZipStream : Stream
     {
         internal ZlibBaseStream _baseStream;
@@ -146,7 +146,7 @@
         /// int n= 1;
         /// using (System.IO.Stream input = System.IO.File.OpenRead(filename))
         /// {
-        /// using (Stream decompressor= new DotNetZipAdditionalPlatforms.Zlib.GZipStream(input, CompressionMode.Decompress, true))
+        /// using (Stream decompressor= new GZipStream(input, CompressionMode.Decompress, true))
         /// {
         /// using (var output = System.IO.File.Create(DecompressedFile))
         /// {
@@ -173,7 +173,7 @@
         /// Dim working(WORKING_BUFFER_SIZE) as Byte
         /// Dim n As Integer = 1
         /// Using input As Stream = File.OpenRead(filename)
-        /// Using decompressor As Stream = new DotNetZipAdditionalPlatforms.Zlib.GZipStream(input, CompressionMode.Decompress, True)
+        /// Using decompressor As Stream = new GZipStream(input, CompressionMode.Decompress, True)
         /// Using output As Stream = File.Create(UncompressedFile)
         /// Do
         /// n= decompressor.Read(working, 0, working.Length)
@@ -276,7 +276,7 @@
         /// </para>
         /// 
         /// <para>
-        /// The <see cref="T:DotNetZipAdditionalPlatforms.Zlib.CompressionMode" /> (Compress or Decompress) also
+        /// The <see cref="T:CompressionMode" /> (Compress or Decompress) also
         /// establishes the "direction" of the stream.  A <c>GZipStream</c> with
         /// <c>CompressionMode.Compress</c> works only through <c>Write()</c>.  A <c>GZipStream</c>
         /// with <c>CompressionMode.Decompress</c> works only through <c>Read()</c>.
@@ -284,7 +284,7 @@
         /// 
         /// <para>
         /// The <c>GZipStream</c> will use the default compression level. If you want
-        /// to specify the compression level, see <see cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.#ctor(System.IO.Stream,DotNetZipAdditionalPlatforms.Zlib.CompressionMode,DotNetZipAdditionalPlatforms.Zlib.CompressionLevel,System.Boolean)" />.
+        /// to specify the compression level, see <see cref="M:GZipStream.#ctor(System.IO.Stream,CompressionMode,CompressionLevel,System.Boolean)" />.
         /// </para>
         /// 
         /// <para>
@@ -388,11 +388,11 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressBuffer(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:GZipStream.UncompressBuffer(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressString(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.CompressString(System.String)" />
+        /// <seealso cref="M:GZipStream.UncompressBuffer(System.Byte[])" />
         /// 
         /// <param name="b">
         /// A buffer to compress.
@@ -414,11 +414,11 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Uncompress it with <see cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressString(System.Byte[])" />.
+        /// Uncompress it with <see cref="M:GZipStream.UncompressString(System.Byte[])" />.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressString(System.Byte[])" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.UncompressString(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.CompressBuffer(System.Byte[])" />
         /// 
         /// <param name="s">
         /// A string to compress. The string will first be encoded
@@ -552,7 +552,7 @@
         /// byte[] working = new byte[WORKING_BUFFER_SIZE];
         /// using (System.IO.Stream input = System.IO.File.OpenRead(_CompressedFile))
         /// {
-        /// using (Stream decompressor= new DotNetZipAdditionalPlatforms.Zlib.GZipStream(input, CompressionMode.Decompress, true))
+        /// using (Stream decompressor= new GZipStream(input, CompressionMode.Decompress, true))
         /// {
         /// using (var output = System.IO.File.Create(_DecompressedFile))
         /// {
@@ -610,8 +610,8 @@
         /// Uncompress a GZip'ed byte array into a byte array.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressBuffer(System.Byte[])" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressString(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.CompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.UncompressString(System.Byte[])" />
         /// 
         /// <param name="compressed">
         /// A buffer containing data that has been compressed with GZip.
@@ -631,8 +631,8 @@
         /// Uncompress a GZip'ed byte array into a single string.
         /// </summary>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.CompressString(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zlib.GZipStream.UncompressBuffer(System.Byte[])" />
+        /// <seealso cref="M:GZipStream.CompressString(System.String)" />
+        /// <seealso cref="M:GZipStream.UncompressBuffer(System.Byte[])" />
         /// 
         /// <param name="compressed">
         /// A buffer containing GZIP-compressed data.

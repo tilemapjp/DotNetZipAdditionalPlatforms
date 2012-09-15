@@ -23,8 +23,8 @@
     /// <c>ZipFile.Read()</c> method.
     /// </para>
     /// 
-    /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String,DotNetZipAdditionalPlatforms.Zip.ReadOptions)" />.
-    /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.IO.Stream,DotNetZipAdditionalPlatforms.Zip.ReadOptions)" />.
+    /// <seealso cref="M:ZipFile.Read(System.String,ReadOptions)" />.
+    /// <seealso cref="M:ZipFile.Read(System.IO.Stream,ReadOptions)" />.
     /// </remarks>
     public class ReadOptions
     {
@@ -35,8 +35,8 @@
         /// different archiver) you will get unexpected results and possibly exceptions.
         /// </summary>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />
-        public System.Text.Encoding Encoding { get; set; }
+        /// <seealso cref="P:ZipFile.ProvisionalAlternateEncoding" />
+        public Encoding Encoding { get; set; }
 
         /// <summary>
         /// An event handler for Read operations.  When opening large zip

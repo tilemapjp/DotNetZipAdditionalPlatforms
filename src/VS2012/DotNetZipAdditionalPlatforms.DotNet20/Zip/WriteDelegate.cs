@@ -12,7 +12,7 @@
     /// <param name="stream">The stream to which the entry data should be written.</param>
     /// 
     /// <remarks>
-    /// When you add an entry and specify a <c>WriteDelegate</c>, via <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.WriteDelegate)" />, the application
+    /// When you add an entry and specify a <c>WriteDelegate</c>, via <see cref="M:ZipFile.AddEntry(System.String,WriteDelegate)" />, the application
     /// code provides the logic that writes the entry data directly into the zip file.
     /// </remarks>
     /// 
@@ -53,7 +53,7 @@
     /// End Sub
     /// </code>
     /// </example>
-    /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.WriteDelegate)" />
+    /// <seealso cref="M:ZipFile.AddEntry(System.String,WriteDelegate)" />
     public delegate void WriteDelegate(string entryName, Stream stream);
 }
 

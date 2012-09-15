@@ -33,7 +33,7 @@
     /// <para>
     /// This class provides a general purpose zip file capability.  Use it to read,
     /// create, or update zip files.  When you want to create zip files using a
-    /// <c>Stream</c> type to write the zip file, you may want to consider the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipOutputStream" /> class.
+    /// <c>Stream</c> type to write the zip file, you may want to consider the <see cref="T:ZipOutputStream" /> class.
     /// </para>
     /// 
     /// <para>
@@ -53,7 +53,7 @@
     /// those bytes into the <c>ZipOutputStream</c>, setting the attributes on the
     /// <c>ZipEntry</c>, and setting the created, last modified, and last accessed
     /// timestamps on the zip entry. All of these things are done automatically by a
-    /// call to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String,System.String)">ZipFile.AddFile()</see>.
+    /// call to <see cref="M:ZipFile.AddFile(System.String,System.String)">ZipFile.AddFile()</see>.
     /// For this reason, the <c>ZipOutputStream</c> is generally recommended for use
     /// only when your application emits arbitrary data, not necessarily data from a
     /// filesystem file, directly into a zip file, and does so using a <c>Stream</c>
@@ -69,7 +69,7 @@
     /// <item>
     /// <c>ZipFile</c> can be used to read and extract zip files, in addition to
     /// creating zip files. <c>ZipOutputStream</c> cannot read zip files. If you want
-    /// to use a stream to read zip files, check out the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipInputStream" /> class.
+    /// to use a stream to read zip files, check out the <see cref="T:ZipInputStream" /> class.
     /// </item>
     /// 
     /// <item>
@@ -98,7 +98,7 @@
         private int _BufferSize;
         private bool _CaseSensitiveRetrieval;
         private string _Comment;
-        private DotNetZipAdditionalPlatforms.Zip.CompressionMethod _compressionMethod;
+        private CompressionMethod _compressionMethod;
         private bool _contentsChanged;
         private static Encoding _defaultEncoding = Encoding.GetEncoding("IBM437");
         private uint _diskNumberWithCd;
@@ -137,7 +137,7 @@
         private Stream _writestream;
         internal Zip64Option _zip64;
         private List<ZipEntry> _zipEntriesAsList;
-        private DotNetZipAdditionalPlatforms.Zip.ZipErrorAction _zipErrorAction;
+        private ZipErrorAction _zipErrorAction;
         /// <summary>
         /// Default size of the buffer used for IO.
         /// </summary>
@@ -152,7 +152,7 @@
         /// 
         /// <remarks>
         /// Adding a large number of entries to a zip file can take a long
-        /// time.  For example, when calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String)" /> on a
+        /// time.  For example, when calling <see cref="M:ZipFile.AddDirectory(System.String)" /> on a
         /// directory that contains 50,000 files, it could take 3 minutes or so.
         /// This event handler allws an application to track the progress of the Add
         /// operation, and to optionally cancel a lengthy Add operation.
@@ -221,9 +221,9 @@
         /// 
         /// </example>
         /// 
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.SaveProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ReadProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractProgress" />
+        /// <seealso cref="E:ZipFile.SaveProgress" />
+        /// <seealso cref="E:ZipFile.ReadProgress" />
+        /// <seealso cref="E:ZipFile.ExtractProgress" />
         public event EventHandler<AddProgressEventArgs> AddProgress;
 
         /// <summary>
@@ -233,7 +233,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// Depending on the particular event, different properties on the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ExtractProgressEventArgs" /> parameter are set.  The following
+        /// Depending on the particular event, different properties on the <see cref="T:ExtractProgressEventArgs" /> parameter are set.  The following
         /// table summarizes the available EventTypes and the conditions under
         /// which this event handler is invoked with a
         /// <c>ExtractProgressEventArgs</c> with the given EventType.
@@ -371,9 +371,9 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.SaveProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ReadProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddProgress" />
+        /// <seealso cref="E:ZipFile.SaveProgress" />
+        /// <seealso cref="E:ZipFile.ReadProgress" />
+        /// <seealso cref="E:ZipFile.AddProgress" />
         public event EventHandler<ExtractProgressEventArgs> ExtractProgress;
 
         /// <summary>
@@ -383,7 +383,7 @@
         /// <remarks>
         /// <para>
         /// Depending on the particular event being signaled, different properties on the
-        /// <see cref="T:DotNetZipAdditionalPlatforms.Zip.ReadProgressEventArgs" /> parameter are set.  The following table
+        /// <see cref="T:ReadProgressEventArgs" /> parameter are set.  The following table
         /// summarizes the available EventTypes and the conditions under which this
         /// event handler is invoked with a <c>ReadProgressEventArgs</c> with the given EventType.
         /// </para>
@@ -430,9 +430,9 @@
         /// </list>
         /// </remarks>
         /// 
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.SaveProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractProgress" />
+        /// <seealso cref="E:ZipFile.SaveProgress" />
+        /// <seealso cref="E:ZipFile.AddProgress" />
+        /// <seealso cref="E:ZipFile.ExtractProgress" />
         public event EventHandler<ReadProgressEventArgs> ReadProgress;
 
         /// <summary>
@@ -443,7 +443,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// Depending on the particular event, different properties on the <see cref="T:DotNetZipAdditionalPlatforms.Zip.SaveProgressEventArgs" /> parameter are set.  The following
+        /// Depending on the particular event, different properties on the <see cref="T:SaveProgressEventArgs" /> parameter are set.  The following
         /// table summarizes the available EventTypes and the conditions under
         /// which this event handler is invoked with a
         /// <c>SaveProgressEventArgs</c> with the given EventType.
@@ -905,9 +905,9 @@
         /// 
         /// </example>
         /// 
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ReadProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddProgress" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractProgress" />
+        /// <seealso cref="E:ZipFile.ReadProgress" />
+        /// <seealso cref="E:ZipFile.AddProgress" />
+        /// <seealso cref="E:ZipFile.ExtractProgress" />
         public event EventHandler<SaveProgressEventArgs> SaveProgress;
 
         /// <summary>
@@ -926,12 +926,12 @@
         /// </para>
         /// 
         /// <para>
-        /// Setting a handler implicitly sets <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" /> to
+        /// Setting a handler implicitly sets <see cref="P:ZipFile.ZipErrorAction" /> to
         /// <c>ZipErrorAction.InvokeErrorEvent</c>.
         /// </para>
         /// 
         /// <para>
-        /// The handler you add applies to all <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> items that are
+        /// The handler you add applies to all <see cref="T:ZipEntry" /> items that are
         /// subsequently added to the <c>ZipFile</c> instance. If you set this
         /// property after you have added items to the <c>ZipFile</c>, but before you
         /// have called <c>Save()</c>, errors that occur while saving those items
@@ -945,7 +945,7 @@
         /// </para>
         /// 
         /// <para>
-        /// In the error handler method, you need to set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ZipErrorAction" /> property on the
+        /// In the error handler method, you need to set the <see cref="P:ZipEntry.ZipErrorAction" /> property on the
         /// <c>ZipErrorEventArgs.CurrentEntry</c>.  This communicates back to
         /// DotNetZip what you would like to do with this particular error.  Within
         /// an error handler, if you set the <c>ZipEntry.ZipErrorAction</c> property
@@ -1019,7 +1019,7 @@
         /// </code>
         /// 
         /// <code lang="VB">
-        /// Private Sub MyZipError(ByVal sender As Object, ByVal e As DotNetZipAdditionalPlatforms.Zip.ZipErrorEventArgs)
+        /// Private Sub MyZipError(ByVal sender As Object, ByVal e As ZipErrorEventArgs)
         /// ' At this point, the application could prompt the user for an action to take.
         /// ' But in this case, this application will simply automatically skip the file, in case of error.
         /// Console.WriteLine("Zip Error,  entry {0}", e.CurrentEntry.FileName)
@@ -1043,7 +1043,7 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />
+        /// <seealso cref="P:ZipFile.ZipErrorAction" />
         public event EventHandler<ZipErrorEventArgs> ZipError;
 
         static ZipFile()
@@ -1057,9 +1057,9 @@
             list.Add("System.Drawing.dll");
             settings.ReferencedAssemblies = list;
             List<string> list2 = new List<string>();
-            list2.Add("DotNetZipAdditionalPlatforms.Zip.WinFormsSelfExtractorStub.resources");
-            list2.Add("DotNetZipAdditionalPlatforms.Zip.Forms.PasswordDialog.resources");
-            list2.Add("DotNetZipAdditionalPlatforms.Zip.Forms.ZipContentsDialog.resources");
+            list2.Add("WinFormsSelfExtractorStub.resources");
+            list2.Add("Forms.PasswordDialog.resources");
+            list2.Add("Forms.ZipContentsDialog.resources");
             settings.CopyThroughResources = list2;
             List<string> list3 = new List<string>();
             list3.Add("WinFormsSelfExtractorStub.cs");
@@ -1090,19 +1090,19 @@
         /// 
         /// <remarks>
         /// <para>
-        /// See the documentation on the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor(System.String)">ZipFile
+        /// See the documentation on the <see cref="M:ZipFile.#ctor(System.String)">ZipFile
         /// constructor that accepts a single string argument</see> for basic
         /// information on all the <c>ZipFile</c> constructors.
         /// </para>
         /// 
         /// <para>
         /// After instantiating with this constructor and adding entries to the
-        /// archive, the application should call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save(System.String)" /> or
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save(System.IO.Stream)" /> to save to a file or a
-        /// stream, respectively.  The application can also set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Name" />
-        /// property and then call the no-argument <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" /> method.  (This
+        /// archive, the application should call <see cref="M:ZipFile.Save(System.String)" /> or
+        /// <see cref="M:ZipFile.Save(System.IO.Stream)" /> to save to a file or a
+        /// stream, respectively.  The application can also set the <see cref="P:ZipFile.Name" />
+        /// property and then call the no-argument <see cref="M:ZipFile.Save" /> method.  (This
         /// is the preferred approach for applications that use the library through
-        /// COM interop.)  If you call the no-argument <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" /> method
+        /// COM interop.)  If you call the no-argument <see cref="M:ZipFile.Save" /> method
         /// without having set the <c>Name</c> of the <c>ZipFile</c>, either through
         /// the parameterized constructor or through the explicit property , the
         /// Save() will throw, because there is no place to save the file.  </para>
@@ -1142,7 +1142,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1185,7 +1185,7 @@
         /// <para>
         /// The application can also call this constructor to read an existing zip
         /// archive.  passing the name of a valid zip file that does exist. But, it's
-        /// better form to use the static <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String)" /> method,
+        /// better form to use the static <see cref="M:ZipFile.Read(System.String)" /> method,
         /// passing the name of the zip file, because using <c>ZipFile.Read()</c> in
         /// your code communicates very clearly what you are doing.  In either case,
         /// the file is then read into the <c>ZipFile</c> instance.  The app can then
@@ -1213,7 +1213,7 @@
         /// 
         /// </remarks>
         /// 
-        /// <exception cref="T:DotNetZipAdditionalPlatforms.Zip.ZipException">
+        /// <exception cref="T:ZipException">
         /// Thrown if name refers to an existing file that is not a valid zip file.
         /// </exception>
         /// 
@@ -1247,7 +1247,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1274,7 +1274,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// See the documentation on the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor(System.String)">ZipFile
+        /// See the documentation on the <see cref="M:ZipFile.#ctor(System.String)">ZipFile
         /// constructor that accepts a single string argument</see> for basic
         /// information on all the <c>ZipFile</c> constructors.
         /// </para>
@@ -1289,7 +1289,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1311,7 +1311,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// See the documentation on the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor(System.String)">ZipFile
+        /// See the documentation on the <see cref="M:ZipFile.#ctor(System.String)">ZipFile
         /// constructor that accepts a single string argument</see> for basic
         /// information on all the <c>ZipFile</c> constructors.
         /// </para>
@@ -1340,7 +1340,7 @@
         /// 
         /// </remarks>
         /// 
-        /// <exception cref="T:DotNetZipAdditionalPlatforms.Zip.ZipException">
+        /// <exception cref="T:ZipException">
         /// Thrown if name refers to an existing file that is not a valid zip file.
         /// </exception>
         /// 
@@ -1376,7 +1376,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1403,7 +1403,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// See the documentation on the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor(System.String)">ZipFile
+        /// See the documentation on the <see cref="M:ZipFile.#ctor(System.String)">ZipFile
         /// constructor that accepts a single string argument</see> for basic
         /// information on all the <c>ZipFile</c> constructors.
         /// </para>
@@ -1411,7 +1411,7 @@
         /// <para>
         /// The Encoding is used as the default alternate encoding for entries with
         /// filenames or comments that cannot be encoded with the IBM437 code page.
-        /// This is equivalent to setting the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" /> property on the <c>ZipFile</c>
+        /// This is equivalent to setting the <see cref="P:ZipFile.ProvisionalAlternateEncoding" /> property on the <c>ZipFile</c>
         /// instance after construction.
         /// </para>
         /// 
@@ -1424,7 +1424,7 @@
         /// 
         /// </remarks>
         /// 
-        /// <exception cref="T:DotNetZipAdditionalPlatforms.Zip.ZipException">
+        /// <exception cref="T:ZipException">
         /// Thrown if name refers to an existing file that is not a valid zip file.
         /// </exception>
         /// 
@@ -1436,7 +1436,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1465,7 +1465,7 @@
         /// 
         /// <remarks>
         /// <para>
-        /// This constructor works like the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor(System.String)">ZipFile
+        /// This constructor works like the <see cref="M:ZipFile.#ctor(System.String)">ZipFile
         /// constructor that accepts a single string argument.</see> See that
         /// reference for detail on what this constructor does.
         /// </para>
@@ -1485,7 +1485,7 @@
         /// <para>
         /// The <c>Encoding</c> is used as the default alternate encoding for entries
         /// with filenames or comments that cannot be encoded with the IBM437 code
-        /// page.  This is a equivalent to setting the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" /> property on the <c>ZipFile</c>
+        /// page.  This is a equivalent to setting the <see cref="P:ZipFile.ProvisionalAlternateEncoding" /> property on the <c>ZipFile</c>
         /// instance after construction.
         /// </para>
         /// 
@@ -1504,7 +1504,7 @@
         /// 
         /// </remarks>
         /// 
-        /// <exception cref="T:DotNetZipAdditionalPlatforms.Zip.ZipException">
+        /// <exception cref="T:ZipException">
         /// Thrown if <c>fileName</c> refers to an existing file that is not a valid zip file.
         /// </exception>
         /// 
@@ -1519,7 +1519,7 @@
         {
             this._emitNtfsTimes = true;
             this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = DotNetZipAdditionalPlatforms.Zip.CompressionMethod.Deflate;
+            this._compressionMethod = CompressionMethod.Deflate;
             this._ReadStreamIsOurs = true;
             this.LOCK = new object();
             this._locEndOfCDS = -1L;
@@ -1601,7 +1601,7 @@
             this._StatusMessageTextWriter = statusMessageWriter;
             this._contentsChanged = true;
             this.AddDirectoryWillTraverseReparsePoints = true;
-            this.CompressionLevel = DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.Default;
+            this.CompressionLevel = CompressionLevel.Default;
             this.ParallelDeflateThreshold = 0x80000L;
             this._initEntriesDictionary();
             if (File.Exists(this._name))
@@ -1744,7 +1744,7 @@
                     Assembly executingAssembly = Assembly.GetExecutingAssembly();
                     StringBuilder builder = new StringBuilder();
                     string str6 = GenerateTempPathname(dir, "cs");
-                    using (ZipFile file = Read(executingAssembly.GetManifestResourceStream("DotNetZipAdditionalPlatforms.Zip.Resources.ZippedResources.zip")))
+                    using (ZipFile file = Read(executingAssembly.GetManifestResourceStream("Resources.ZippedResources.zip")))
                     {
                         str3 = GenerateTempPathname(dir, "tmp");
                         if (string.IsNullOrEmpty(options.IconFile))
@@ -1969,18 +1969,18 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String,System.String)" />
         /// 
         /// <overloads>This method has 2 overloads.</overloads>
         /// 
@@ -2010,8 +2010,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
@@ -2037,9 +2037,9 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String,System.String)" />
         /// 
         /// <param name="directoryName">The name of the directory to add.</param>
         /// 
@@ -2135,25 +2135,25 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// 
         /// <para>
         /// About progress events: When using the WriteDelegate, DotNetZip does
-        /// not issue any SaveProgress events with <c>EventType</c> = <see cref="F:DotNetZipAdditionalPlatforms.Zip.ZipProgressEventType.Saving_EntryBytesRead">
+        /// not issue any SaveProgress events with <c>EventType</c> = <see cref="F:ZipProgressEventType.Saving_EntryBytesRead">
         /// Saving_EntryBytesRead</see>. (This is because it is the
         /// application's code that runs in WriteDelegate - there's no way for
         /// DotNetZip to know when to issue a EntryBytesRead event.)
         /// Applications that want to update a progress bar or similar status
         /// indicator should do so from within the WriteDelegate
         /// itself. DotNetZip will issue the other SaveProgress events,
-        /// including <see cref="F:DotNetZipAdditionalPlatforms.Zip.ZipProgressEventType.Saving_Started">
+        /// including <see cref="F:ZipProgressEventType.Saving_Started">
         /// Saving_Started</see>,
-        /// <see cref="F:DotNetZipAdditionalPlatforms.Zip.ZipProgressEventType.Saving_BeforeWriteEntry">
-        /// Saving_BeforeWriteEntry</see>, and <see cref="F:DotNetZipAdditionalPlatforms.Zip.ZipProgressEventType.Saving_AfterWriteEntry">
+        /// <see cref="F:ZipProgressEventType.Saving_BeforeWriteEntry">
+        /// Saving_BeforeWriteEntry</see>, and <see cref="F:ZipProgressEventType.Saving_AfterWriteEntry">
         /// Saving_AfterWriteEntry</see>.
         /// </para>
         /// 
@@ -2225,7 +2225,7 @@
         /// DataSet ds1 = new DataSet();
         /// da.Fill(ds1, "Invoices");
         /// 
-        /// using(DotNetZipAdditionalPlatforms.Zip.ZipFile zip = new DotNetZipAdditionalPlatforms.Zip.ZipFile())
+        /// using(ZipFile zip = new ZipFile())
         /// {
         /// zip.AddEntry(zipEntryName, (name,stream) =&gt; ds1.WriteXml(stream) );
         /// zip.Save(zipFileName);
@@ -2245,7 +2245,7 @@
         /// <code lang="C#">
         /// using (var input = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite ))
         /// {
-        /// using(DotNetZipAdditionalPlatforms.Zip.ZipFile zip = new DotNetZipAdditionalPlatforms.Zip.ZipFile())
+        /// using(ZipFile zip = new ZipFile())
         /// {
         /// zip.AddEntry(zipEntryName, (name,output) =&gt;
         /// {
@@ -2298,7 +2298,7 @@
         /// End Sub
         /// </code>
         /// </example>
-        public ZipEntry AddEntry(string entryName, DotNetZipAdditionalPlatforms.Zip.WriteDelegate writer)
+        public ZipEntry AddEntry(string entryName, WriteDelegate writer)
         {
             ZipEntry ze = ZipEntry.CreateForWriter(entryName, writer);
             if (this.Verbose)
@@ -2317,7 +2317,7 @@
         /// 
         /// <para>
         /// The application should provide an open, readable stream; in this case it
-        /// will be read during the call to <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" /> or one of
+        /// will be read during the call to <see cref="M:ZipFile.Save" /> or one of
         /// its overloads.
         /// </para>
         /// 
@@ -2332,13 +2332,13 @@
         /// In cases where a large number of streams will be added to the
         /// <c>ZipFile</c>, the application may wish to avoid maintaining all of the
         /// streams open simultaneously.  To handle this situation, the application
-        /// should use the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.OpenDelegate,DotNetZipAdditionalPlatforms.Zip.CloseDelegate)" />
+        /// should use the <see cref="M:ZipFile.AddEntry(System.String,OpenDelegate,CloseDelegate)" />
         /// overload.
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -2377,7 +2377,7 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateEntry(System.String,System.IO.Stream)" />
+        /// <seealso cref="M:ZipFile.UpdateEntry(System.String,System.IO.Stream)" />
         /// 
         /// <param name="entryName">
         /// The name, including any path, which is shown in the zip file for the added
@@ -2468,8 +2468,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -2484,7 +2484,7 @@
         /// involved.
         /// 
         /// <code lang="C#">
-        /// using(DotNetZipAdditionalPlatforms.Zip.ZipFile zip = new DotNetZipAdditionalPlatforms.Zip.ZipFile())
+        /// using(ZipFile zip = new ZipFile())
         /// {
         /// zip.AddEntry(zipEntryName,
         /// (name) =&gt;  File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite ),
@@ -2592,7 +2592,7 @@
         /// <param name="encoding">
         /// The text encoding to use when encoding the string. Be aware: This is
         /// distinct from the text encoding used to encode the fileName, as specified
-        /// in <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />.
+        /// in <see cref="P:ZipFile.ProvisionalAlternateEncoding" />.
         /// </param>
         /// 
         /// <returns>The <c>ZipEntry</c> added.</returns>
@@ -2625,8 +2625,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -2674,9 +2674,9 @@
         /// 
         /// <overloads>This method has two overloads.</overloads>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String)" />
         /// 
         /// <param name="fileName">
         /// The name of the file to add. It should refer to a file in the filesystem.
@@ -2710,8 +2710,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -2767,9 +2767,9 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String,System.String)" />
         /// 
         /// <param name="fileName">
         /// The name of the file to add.  The name of the file may be a relative path
@@ -2810,8 +2810,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
@@ -2849,7 +2849,7 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddSelectedFiles(System.String,System.String)" />
         public void AddFiles(IEnumerable<string> fileNames)
         {
             this.AddFiles(fileNames, null);
@@ -2869,7 +2869,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their respective values at the
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />, <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their respective values at the
         /// time of this call will be applied to each ZipEntry added.
         /// </para>
         /// </remarks>
@@ -2890,7 +2890,7 @@
         /// archive.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddSelectedFiles(System.String,System.String)" />
         public void AddFiles(IEnumerable<string> fileNames, string directoryPathInArchive)
         {
             this.AddFiles(fileNames, false, directoryPathInArchive);
@@ -2913,8 +2913,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
@@ -2947,7 +2947,7 @@
         /// with <paramref name="preserveDirHierarchy" /> = <c>true</c> will result in the
         /// full direcory paths being included in the entries added to the ZipFile.
         /// </param>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddSelectedFiles(System.String,System.String)" />
         public void AddFiles(IEnumerable<string> fileNames, bool preserveDirHierarchy, string directoryPathInArchive)
         {
             if (fileNames == null)
@@ -3008,7 +3008,7 @@
         /// <para>
         /// The name of the item may be a relative path or a fully-qualified
         /// path. Remember, the items contained in <c>ZipFile</c> instance get written
-        /// to the disk only when you call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" /> or a similar
+        /// to the disk only when you call <see cref="M:ZipFile.Save" /> or a similar
         /// save method.
         /// </para>
         /// 
@@ -3019,17 +3019,17 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String)" />
         /// 
         /// <overloads>This method has two overloads.</overloads>
         /// <param name="fileOrDirectoryName">
@@ -3070,8 +3070,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -3094,9 +3094,9 @@
         /// insert the item at the root path within the archive.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String,System.String)" />
         /// 
         /// <example>
         /// This example shows how to zip up a set of files into a flat hierarchy,
@@ -3489,7 +3489,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// </remarks>
@@ -3545,7 +3545,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// </remarks>
@@ -3605,7 +3605,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -3669,7 +3669,7 @@
         /// specified selection criteria, and adds those files to the ZipFile, using
         /// the specified directory path in the archive.  The search does not recurse
         /// into subdirectories.  For details on the syntax for the selectionCriteria
-        /// parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// </remarks>
@@ -3735,7 +3735,7 @@
         /// is true, files are also selected from subdirectories, and the directory
         /// structure in the filesystem is reproduced in the zip archive, rooted at
         /// the directory specified by <c>directoryOnDisk</c>.  For details on the
-        /// syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </remarks>
         /// 
         /// <example>
@@ -3820,7 +3820,7 @@
         /// </para>
         /// 
         /// <para>
-        /// Developers using COM can use the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ComHelper.CheckZip(System.String)">ComHelper.CheckZip(String)</see>
+        /// Developers using COM can use the <see cref="M:ComHelper.CheckZip(System.String)">ComHelper.CheckZip(String)</see>
         /// method.
         /// </para>
         /// 
@@ -3830,8 +3830,8 @@
         /// 
         /// <returns>true if the named zip file checks OK. Otherwise, false. </returns>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.FixZipDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.CheckZip(System.String,System.Boolean,System.IO.TextWriter)" />
+        /// <seealso cref="M:ZipFile.FixZipDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.CheckZip(System.String,System.Boolean,System.IO.TextWriter)" />
         public static bool CheckZip(string zipFileName)
         {
             return CheckZip(zipFileName, false, null);
@@ -3875,8 +3875,8 @@
         /// 
         /// <returns>true if the named zip is OK; false if the file needs to be fixed.</returns>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.CheckZip(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.FixZipDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.CheckZip(System.String)" />
+        /// <seealso cref="M:ZipFile.FixZipDirectory(System.String)" />
         public static bool CheckZip(string zipFileName, bool fixIfNecessary, TextWriter writer)
         {
             ZipFile file = null;
@@ -4128,7 +4128,7 @@
         /// </summary>
         /// 
         /// <remarks>
-        /// Applications should call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Dispose">the no-arg Dispose method</see>.
+        /// Applications should call <see cref="M:ZipFile.Dispose">the no-arg Dispose method</see>.
         /// </remarks>
         /// 
         /// <param name="disposeManagedResources">
@@ -4188,18 +4188,18 @@
         /// set that property on the <c>ZipFile</c> instance, the entry will not
         /// be extracted, the existing file will not be overwritten and an
         /// exception will be thrown. To change this, set the property, or use the
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractAll(System.String,DotNetZipAdditionalPlatforms.Zip.ExtractExistingFileAction)" /> overload that allows you to
+        /// <see cref="M:ZipFile.ExtractAll(System.String,ExtractExistingFileAction)" /> overload that allows you to
         /// specify an ExtractExistingFileAction parameter.
         /// </para>
         /// 
         /// <para>
         /// The action to take when an extract would overwrite an existing file
         /// applies to all entries.  If you want to set this on a per-entry basis,
-        /// then you must use one of the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Extract">ZipEntry.Extract</see> methods.
+        /// then you must use one of the <see cref="M:ZipEntry.Extract">ZipEntry.Extract</see> methods.
         /// </para>
         /// 
         /// <para>
-        /// This method will send verbose output messages to the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.StatusMessageTextWriter" />, if it is set on the <c>ZipFile</c>
+        /// This method will send verbose output messages to the <see cref="P:ZipFile.StatusMessageTextWriter" />, if it is set on the <c>ZipFile</c>
         /// instance.
         /// </para>
         /// 
@@ -4270,8 +4270,8 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractProgress" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />
+        /// <seealso cref="E:ZipFile.ExtractProgress" />
+        /// <seealso cref="P:ZipFile.ExtractExistingFile" />
         /// 
         /// <param name="path">
         /// The path to which the contents of the zipfile will be extracted.
@@ -4300,16 +4300,16 @@
         /// <para>
         /// The action to take when an extract would overwrite an existing file
         /// applies to all entries.  If you want to set this on a per-entry basis,
-        /// then you must use <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Extract(System.String,DotNetZipAdditionalPlatforms.Zip.ExtractExistingFileAction)" /> or one of the similar methods.
+        /// then you must use <see cref="M:ZipEntry.Extract(System.String,ExtractExistingFileAction)" /> or one of the similar methods.
         /// </para>
         /// 
         /// <para>
-        /// Calling this method is equivalent to setting the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" /> property and then calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractAll(System.String)" />.
+        /// Calling this method is equivalent to setting the <see cref="P:ZipFile.ExtractExistingFile" /> property and then calling <see cref="M:ZipFile.ExtractAll(System.String)" />.
         /// </para>
         /// 
         /// <para>
         /// This method will send verbose output messages to the
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.StatusMessageTextWriter" />, if it is set on the <c>ZipFile</c> instance.
+        /// <see cref="P:ZipFile.StatusMessageTextWriter" />, if it is set on the <c>ZipFile</c> instance.
         /// </para>
         /// </remarks>
         /// 
@@ -4340,7 +4340,7 @@
         /// <param name="extractExistingFile">
         /// The action to take if extraction would overwrite an existing file.
         /// </param>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractSelectedEntries(System.String,DotNetZipAdditionalPlatforms.Zip.ExtractExistingFileAction)" />
+        /// <seealso cref="M:ZipFile.ExtractSelectedEntries(System.String,ExtractExistingFileAction)" />
         public void ExtractAll(string path, ExtractExistingFileAction extractExistingFile)
         {
             this.ExtractExistingFile = extractExistingFile;
@@ -4380,14 +4380,14 @@
         /// 
         /// <para>
         /// If any of the files to be extracted already exist, then the action taken is as
-        /// specified in the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ExtractExistingFile" /> property on the
+        /// specified in the <see cref="P:ZipEntry.ExtractExistingFile" /> property on the
         /// corresponding ZipEntry instance.  By default, the action taken in this case is to
         /// throw an exception.
         /// </para>
         /// 
         /// <para>
         /// For information on the syntax of the selectionCriteria string,
-        /// see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -4402,7 +4402,7 @@
         /// </example>
         /// <param name="selectionCriteria">the selection criteria for entries to extract.</param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractSelectedEntries(System.String,DotNetZipAdditionalPlatforms.Zip.ExtractExistingFileAction)" />
+        /// <seealso cref="M:ZipFile.ExtractSelectedEntries(System.String,ExtractExistingFileAction)" />
         public void ExtractSelectedEntries(string selectionCriteria)
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria))
@@ -4425,7 +4425,7 @@
         /// 
         /// <para>
         /// For information on the syntax of the string describing the entry selection criteria,
-        /// see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -4467,14 +4467,14 @@
         /// 
         /// <para>
         /// If any of the files to be extracted already exist, then the action taken is as
-        /// specified in the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ExtractExistingFile" /> property on the
+        /// specified in the <see cref="P:ZipEntry.ExtractExistingFile" /> property on the
         /// corresponding ZipEntry instance.  By default, the action taken in this case is to
         /// throw an exception.
         /// </para>
         /// 
         /// <para>
         /// For information on the syntax of the string describing the entry selection criteria,
-        /// see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -4496,7 +4496,7 @@
         /// all directories in the archive are used.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractSelectedEntries(System.String,System.String,System.String,DotNetZipAdditionalPlatforms.Zip.ExtractExistingFileAction)" />
+        /// <seealso cref="M:ZipFile.ExtractSelectedEntries(System.String,System.String,System.String,ExtractExistingFileAction)" />
         public void ExtractSelectedEntries(string selectionCriteria, string directoryPathInArchive)
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria, directoryPathInArchive))
@@ -4517,7 +4517,7 @@
         /// </para>
         /// <para>
         /// For information on the syntax of the string describing the entry selection criteria,
-        /// see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -4554,7 +4554,7 @@
         /// 
         /// <para>
         /// For information on the syntax of the string describing the entry selection criteria,
-        /// see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// </remarks>
         /// 
@@ -4619,7 +4619,7 @@
         /// </para>
         /// 
         /// <para>
-        /// Developers using COM can use the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ComHelper.FixZipDirectory(System.String)">ComHelper.FixZipDirectory(String)</see>
+        /// Developers using COM can use the <see cref="M:ComHelper.FixZipDirectory(System.String)">ComHelper.FixZipDirectory(String)</see>
         /// method.
         /// </para>
         /// 
@@ -4627,8 +4627,8 @@
         /// 
         /// <param name="zipFileName">The filename to of the zip file to fix.</param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.CheckZip(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.CheckZip(System.String,System.Boolean,System.IO.TextWriter)" />
+        /// <seealso cref="M:ZipFile.CheckZip(System.String)" />
+        /// <seealso cref="M:ZipFile.CheckZip(System.String,System.Boolean,System.IO.TextWriter)" />
         public static void FixZipDirectory(string zipFileName)
         {
             using (ZipFile file = new ZipFile())
@@ -4764,7 +4764,7 @@
         /// This method is primarily useful from COM Automation environments, when
         /// reading or extracting zip files. In COM, it is not possible to invoke
         /// parameterized constructors for a class. A COM Automation application can
-        /// update a zip file by using the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.#ctor">default (no argument)
+        /// update a zip file by using the <see cref="M:ZipFile.#ctor">default (no argument)
         /// constructor</see>, then calling <c>Initialize()</c> to read the contents
         /// of an on-disk zip archive into the <c>ZipFile</c> instance.
         /// </para>
@@ -4801,7 +4801,7 @@
         /// <remarks>
         /// 
         /// <para>
-        /// Calling this method is equivalent to calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.IsZipFile(System.String,System.Boolean)" /> with the testExtract parameter set to false.
+        /// Calling this method is equivalent to calling <see cref="M:ZipFile.IsZipFile(System.String,System.Boolean)" /> with the testExtract parameter set to false.
         /// </para>
         /// </remarks>
         /// 
@@ -4844,7 +4844,7 @@
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.IsZipFile(System.String,System.Boolean)" />
+        /// <seealso cref="M:ZipFile.IsZipFile(System.String,System.Boolean)" />
         /// 
         /// <param name="stream">The stream to check.</param>
         /// <param name="testExtract">true if the caller wants to extract each entry.</param>
@@ -5194,7 +5194,7 @@
         /// 
         /// <para>
         /// When reading from a file, it's probably easier to just use
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String,DotNetZipAdditionalPlatforms.Zip.ReadOptions)">ZipFile.Read(String, ReadOptions)</see>.  This
+        /// <see cref="M:ZipFile.Read(System.String,ReadOptions)">ZipFile.Read(String, ReadOptions)</see>.  This
         /// overload is useful when when the zip archive content is
         /// available from an already-open stream. The stream must be
         /// open and readable and seekable when calling this method.  The
@@ -5206,7 +5206,7 @@
         /// <c>System.Text.Encoding</c>, which is the <c>IBM437</c>
         /// codepage. If you want to specify the encoding to use when
         /// reading the zipfile content, see
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.IO.Stream,DotNetZipAdditionalPlatforms.Zip.ReadOptions)">ZipFile.Read(Stream, ReadOptions)</see>.  This
+        /// <see cref="M:ZipFile.Read(System.IO.Stream,ReadOptions)">ZipFile.Read(Stream, ReadOptions)</see>.  This
         /// </para>
         /// 
         /// <para>
@@ -5282,7 +5282,7 @@
         /// pathname.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String,DotNetZipAdditionalPlatforms.Zip.ReadOptions)" />.
+        /// <seealso cref="M:ZipFile.Read(System.String,ReadOptions)" />.
         /// 
         /// <returns>The instance read from the zip archive.</returns>
         public static ZipFile Read(string fileName)
@@ -5299,7 +5299,7 @@
         /// 
         /// <para>
         /// When reading from a file, it's probably easier to just use
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String,DotNetZipAdditionalPlatforms.Zip.ReadOptions)">ZipFile.Read(String, ReadOptions)</see>.  This
+        /// <see cref="M:ZipFile.Read(System.String,ReadOptions)">ZipFile.Read(String, ReadOptions)</see>.  This
         /// overload is useful when when the zip archive content is
         /// available from an already-open stream. The stream must be
         /// open and readable and seekable when calling this method.  The
@@ -5335,7 +5335,7 @@
         /// 
         /// <returns>The ZipFile instance read from the stream.</returns>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String,DotNetZipAdditionalPlatforms.Zip.ReadOptions)" />
+        /// <seealso cref="M:ZipFile.Read(System.String,ReadOptions)" />
         public static ZipFile Read(Stream zipStream, ReadOptions options)
         {
             if (options == null)
@@ -5496,7 +5496,7 @@
         /// 
         /// <returns>The ZipFile instance read from the zip archive.</returns>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.IO.Stream,DotNetZipAdditionalPlatforms.Zip.ReadOptions)" />
+        /// <seealso cref="M:ZipFile.Read(System.IO.Stream,ReadOptions)" />
         public static ZipFile Read(string fileName, ReadOptions options)
         {
             if (options == null)
@@ -5542,7 +5542,7 @@
         /// encoding bit set.  Be careful specifying the encoding.  If the value you use
         /// here is not the same as the Encoding used when the zip archive was created
         /// (possibly by a different archiver) you will get unexpected results and
-        /// possibly exceptions.  See the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />
+        /// possibly exceptions.  See the <see cref="P:ZipFile.ProvisionalAlternateEncoding" />
         /// property for more information.
         /// </param>
         /// 
@@ -5895,8 +5895,8 @@
         /// that ICollection to this method.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.SelectEntries(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.RemoveSelectedEntries(System.String)" />
+        /// <seealso cref="M:ZipFile.SelectEntries(System.String)" />
+        /// <seealso cref="M:ZipFile.RemoveSelectedEntries(System.String)" />
         public void RemoveEntries(ICollection<ZipEntry> entriesToRemove)
         {
             if (entriesToRemove == null)
@@ -5919,8 +5919,8 @@
         /// List of Strings that provide the names of entries to be removed.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.SelectEntries(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.RemoveSelectedEntries(System.String)" />
+        /// <seealso cref="M:ZipFile.SelectEntries(System.String)" />
+        /// <seealso cref="M:ZipFile.RemoveSelectedEntries(System.String)" />
         public void RemoveEntries(ICollection<string> entriesToRemove)
         {
             if (entriesToRemove == null)
@@ -6013,7 +6013,7 @@
         /// The <c>ZipEntry</c> to remove from the zip.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.RemoveSelectedEntries(System.String)" />
+        /// <seealso cref="M:ZipFile.RemoveSelectedEntries(System.String)" />
         public void RemoveEntry(ZipEntry entry)
         {
             if (entry == null)
@@ -6128,7 +6128,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// <para>
@@ -6188,7 +6188,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// <para>
@@ -6307,7 +6307,7 @@
         /// </para>
         /// 
         /// <para>
-        /// The <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Name" /> property is specified either explicitly,
+        /// The <see cref="P:ZipFile.Name" /> property is specified either explicitly,
         /// or implicitly using one of the parameterized ZipFile constructors.  For
         /// COM Automation clients, the <c>Name</c> property must be set explicitly,
         /// because COM Automation clients cannot call parameterized constructors.
@@ -6326,23 +6326,23 @@
         /// the application calls <c>Save</c>.  If, for example, the application
         /// adds entries with <c>AddEntry</c> using a dynamically-allocated
         /// <c>MemoryStream</c>, the memory stream must not have been disposed
-        /// before the call to <c>Save</c>. See the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.InputStream" /> property for more discussion of the
+        /// before the call to <c>Save</c>. See the <see cref="P:ZipEntry.InputStream" /> property for more discussion of the
         /// availability requirements of the input stream for an entry, and an
         /// approach for providing just-in-time stream lifecycle management.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,System.IO.Stream)" />
+        /// <seealso cref="M:ZipFile.AddEntry(System.String,System.IO.Stream)" />
         /// 
-        /// <exception cref="T:DotNetZipAdditionalPlatforms.Zip.BadStateException">
+        /// <exception cref="T:BadStateException">
         /// Thrown if you haven't specified a location or stream for saving the zip,
         /// either in the constructor or by setting the Name property, or if you try
         /// to save a regular zip archive to a filename with a .exe extension.
         /// </exception>
         /// 
         /// <exception cref="T:System.OverflowException">
-        /// Thrown if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.MaxOutputSegmentSize" /> is non-zero, and the number
+        /// Thrown if <see cref="P:ZipFile.MaxOutputSegmentSize" /> is non-zero, and the number
         /// of segments that would be generated for the spanned zip file during the
         /// save operation exceeds 99.  If this happens, you need to increase the
         /// segment size.
@@ -6511,9 +6511,9 @@
         /// then gets the array of bytes from that MemoryStream.
         /// 
         /// <code lang="C#">
-        /// using (var zip = new DotNetZipAdditionalPlatforms.Zip.ZipFile())
+        /// using (var zip = new ZipFile())
         /// {
-        /// zip.CompressionLevel= DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.BestCompression;
+        /// zip.CompressionLevel= CompressionLevel.BestCompression;
         /// zip.Password = "VerySecret.";
         /// zip.Encryption = EncryptionAlgorithm.WinZipAes128;
         /// zip.AddFile(sourceFileName);
@@ -6535,7 +6535,7 @@
         /// <code lang="C#">
         /// using (var fs = new FileSteeam(filename, FileMode.Open))
         /// {
-        /// using (var zip = DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(inputStream))
+        /// using (var zip = ZipFile.Read(inputStream))
         /// {
         /// zip.AddEntry("Name1.txt", "this is the content");
         /// zip.Save(inputStream);  // NO NO NO!!
@@ -6548,7 +6548,7 @@
         /// </para>
         /// 
         /// <code lang="C#">
-        /// using (var zip = DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(filename))
+        /// using (var zip = ZipFile.Read(filename))
         /// {
         /// zip.AddEntry("Name1.txt", "this is the content");
         /// zip.Save();  // YES!
@@ -6701,7 +6701,7 @@
         /// <para>
         /// There are a few temporary files created during the saving to a
         /// self-extracting zip.  These files are created in the directory pointed
-        /// to by <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.TempFileFolder" />, which defaults to <see cref="M:System.IO.Path.GetTempPath" />.  These temporary files are
+        /// to by <see cref="P:ZipFile.TempFileFolder" />, which defaults to <see cref="M:System.IO.Path.GetTempPath" />.  These temporary files are
         /// removed upon successful completion of this method.
         /// </para>
         /// 
@@ -6766,7 +6766,7 @@
         /// This method saves a self extracting archive, using the specified save
         /// options. These options include the flavor of the SFX, the default extract
         /// directory, the icon file, and so on.  See the documentation
-        /// for <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.SaveSelfExtractor(System.String,DotNetZipAdditionalPlatforms.Zip.SelfExtractorFlavor)" /> for more
+        /// for <see cref="M:ZipFile.SaveSelfExtractor(System.String,SelfExtractorFlavor)" /> for more
         /// details.
         /// </para>
         /// 
@@ -6853,7 +6853,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// <para>
@@ -6915,7 +6915,7 @@
         /// </para>
         /// 
         /// <para>
-        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// For details on the syntax for the selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </para>
         /// 
         /// <para>
@@ -7006,9 +7006,9 @@
         /// contents and the new files.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String)" />
         /// 
         /// <param name="directoryName">
         /// The path to the directory to be added to the zip archive, or updated in
@@ -7038,9 +7038,9 @@
         /// contents and the new files.
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddDirectory(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String,System.String)" />
         /// 
         /// <param name="directoryName">
         /// The path to the directory to be added to the zip archive, or updated
@@ -7072,7 +7072,7 @@
         /// 
         /// <remarks>
         /// Calling this method is equivalent to removing the <c>ZipEntry</c> for the
-        /// given file name and directory path, if it exists, and then calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.WriteDelegate)" />.  See the
+        /// given file name and directory path, if it exists, and then calling <see cref="M:ZipFile.AddEntry(System.String,WriteDelegate)" />.  See the
         /// documentation for that method for further explanation.
         /// </remarks>
         /// 
@@ -7083,7 +7083,7 @@
         /// <param name="writer">the delegate which will write the entry content.</param>
         /// 
         /// <returns>The <c>ZipEntry</c> added.</returns>
-        public ZipEntry UpdateEntry(string entryName, DotNetZipAdditionalPlatforms.Zip.WriteDelegate writer)
+        public ZipEntry UpdateEntry(string entryName, WriteDelegate writer)
         {
             this.RemoveEntryForUpdate(entryName);
             return this.AddEntry(entryName, writer);
@@ -7104,21 +7104,21 @@
         /// <para>
         /// The stream must be open and readable during the call to
         /// <c>ZipFile.Save</c>.  You can dispense the stream on a just-in-time basis
-        /// using the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.InputStream" /> property. Check the
+        /// using the <see cref="P:ZipEntry.InputStream" /> property. Check the
         /// documentation of that property for more information.
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,System.IO.Stream)" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.InputStream" />
+        /// <seealso cref="M:ZipFile.AddEntry(System.String,System.IO.Stream)" />
+        /// <seealso cref="P:ZipEntry.InputStream" />
         /// 
         /// <param name="entryName">
         /// The name, including any path, to use within the archive for the entry.
@@ -7140,7 +7140,7 @@
         /// <remarks>
         /// Calling this method is equivalent to removing the <c>ZipEntry</c>
         /// for the given filename and directory path, if it exists, and then
-        /// calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,System.Byte[])" />.  See the
+        /// calling <see cref="M:ZipFile.AddEntry(System.String,System.Byte[])" />.  See the
         /// documentation for that method for further explanation.
         /// </remarks>
         /// 
@@ -7167,11 +7167,11 @@
         /// <para>
         /// Calling this method is equivalent to removing the <c>ZipEntry</c> for
         /// the given file name and directory path, if it exists, and then calling
-        /// <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,System.String)" />.  See the documentation for
+        /// <see cref="M:ZipFile.AddEntry(System.String,System.String)" />.  See the documentation for
         /// that method for further explanation. The string content is encoded
         /// using the default encoding for the machine, or on Silverlight, using
         /// UTF-8. This encoding is distinct from the encoding used for the
-        /// filename itself.  See <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncoding" />.
+        /// filename itself.  See <see cref="P:ZipFile.AlternateEncoding" />.
         /// </para>
         /// 
         /// </remarks>
@@ -7197,7 +7197,7 @@
         /// 
         /// <remarks>
         /// Calling this method is equivalent to removing the <c>ZipEntry</c> for the
-        /// given file name and directory path, if it exists, and then calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,DotNetZipAdditionalPlatforms.Zip.OpenDelegate,DotNetZipAdditionalPlatforms.Zip.CloseDelegate)" />.  See the
+        /// given file name and directory path, if it exists, and then calling <see cref="M:ZipFile.AddEntry(System.String,OpenDelegate,CloseDelegate)" />.  See the
         /// documentation for that method for further explanation.
         /// </remarks>
         /// 
@@ -7226,7 +7226,7 @@
         /// 
         /// <remarks>
         /// Calling this method is equivalent to removing the <c>ZipEntry</c> for the
-        /// given file name and directory path, if it exists, and then calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddEntry(System.String,System.String,System.Text.Encoding)" />.  See the
+        /// given file name and directory path, if it exists, and then calling <see cref="M:ZipFile.AddEntry(System.String,System.String,System.Text.Encoding)" />.  See the
         /// documentation for that method for further explanation.
         /// </remarks>
         /// 
@@ -7240,7 +7240,7 @@
         /// 
         /// <param name="encoding">
         /// The text encoding to use when encoding the string. Be aware: This is
-        /// distinct from the text encoding used to encode the filename. See <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncoding" />.
+        /// distinct from the text encoding used to encode the filename. See <see cref="P:ZipFile.AlternateEncoding" />.
         /// </param>
         /// 
         /// <returns>The <c>ZipEntry</c> added.</returns>
@@ -7268,8 +7268,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
@@ -7317,9 +7317,9 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String)" />
         /// 
         /// <param name="fileName">
         /// The name of the file to add or update. It should refer to a file in the
@@ -7359,16 +7359,16 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddFile(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateItem(System.String,System.String)" />
         /// 
         /// <param name="fileName">
         /// The name of the file to add or update. It should refer to a file in the
@@ -7410,8 +7410,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
@@ -7439,8 +7439,8 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to each
         /// ZipEntry added.
         /// </para>
@@ -7462,7 +7462,7 @@
         /// archive.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddSelectedFiles(System.String,System.String)" />
         public void UpdateFiles(IEnumerable<string> fileNames, string directoryPathInArchive)
         {
             if (fileNames == null)
@@ -7491,16 +7491,16 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String)" />
         /// 
         /// <param name="itemName">
         /// the path to the file or directory to be added or updated.
@@ -7532,16 +7532,16 @@
         /// </para>
         /// 
         /// <para>
-        /// For <c>ZipFile</c> properties including <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.SetCompression" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ExtractExistingFile" />,
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, their
+        /// For <c>ZipFile</c> properties including <see cref="P:ZipFile.Encryption" />, <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.SetCompression" />, <see cref="P:ZipFile.ProvisionalAlternateEncoding" />, <see cref="P:ZipFile.ExtractExistingFile" />,
+        /// <see cref="P:ZipFile.ZipErrorAction" />, and <see cref="P:ZipFile.CompressionLevel" />, their
         /// respective values at the time of this call will be applied to the
         /// <c>ZipEntry</c> added.
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddItem(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateFile(System.String,System.String)" />
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.UpdateDirectory(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.AddItem(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateFile(System.String,System.String)" />
+        /// <seealso cref="M:ZipFile.UpdateDirectory(System.String,System.String)" />
         /// 
         /// <param name="itemName">
         /// The path for the File or Directory to be added or updated.
@@ -7584,7 +7584,7 @@
         /// subdirectories, and the directory structure in the filesystem is
         /// reproduced in the zip archive, rooted at the directory specified by
         /// <c>directoryOnDisk</c>.  For details on the syntax for the
-        /// selectionCriteria parameter, see <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String)" />.
+        /// selectionCriteria parameter, see <see cref="M:ZipFile.AddSelectedFiles(System.String)" />.
         /// </remarks>
         /// 
         /// <param name="selectionCriteria">
@@ -7610,7 +7610,7 @@
         /// If true, the method also scans subdirectories for files matching the criteria.
         /// </param>
         /// 
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.AddSelectedFiles(System.String,System.String,System.String,System.Boolean)" />
+        /// <seealso cref="M:ZipFile.AddSelectedFiles(System.String,System.String,System.String,System.Boolean)" />
         public void UpdateSelectedFiles(string selectionCriteria, string directoryOnDisk, string directoryPathInArchive, bool recurseDirectories)
         {
             this._AddOrUpdateSelectedFiles(selectionCriteria, directoryOnDisk, directoryPathInArchive, recurseDirectories, true);
@@ -7670,7 +7670,7 @@
         /// <remarks>
         /// <para>
         /// Whether the encoding specified here is used during the save depends
-        /// on <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncodingUsage" />.
+        /// on <see cref="P:ZipFile.AlternateEncodingUsage" />.
         /// </para>
         /// </remarks>
         public Encoding AlternateEncoding
@@ -7861,9 +7861,9 @@
         /// Comment to be encoded with something else, for example using code page
         /// 950 "Big-5 Chinese". To fill that need, DotNetZip will encode the
         /// comment following the same procedure it follows for encoding
-        /// filenames: (a) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncodingUsage" /> is
-        /// <c>Never</c>, it uses the default encoding (IBM437). (b) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncodingUsage" /> is <c>Always</c>, it always uses the
-        /// alternate encoding (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncoding" />). (c) if <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncodingUsage" /> is <c>AsNecessary</c>, it uses the
+        /// filenames: (a) if <see cref="P:ZipFile.AlternateEncodingUsage" /> is
+        /// <c>Never</c>, it uses the default encoding (IBM437). (b) if <see cref="P:ZipFile.AlternateEncodingUsage" /> is <c>Always</c>, it always uses the
+        /// alternate encoding (<see cref="P:ZipFile.AlternateEncoding" />). (c) if <see cref="P:ZipFile.AlternateEncodingUsage" /> is <c>AsNecessary</c>, it uses the
         /// alternate encoding only if the default encoding is not sufficient for
         /// encoding the comment - in other words if decoding the result does not
         /// produce the original string.  This decision is taken at the time of
@@ -7872,11 +7872,11 @@
         /// 
         /// <para>
         /// When creating a zip archive using this library, it is possible to change
-        /// the value of <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncoding" /> between each
+        /// the value of <see cref="P:ZipFile.AlternateEncoding" /> between each
         /// entry you add, and between adding entries and the call to
         /// <c>Save()</c>. Don't do this.  It will likely result in a zip file that is
         /// not readable by any tool or application.  For best interoperability, leave
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.AlternateEncoding" /> alone, or specify it only
+        /// <see cref="P:ZipFile.AlternateEncoding" /> alone, or specify it only
         /// once, before adding any entries to the <c>ZipFile</c> instance.
         /// </para>
         /// 
@@ -7907,9 +7907,9 @@
         /// </para>
         /// 
         /// <para>
-        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipErrorAction" />, setting this property on a <c>ZipFile</c>
+        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.Encryption" />, and <see cref="P:ZipFile.ZipErrorAction" />, setting this property on a <c>ZipFile</c>
         /// instance will cause the specified <c>CompressionLevel</c> to be used on all
-        /// <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> items that are subsequently added to the
+        /// <see cref="T:ZipEntry" /> items that are subsequently added to the
         /// <c>ZipFile</c> instance. If you set this property after you have added
         /// items to the <c>ZipFile</c>, but before you have called <c>Save()</c>,
         /// those items will not use the specified compression level.
@@ -7925,7 +7925,7 @@
         /// alone, and accept the default.
         /// </para>
         /// </remarks>
-        public DotNetZipAdditionalPlatforms.Zlib.CompressionLevel CompressionLevel { get; set; }
+        public CompressionLevel CompressionLevel { get; set; }
 
         /// <summary>
         /// The compression method for the zipfile.
@@ -7935,8 +7935,8 @@
         /// By default, the compression method is <c>CompressionMethod.Deflate.</c>
         /// </para>
         /// </remarks>
-        /// <seealso cref="T:DotNetZipAdditionalPlatforms.Zip.CompressionMethod" />
-        public DotNetZipAdditionalPlatforms.Zip.CompressionMethod CompressionMethod
+        /// <seealso cref="T:CompressionMethod" />
+        public CompressionMethod CompressionMethod
         {
             get
             {
@@ -7963,7 +7963,7 @@
         /// The default text encoding used in zip archives.  It is numeric 437, also
         /// known as IBM437.
         /// </summary>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ProvisionalAlternateEncoding" />
+        /// <seealso cref="P:ZipFile.ProvisionalAlternateEncoding" />
         public static Encoding DefaultEncoding
         {
             get
@@ -7988,10 +7988,10 @@
         /// </para>
         /// 
         /// <para>
-        /// When adding an entry from a file or directory, the Creation (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.CreationTime" />), Access (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.AccessedTime" />), and Modified (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ModifiedTime" />) times for the given entry are
+        /// When adding an entry from a file or directory, the Creation (<see cref="P:ZipEntry.CreationTime" />), Access (<see cref="P:ZipEntry.AccessedTime" />), and Modified (<see cref="P:ZipEntry.ModifiedTime" />) times for the given entry are
         /// automatically set from the filesystem values. When adding an entry from a
         /// stream or string, all three values are implicitly set to DateTime.Now.
-        /// Applications can also explicitly set those times by calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.SetEntryTimes(System.DateTime,System.DateTime,System.DateTime)" />.
+        /// Applications can also explicitly set those times by calling <see cref="M:ZipEntry.SetEntryTimes(System.DateTime,System.DateTime,System.DateTime)" />.
         /// </para>
         /// 
         /// <para>
@@ -8016,13 +8016,13 @@
         /// </para>
         /// 
         /// <para>
-        /// The times stored are taken from <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ModifiedTime" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.AccessedTime" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.CreationTime" />.
+        /// The times stored are taken from <see cref="P:ZipEntry.ModifiedTime" />, <see cref="P:ZipEntry.AccessedTime" />, and <see cref="P:ZipEntry.CreationTime" />.
         /// </para>
         /// 
         /// <para>
-        /// This property is not mutually exclusive of the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.EmitTimesInWindowsFormatWhenSaving" /> property. It is possible and
+        /// This property is not mutually exclusive of the <see cref="P:ZipFile.EmitTimesInWindowsFormatWhenSaving" /> property. It is possible and
         /// legal and valid to produce a zip file that contains timestamps encoded in
-        /// the Unix format as well as in the Windows format, in addition to the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.LastModified">LastModified</see> time attached to each
+        /// the Unix format as well as in the Windows format, in addition to the <see cref="P:ZipEntry.LastModified">LastModified</see> time attached to each
         /// entry in the zip archive, a time that is always stored in "DOS
         /// format". And, notwithstanding the names PKWare uses for these time
         /// formats, any of them can be read and written by any computer, on any
@@ -8040,8 +8040,8 @@
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.EmitTimesInUnixFormatWhenSaving" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.EmitTimesInWindowsFormatWhenSaving" />
+        /// <seealso cref="P:ZipEntry.EmitTimesInUnixFormatWhenSaving" />
+        /// <seealso cref="P:ZipFile.EmitTimesInWindowsFormatWhenSaving" />
         public bool EmitTimesInUnixFormatWhenSaving
         {
             get
@@ -8070,11 +8070,11 @@
         /// </para>
         /// 
         /// <para>
-        /// When adding an entry from a file or directory, the Creation (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.CreationTime" />), Access (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.AccessedTime" />), and Modified (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ModifiedTime" />) times for the given entry are
+        /// When adding an entry from a file or directory, the Creation (<see cref="P:ZipEntry.CreationTime" />), Access (<see cref="P:ZipEntry.AccessedTime" />), and Modified (<see cref="P:ZipEntry.ModifiedTime" />) times for the given entry are
         /// automatically set from the filesystem values. When adding an entry from a
         /// stream or string, all three values are implicitly set to
         /// <c>DateTime.Now</c>.  Applications can also explicitly set those times by
-        /// calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipEntry.SetEntryTimes(System.DateTime,System.DateTime,System.DateTime)" />.
+        /// calling <see cref="M:ZipEntry.SetEntryTimes(System.DateTime,System.DateTime,System.DateTime)" />.
         /// </para>
         /// 
         /// <para>
@@ -8098,7 +8098,7 @@
         /// </para>
         /// 
         /// <para>
-        /// The times stored are taken from <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ModifiedTime" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.AccessedTime" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.CreationTime" />.
+        /// The times stored are taken from <see cref="P:ZipEntry.ModifiedTime" />, <see cref="P:ZipEntry.AccessedTime" />, and <see cref="P:ZipEntry.CreationTime" />.
         /// </para>
         /// 
         /// <para>
@@ -8107,9 +8107,9 @@
         /// </para>
         /// 
         /// <para>
-        /// This property is not mutually exclusive of the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.EmitTimesInUnixFormatWhenSaving" /> property. It is possible and
+        /// This property is not mutually exclusive of the <see cref="P:ZipFile.EmitTimesInUnixFormatWhenSaving" /> property. It is possible and
         /// legal and valid to produce a zip file that contains timestamps encoded in
-        /// the Unix format as well as in the Windows format, in addition to the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.LastModified">LastModified</see> time attached to each
+        /// the Unix format as well as in the Windows format, in addition to the <see cref="P:ZipEntry.LastModified">LastModified</see> time attached to each
         /// entry in the archive, a time that is always stored in "DOS format". And,
         /// notwithstanding the names PKWare uses for these time formats, any of them
         /// can be read and written by any computer, on any operating system.  But,
@@ -8152,8 +8152,8 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.EmitTimesInWindowsFormatWhenSaving" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.EmitTimesInUnixFormatWhenSaving" />
+        /// <seealso cref="P:ZipEntry.EmitTimesInWindowsFormatWhenSaving" />
+        /// <seealso cref="P:ZipFile.EmitTimesInUnixFormatWhenSaving" />
         public bool EmitTimesInWindowsFormatWhenSaving
         {
             get
@@ -8180,19 +8180,19 @@
         /// 
         /// <para>
         /// If you set this to something other than EncryptionAlgorithm.None, you
-        /// will also need to set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />.
+        /// will also need to set the <see cref="P:ZipFile.Password" />.
         /// </para>
         /// 
         /// <para>
-        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" /> and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, setting this
+        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:ZipFile.Password" /> and <see cref="P:ZipFile.CompressionLevel" />, setting this
         /// property on a <c>ZipFile</c> instance will cause the specified
-        /// <c>EncryptionAlgorithm</c> to be used on all <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> items
+        /// <c>EncryptionAlgorithm</c> to be used on all <see cref="T:ZipEntry" /> items
         /// that are subsequently added to the <c>ZipFile</c> instance. In other
         /// words, if you set this property after you have added items to the
         /// <c>ZipFile</c>, but before you have called <c>Save()</c>, those items will
         /// not be encrypted or protected with a password in the resulting zip
         /// archive. To get a zip archive with encrypted entries, set this property,
-        /// along with the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" /> property, before calling
+        /// along with the <see cref="P:ZipFile.Password" /> property, before calling
         /// <c>AddFile</c>, <c>AddItem</c>, or <c>AddDirectory</c> (etc.) on the
         /// <c>ZipFile</c> instance.
         /// </para>
@@ -8280,8 +8280,8 @@
         /// 
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password">ZipFile.Password</seealso>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Encryption">ZipEntry.Encryption</seealso>
+        /// <seealso cref="P:ZipFile.Password">ZipFile.Password</seealso>
+        /// <seealso cref="P:ZipEntry.Encryption">ZipEntry.Encryption</seealso>
         public EncryptionAlgorithm Encryption
         {
             get
@@ -8315,7 +8315,7 @@
         /// get this collection.
         /// </para>
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.EntriesSorted" />
+        /// <seealso cref="P:ZipFile.EntriesSorted" />
         public ICollection<ZipEntry> Entries
         {
             get
@@ -8367,7 +8367,7 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Entries" />
+        /// <seealso cref="P:ZipFile.Entries" />
         public ICollection<ZipEntry> EntriesSorted
         {
             get
@@ -8395,7 +8395,7 @@
         /// to swap forward slashes for backslashes.
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Item(System.String)" />
+        /// <seealso cref="P:ZipFile.Item(System.String)" />
         /// 
         /// <example>
         /// This example shows one way to test if a filename is already contained
@@ -8464,7 +8464,7 @@
         /// to be extracted does not already exist.
         /// </para>
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ExtractExistingFile" />
+        /// <seealso cref="P:ZipEntry.ExtractExistingFile" />
         public ExtractExistingFileAction ExtractExistingFile { get; set; }
 
         /// <summary>
@@ -8518,8 +8518,8 @@
         /// </para>
         /// 
         /// <para>
-        /// This flag is effective only when calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Initialize(System.String)" />. Normally you would read a ZipFile with the
-        /// static <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String)">ZipFile.Read</see>
+        /// This flag is effective only when calling <see cref="M:ZipFile.Initialize(System.String)" />. Normally you would read a ZipFile with the
+        /// static <see cref="M:ZipFile.Read(System.String)">ZipFile.Read</see>
         /// method. But you can't set the <c>FullScan</c> property on the
         /// <c>ZipFile</c> instance when you use a static factory method like
         /// <c>ZipFile.Read</c>.
@@ -8646,7 +8646,7 @@
         /// </para>
         /// 
         /// <para>
-        /// The <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CaseSensitiveRetrieval" /> property on the <c>ZipFile</c>
+        /// The <see cref="P:ZipFile.CaseSensitiveRetrieval" /> property on the <c>ZipFile</c>
         /// determines whether retrieval via this indexer is done via case-sensitive
         /// comparisons. By default, retrieval is not case sensitive.  This makes
         /// sense on Windows, in which filesystems are not case sensitive.
@@ -8698,7 +8698,7 @@
         /// End Using
         /// </code>
         /// </example>
-        /// <seealso cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.RemoveEntry(System.String)" />
+        /// <seealso cref="M:ZipFile.RemoveEntry(System.String)" />
         /// 
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the caller attempts to assign a non-null value to the indexer.
@@ -8707,7 +8707,7 @@
         /// <param name="fileName">
         /// The name of the file, including any directory path, to retrieve from the
         /// zip.  The filename match is not case-sensitive by default; you can use the
-        /// <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CaseSensitiveRetrieval" /> property to change this behavior. The
+        /// <see cref="P:ZipFile.CaseSensitiveRetrieval" /> property to change this behavior. The
         /// pathname can use forward-slashes or backward slashes.
         /// </param>
         /// 
@@ -8818,7 +8818,7 @@
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Set this to a non-zero value before calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" /> or <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save(System.String)" /> to specify that the ZipFile should be saved as a
+        /// Set this to a non-zero value before calling <see cref="M:ZipFile.Save" /> or <see cref="M:ZipFile.Save(System.String)" /> to specify that the ZipFile should be saved as a
         /// split archive, also sometimes called a spanned archive. Some also
         /// call them multi-file archives.
         /// </para>
@@ -8880,14 +8880,14 @@
         /// </para>
         /// 
         /// <para>
-        /// If you read a split archive, with <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Read(System.String)" /> and
+        /// If you read a split archive, with <see cref="M:ZipFile.Read(System.String)" /> and
         /// then subsequently call <c>ZipFile.Save()</c>, unless you set this
         /// property before calling <c>Save()</c>, you will get a normal,
         /// single-file archive.
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.NumberOfSegmentsForMostRecentSave" />
+        /// <seealso cref="P:ZipFile.NumberOfSegmentsForMostRecentSave" />
         public int MaxOutputSegmentSize
         {
             get
@@ -8920,9 +8920,9 @@
         /// 
         /// <para>
         /// If you use the no-argument constructor, and you then explicitly set this
-        /// property, when you call <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save" />, this name will
+        /// property, when you call <see cref="M:ZipFile.Save" />, this name will
         /// specify the name of the zip file created.  Doing so is equivalent to
-        /// calling <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save(System.String)" />.  When instantiating a
+        /// calling <see cref="M:ZipFile.Save(System.String)" />.  When instantiating a
         /// <c>ZipFile</c> by reading from a stream or byte array, the <c>Name</c>
         /// property remains <c>null</c>.  When saving to a stream, the <c>Name</c>
         /// property is implicitly set to <c>null</c>.
@@ -8945,7 +8945,7 @@
         /// </summary>
         /// <remarks>
         /// <para>
-        /// This is normally zero, unless you have set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.MaxOutputSegmentSize" /> property.  If you have set <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.MaxOutputSegmentSize" />, and then you save a file, after the call to
+        /// This is normally zero, unless you have set the <see cref="P:ZipFile.MaxOutputSegmentSize" /> property.  If you have set <see cref="P:ZipFile.MaxOutputSegmentSize" />, and then you save a file, after the call to
         /// Save() completes, you can read this value to learn the number of segments that
         /// were created.
         /// </para>
@@ -8955,7 +8955,7 @@
         /// Archive.z04, and Archive.zip, and the value of this property will be 5.
         /// </para>
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.MaxOutputSegmentSize" />
+        /// <seealso cref="P:ZipFile.MaxOutputSegmentSize" />
         public int NumberOfSegmentsForMostRecentSave
         {
             get
@@ -8972,7 +8972,7 @@
         /// <para>
         /// The use of ZIP64 extensions within an archive is not always necessary, and
         /// for interoperability concerns, it may be desired to NOT use ZIP64 if
-        /// possible.  The <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.UseZip64WhenSaving" /> property can be
+        /// possible.  The <see cref="P:ZipFile.UseZip64WhenSaving" /> property can be
         /// set to use ZIP64 extensions only when necessary.  In those cases,
         /// Sometimes applications want to know whether a Save() actually used ZIP64
         /// extensions.  Applications can query this read-only property to learn
@@ -8991,15 +8991,15 @@
         /// because of its uncompressed or compressed size, or because the archive is
         /// larger than 4294967295 bytes, or because there are more than 65534 entries
         /// in the archive, or because the <c>UseZip64WhenSaving</c> property was set
-        /// to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Always" />, or because the
-        /// <c>UseZip64WhenSaving</c> property was set to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> and the output stream was not seekable.
+        /// to <see cref="F:Zip64Option.Always" />, or because the
+        /// <c>UseZip64WhenSaving</c> property was set to <see cref="F:Zip64Option.AsNecessary" /> and the output stream was not seekable.
         /// The value of this property does not indicate the reason the ZIP64
         /// extensions were used.
         /// </para>
         /// 
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.UseZip64WhenSaving" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.RequiresZip64" />
+        /// <seealso cref="P:ZipFile.UseZip64WhenSaving" />
+        /// <seealso cref="P:ZipFile.RequiresZip64" />
         public bool? OutputUsedZip64
         {
             get
@@ -9042,7 +9042,7 @@
         /// buffers allocated: one for input and one for output.  This property
         /// sets a limit for the number of pairs.  The total amount of storage
         /// space allocated for buffering will then be (N*S*2), where N is the
-        /// number of buffer pairs, S is the size of each buffer (<see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.BufferSize" />).  By default, DotNetZip allocates 4 buffer
+        /// number of buffer pairs, S is the size of each buffer (<see cref="P:ZipFile.BufferSize" />).  By default, DotNetZip allocates 4 buffer
         /// pairs per CPU core, so if your machine has 4 cores, and you retain
         /// the default buffer size of 128k, then the
         /// ParallelDeflateOutputStream will use 4 * 4 * 2 * 128kb of buffer
@@ -9080,7 +9080,7 @@
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ParallelDeflateThreshold" />
+        /// <seealso cref="P:ZipFile.ParallelDeflateThreshold" />
         public int ParallelDeflateMaxBufferPairs
         {
             get
@@ -9145,13 +9145,13 @@
         /// Multi-threaded compression does not give as much an advantage when
         /// using Encryption. This is primarily because encryption tends to slow
         /// down the entire pipeline. Also, multi-threaded compression gives less
-        /// of an advantage when using lower compression levels, for example <see cref="F:DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.BestSpeed" />.  You may have to
+        /// of an advantage when using lower compression levels, for example <see cref="F:CompressionLevel.BestSpeed" />.  You may have to
         /// perform some tests to determine the best approach for your situation.
         /// </para>
         /// 
         /// </remarks>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.ParallelDeflateMaxBufferPairs" />
+        /// <seealso cref="P:ZipFile.ParallelDeflateMaxBufferPairs" />
         public long ParallelDeflateThreshold
         {
             get
@@ -9217,9 +9217,9 @@
         /// </para>
         /// 
         /// <para>
-        /// When setting the Password, you may also want to explicitly set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" /> property, to specify how to encrypt the entries added
+        /// When setting the Password, you may also want to explicitly set the <see cref="P:ZipFile.Encryption" /> property, to specify how to encrypt the entries added
         /// to the ZipFile.  If you set the Password to a non-null value and do not
-        /// set <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, then PKZip 2.0 ("Weak") encryption is used.
+        /// set <see cref="P:ZipFile.Encryption" />, then PKZip 2.0 ("Weak") encryption is used.
         /// This encryption is relatively weak but is very interoperable. If you set
         /// the password to a <c>null</c> value (<c>Nothing</c> in VB), Encryption is
         /// reset to None.
@@ -9229,7 +9229,7 @@
         /// All of the preceding applies to writing zip archives, in other words when
         /// you use one of the Save methods.  To use this property when reading or an
         /// existing ZipFile, do the following: set the Password property on the
-        /// <c>ZipFile</c>, then call one of the Extract() overloads on the <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" />. In this case, the entry is extracted using the
+        /// <c>ZipFile</c>, then call one of the Extract() overloads on the <see cref="T:ZipEntry" />. In this case, the entry is extracted using the
         /// <c>Password</c> that is specified on the <c>ZipFile</c> instance. If you
         /// have not set the <c>Password</c> property, then the password is
         /// <c>null</c>, and the entry is extracted with no password.
@@ -9243,7 +9243,7 @@
         /// </para>
         /// 
         /// <para>
-        /// The <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> class also has a <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Password">Password</see> property.  It takes precedence
+        /// The <see cref="T:ZipEntry" /> class also has a <see cref="P:ZipEntry.Password">Password</see> property.  It takes precedence
         /// over this property on the <c>ZipFile</c>.  Typically, you would use the
         /// per-entry Password when most entries in the zip archive use one password,
         /// and a few entries use a different password.  If all entries in the zip
@@ -9303,8 +9303,8 @@
         /// 
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption">ZipFile.Encryption</seealso>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.Password">ZipEntry.Password</seealso>
+        /// <seealso cref="P:ZipFile.Encryption">ZipFile.Encryption</seealso>
+        /// <seealso cref="P:ZipEntry.Password">ZipEntry.Password</seealso>
         public string Password
         {
             private get
@@ -9369,15 +9369,15 @@
         /// <para>
         /// A <c>Value</c> of false does not indicate that the zip archive, as saved,
         /// does not use ZIP64.  It merely indicates that ZIP64 is not required.  An
-        /// archive may use ZIP64 even when not required if the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.UseZip64WhenSaving" /> property is set to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Always" />, or if the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.UseZip64WhenSaving" /> property is set to <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> and the output stream was not
-        /// seekable. Use the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.OutputUsedZip64" /> property to determine if
+        /// archive may use ZIP64 even when not required if the <see cref="P:ZipFile.UseZip64WhenSaving" /> property is set to <see cref="F:Zip64Option.Always" />, or if the <see cref="P:ZipFile.UseZip64WhenSaving" /> property is set to <see cref="F:Zip64Option.AsNecessary" /> and the output stream was not
+        /// seekable. Use the <see cref="P:ZipFile.OutputUsedZip64" /> property to determine if
         /// the most recent <c>Save()</c> method resulted in an archive that utilized
         /// the ZIP64 extensions.
         /// </para>
         /// 
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.UseZip64WhenSaving" />
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.OutputUsedZip64" />
+        /// <seealso cref="P:ZipFile.UseZip64WhenSaving" />
+        /// <seealso cref="P:ZipFile.OutputUsedZip64" />
         public bool? RequiresZip64
         {
             get
@@ -9417,11 +9417,11 @@
         /// </para>
         /// 
         /// <para>
-        /// Typically applications set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" /> property on
+        /// Typically applications set the <see cref="P:ZipFile.CompressionLevel" /> property on
         /// the <c>ZipFile</c> or on each <c>ZipEntry</c> to determine the level of
         /// compression used. This is done at the time the entry is added to the
         /// <c>ZipFile</c>. Setting the property to
-        /// <c>DotNetZipAdditionalPlatforms.Zlib.CompressionLevel.None</c> means no compression will be used.
+        /// <c>CompressionLevel.None</c> means no compression will be used.
         /// </para>
         /// 
         /// <para>
@@ -9565,7 +9565,7 @@
         /// strategies work better on different sorts of data. The strategy
         /// parameter can affect the compression ratio and the speed of
         /// compression but not the correctness of the compresssion.  For more
-        /// information see <see cref="T:DotNetZipAdditionalPlatforms.Zlib.CompressionStrategy">DotNetZipAdditionalPlatforms.Zlib.CompressionStrategy</see>.
+        /// information see <see cref="T:CompressionStrategy">CompressionStrategy</see>.
         /// </remarks>
         public CompressionStrategy Strategy
         {
@@ -9594,8 +9594,8 @@
         /// 
         /// <para>
         /// By default, the library will create the temporary file in the directory
-        /// specified for the file itself, via the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Name" /> property or via
-        /// the <see cref="M:DotNetZipAdditionalPlatforms.Zip.ZipFile.Save(System.String)" /> method.
+        /// specified for the file itself, via the <see cref="P:ZipFile.Name" /> property or via
+        /// the <see cref="M:ZipFile.Save(System.String)" /> method.
         /// </para>
         /// 
         /// <para>
@@ -9651,7 +9651,7 @@
         /// <remarks>
         /// 
         /// <para>
-        /// When creating a zip file, the default value for the property is <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.Never" />. <see cref="F:DotNetZipAdditionalPlatforms.Zip.Zip64Option.AsNecessary" /> is
+        /// When creating a zip file, the default value for the property is <see cref="F:Zip64Option.Never" />. <see cref="F:Zip64Option.AsNecessary" /> is
         /// safest, in the sense that you will not get an Exception if a pre-ZIP64
         /// limit is exceeded.
         /// </para>
@@ -9672,7 +9672,7 @@
         /// <para>
         /// An interesting question is, if you have set this property to
         /// <c>AsNecessary</c>, and then successfully saved, does the resulting
-        /// archive use ZIP64 extensions or not?  To learn this, check the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.OutputUsedZip64" /> property, after calling <c>Save()</c>.
+        /// archive use ZIP64 extensions or not?  To learn this, check the <see cref="P:ZipFile.OutputUsedZip64" /> property, after calling <c>Save()</c>.
         /// </para>
         /// 
         /// <para>
@@ -9681,7 +9681,7 @@
         /// </para>
         /// 
         /// </remarks>
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.RequiresZip64" />
+        /// <seealso cref="P:ZipFile.RequiresZip64" />
         public Zip64Option UseZip64WhenSaving
         {
             get
@@ -9695,12 +9695,12 @@
         }
 
         /// <summary>
-        /// Indicates whether verbose output is sent to the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.StatusMessageTextWriter" /> during <c>AddXxx()</c> and
+        /// Indicates whether verbose output is sent to the <see cref="P:ZipFile.StatusMessageTextWriter" /> during <c>AddXxx()</c> and
         /// <c>ReadXxx()</c> operations.
         /// </summary>
         /// 
         /// <remarks>
-        /// This is a <em>synthetic</em> property.  It returns true if the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.StatusMessageTextWriter" /> is non-null.
+        /// This is a <em>synthetic</em> property.  It returns true if the <see cref="P:ZipFile.StatusMessageTextWriter" /> is non-null.
         /// </remarks>
         internal bool Verbose
         {
@@ -9784,7 +9784,7 @@
         /// 
         /// <para>
         /// This property is implicitly set to <c>ZipErrorAction.InvokeErrorEvent</c>
-        /// if you add a handler to the <see cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipError" /> event.  If you set
+        /// if you add a handler to the <see cref="E:ZipFile.ZipError" /> event.  If you set
         /// this property to something other than
         /// <c>ZipErrorAction.InvokeErrorEvent</c>, then the <c>ZipError</c>
         /// event is implicitly cleared.  What it means is you can set one or the
@@ -9793,9 +9793,9 @@
         /// </para>
         /// 
         /// <para>
-        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Password" />, <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.Encryption" />, and <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.CompressionLevel" />, setting this property on a <c>ZipFile</c>
+        /// As with some other properties on the <c>ZipFile</c> class, like <see cref="P:ZipFile.Password" />, <see cref="P:ZipFile.Encryption" />, and <see cref="P:ZipFile.CompressionLevel" />, setting this property on a <c>ZipFile</c>
         /// instance will cause the specified <c>ZipErrorAction</c> to be used on all
-        /// <see cref="T:DotNetZipAdditionalPlatforms.Zip.ZipEntry" /> items that are subsequently added to the
+        /// <see cref="T:ZipEntry" /> items that are subsequently added to the
         /// <c>ZipFile</c> instance. If you set this property after you have added
         /// items to the <c>ZipFile</c>, but before you have called <c>Save()</c>,
         /// those items will not use the specified error handling action.
@@ -9810,7 +9810,7 @@
         /// <para>
         /// If you set this property to <c>ZipErrorAction.Skip</c> and you'd like to
         /// learn which files may have been skipped after a <c>Save()</c>, you can
-        /// set the <see cref="P:DotNetZipAdditionalPlatforms.Zip.ZipFile.StatusMessageTextWriter" /> on the ZipFile before
+        /// set the <see cref="P:ZipFile.StatusMessageTextWriter" /> on the ZipFile before
         /// calling <c>Save()</c>. A message will be emitted into that writer for
         /// each skipped file, if any.
         /// </para>
@@ -9838,22 +9838,22 @@
         /// </code>
         /// </example>
         /// 
-        /// <seealso cref="P:DotNetZipAdditionalPlatforms.Zip.ZipEntry.ZipErrorAction" />
-        /// <seealso cref="E:DotNetZipAdditionalPlatforms.Zip.ZipFile.ZipError" />
-        public DotNetZipAdditionalPlatforms.Zip.ZipErrorAction ZipErrorAction
+        /// <seealso cref="P:ZipEntry.ZipErrorAction" />
+        /// <seealso cref="E:ZipFile.ZipError" />
+        public ZipErrorAction ZipErrorAction
         {
             get
             {
                 if (this.ZipError != null)
                 {
-                    this._zipErrorAction = DotNetZipAdditionalPlatforms.Zip.ZipErrorAction.InvokeErrorEvent;
+                    this._zipErrorAction = ZipErrorAction.InvokeErrorEvent;
                 }
                 return this._zipErrorAction;
             }
             set
             {
                 this._zipErrorAction = value;
-                if ((this._zipErrorAction != DotNetZipAdditionalPlatforms.Zip.ZipErrorAction.InvokeErrorEvent) && (this.ZipError != null))
+                if ((this._zipErrorAction != ZipErrorAction.InvokeErrorEvent) && (this.ZipError != null))
                 {
                     this.ZipError = null;
                 }
