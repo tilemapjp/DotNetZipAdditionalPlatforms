@@ -14,7 +14,6 @@
     /// directly by applications wishing to create, read, or manipulate zip
     /// archive files.
     /// </remarks>
-    [Guid("ebc25cf6-9120-4283-b972-0e5520d0000C"), ClassInterface(ClassInterfaceType.AutoDispatch), ComVisible(true)]
     public class CRC32
     {
         private uint _register;

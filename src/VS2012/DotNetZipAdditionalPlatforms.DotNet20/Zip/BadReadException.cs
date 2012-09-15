@@ -8,7 +8,7 @@
     /// Indicates that a read was attempted on a stream, and bad or incomplete data was
     /// received.
     /// </summary>
-    [Serializable, Guid("ebc25cf6-9120-4283-b972-0e5520d0000A")]
+    [Serializable]
     public class BadReadException : ZipException
     {
         /// <summary>

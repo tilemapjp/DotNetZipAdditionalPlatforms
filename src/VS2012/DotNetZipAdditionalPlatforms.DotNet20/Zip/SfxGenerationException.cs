@@ -7,7 +7,7 @@
     /// <summary>
     /// Issued when errors occur saving a self-extracting archive.
     /// </summary>
-    [Serializable, Guid("ebc25cf6-9120-4283-b972-0e5520d00008")]
+    [Serializable]
     public class SfxGenerationException : ZipException
     {
         /// <summary>

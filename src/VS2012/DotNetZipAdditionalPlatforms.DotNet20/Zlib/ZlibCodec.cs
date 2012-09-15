@@ -12,7 +12,6 @@
     /// This class compresses and decompresses data according to the Deflate algorithm
     /// and optionally, the ZLIB format, as documented in <see href="http://www.ietf.org/rfc/rfc1950.txt">RFC 1950 - ZLIB</see> and <see href="http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE</see>.
     /// </remarks>
-    [Guid("ebc25cf6-9120-4283-b972-0e5520d0000D"), ComVisible(true), ClassInterface(ClassInterfaceType.AutoDispatch)]
     public sealed class ZlibCodec
     {
         internal uint _Adler32;

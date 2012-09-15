@@ -18,7 +18,6 @@
     /// Represents a single entry in a ZipFile. Typically, applications get a ZipEntry
     /// by enumerating the entries within a ZipFile, or by adding an entry to a ZipFile.
     /// </summary>
-    [Guid("ebc25cf6-9120-4283-b972-0e5520d00004"), ClassInterface(ClassInterfaceType.AutoDispatch), ComVisible(true)]
     public class ZipEntry
     {
         private long __FileDataPosition = -1L;

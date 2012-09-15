@@ -8,7 +8,7 @@
     /// Issued when an <c>ZipEntry.ExtractWithPassword()</c> method is invoked
     /// with an incorrect password.
     /// </summary>
-    [Serializable, Guid("ebc25cf6-9120-4283-b972-0e5520d0000B")]
+    [Serializable]
     public class BadPasswordException : ZipException
     {
         /// <summary>

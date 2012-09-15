@@ -7,7 +7,7 @@
     /// <summary>
     /// Base class for all exceptions defined by and throw by the Zip library.
     /// </summary>
-    [Serializable, Guid("ebc25cf6-9120-4283-b972-0e5520d00006")]
+    [Serializable]
     public class ZipException : Exception
     {
         /// <summary>

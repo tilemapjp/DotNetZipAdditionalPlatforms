@@ -90,7 +90,6 @@
     /// </para>
     /// 
     /// </remarks>
-    [ClassInterface(ClassInterfaceType.AutoDispatch), Guid("ebc25cf6-9120-4283-b972-0e5520d00005"), ComVisible(true)]
     public class ZipFile : IEnumerable<ZipEntry>, IEnumerable, IDisposable
     {
         private bool _addOperationCanceled;

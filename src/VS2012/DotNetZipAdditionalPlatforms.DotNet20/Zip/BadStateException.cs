@@ -9,7 +9,7 @@
     /// given the state of the instance. For example, if you call <c>Save()</c> on a ZipFile
     /// which has no filename set, you can get this exception.
     /// </summary>
-    [Serializable, Guid("ebc25cf6-9120-4283-b972-0e5520d00007")]
+    [Serializable]
     public class BadStateException : ZipException
     {
         /// <summary>
