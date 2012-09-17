@@ -5,13 +5,13 @@
 
     internal class OffsetStream : Stream, IDisposable
     {
-        private Stream _innerStream;
-        private long _originalPosition;
+        private Stream innerStreamField;
+        private long originalPositionField;
 
         public OffsetStream(Stream s)
         {
-            this._originalPosition = s.Position;
-            this._innerStream = s;
+            this.originalPositionField = s.Position;
+            this.innerStreamField = s;
         }
 
         public override void Close()
@@ -21,17 +21,17 @@
 
         public override void Flush()
         {
-            this._innerStream.Flush();
+            this.innerStreamField.Flush();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return this._innerStream.Read(buffer, offset, count);
+            return this.innerStreamField.Read(buffer, offset, count);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return (this._innerStream.Seek(this._originalPosition + offset, origin) - this._originalPosition);
+            return (this.innerStreamField.Seek(this.originalPositionField + offset, origin) - this.originalPositionField);
         }
 
         public override void SetLength(long value)
@@ -53,7 +53,7 @@
         {
             get
             {
-                return this._innerStream.CanRead;
+                return this.innerStreamField.CanRead;
             }
         }
 
@@ -61,7 +61,7 @@
         {
             get
             {
-                return this._innerStream.CanSeek;
+                return this.innerStreamField.CanSeek;
             }
         }
 
@@ -77,7 +77,7 @@
         {
             get
             {
-                return this._innerStream.Length;
+                return this.innerStreamField.Length;
             }
         }
 
@@ -85,11 +85,11 @@
         {
             get
             {
-                return (this._innerStream.Position - this._originalPosition);
+                return (this.innerStreamField.Position - this.originalPositionField);
             }
             set
             {
-                this._innerStream.Position = this._originalPosition + value;
+                this.innerStreamField.Position = this.originalPositionField + value;
             }
         }
     }

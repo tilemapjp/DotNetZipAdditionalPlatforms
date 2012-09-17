@@ -92,59 +92,61 @@
     /// </remarks>
     public class ZipFile : IEnumerable<ZipEntry>, IEnumerable, IDisposable
     {
-        private bool _addOperationCanceled;
-        private Encoding _alternateEncoding;
-        private ZipOption _alternateEncodingUsage;
-        private int _BufferSize;
-        private bool _CaseSensitiveRetrieval;
-        private string _Comment;
-        private CompressionMethod _compressionMethod;
-        private bool _contentsChanged;
-        private static Encoding _defaultEncoding = Encoding.GetEncoding("IBM437");
-        private uint _diskNumberWithCd;
-        private bool _disposed;
-        private bool _emitNtfsTimes;
-        private bool _emitUnixTimes;
-        private EncryptionAlgorithm _Encryption;
-        private Dictionary<string, ZipEntry> _entries;
-        private bool _extractOperationCanceled;
-        private bool _fileAlreadyExists;
-        private bool _hasBeenSaved;
-        internal bool _inExtractAll;
-        private bool _JustSaved;
-        private long _lengthOfReadStream;
-        private long _locEndOfCDS;
-        private int _maxBufferPairs;
-        private int _maxOutputSegmentSize;
-        private string _name;
-        private uint _numberOfSegmentsForMostRecentSave;
-        private uint _OffsetOfCentralDirectory;
-        private long _OffsetOfCentralDirectory64;
-        private bool? _OutputUsesZip64;
-        private long _ParallelDeflateThreshold;
-        internal string _Password;
-        private string _readName;
-        private Stream _readstream;
-        private bool _ReadStreamIsOurs;
-        private bool _saveOperationCanceled;
-        private bool _SavingSfx;
-        private TextWriter _StatusMessageTextWriter;
-        private CompressionStrategy _Strategy;
-        private string _TempFileFolder;
-        private string _temporaryFileName;
-        private ushort _versionMadeBy;
-        private ushort _versionNeededToExtract;
-        private Stream _writestream;
-        internal Zip64Option _zip64;
-        private List<ZipEntry> _zipEntriesAsList;
-        private ZipErrorAction _zipErrorAction;
+        private bool addOperationCanceledField;
+        private Encoding alternateEncodingField;
+        private ZipOption alternateEncodingUsageField;
+        private int bufferSizeField;
+        private bool caseSensitiveRetrievalField;
+        private string commentField;
+        private CompressionMethod compressionMethodField;
+        private bool contentsChangedField;
+        private static Encoding defaultEncodingField = Encoding.GetEncoding("IBM437");
+        private uint diskNumberWithCdField;
+        private bool disposedField;
+        private bool emitNtfsTimesField;
+        private bool emitUnixTimesField;
+        private EncryptionAlgorithm encryptionField;
+        private Dictionary<string, ZipEntry> entriesField;
+        private bool extractOperationCanceledField;
+        private bool fileAlreadyExistsField;
+        private bool hasBeenSavedField;
+        internal bool inExtractAllField;
+        private bool justSavedField;
+        private long lengthOfReadStreamField;
+        private long locEndOfCdsField;
+        private int maxBufferPairsField;
+        private int maxOutputSegmentSizeField;
+        private string nameField;
+        private uint numberOfSegmentsForMostRecentSaveField;
+        private uint offsetOfCentralDirectoryField;
+        private long offsetOfCentralDirectory64Field;
+        private bool? outputUsesZip64Field;
+        private long parallelDeflateThresholdField;
+        internal string passwordField;
+        private string readNameField;
+        private Stream readstreamField;
+        private bool readStreamIsOursField;
+        private bool saveOperationCanceledField;
+        private bool savingSfxField;
+        private TextWriter statusMessageTextWriterField;
+        private CompressionStrategy strategyField;
+        private string tempFileFolderField;
+        private string temporaryFileNameField;
+        private ushort versionMadeByField;
+        private ushort versionNeededToExtractField;
+        private Stream writeStreamField;
+        internal Zip64Option zip64Field;
+        private List<ZipEntry> zipEntriesAsListField;
+        private ZipErrorAction zipErrorActionField;
+
         /// <summary>
         /// Default size of the buffer used for IO.
         /// </summary>
         public const int BufferSizeDefault = 0x8000;
-        private object LOCK;
-        internal ParallelDeflateOutputStream ParallelDeflater;
-        private static ExtractorSettings[] SettingsList;
+
+        private object lockField;
+        internal ParallelDeflateOutputStream parallelDeflaterField;
+        private static ExtractorSettings[] settingsListField;
 
         /// <summary>
         /// An event handler invoked before, during, and after Adding entries to a zip archive.
@@ -1081,7 +1083,7 @@
             list5.Add("CommandLineSelfExtractorStub.cs");
             settings2.ResourcesToCompile = list5;
             settingsArray[1] = settings2;
-            SettingsList = settingsArray;
+            settingsListField = settingsArray;
         }
 
         /// <summary>
@@ -1140,18 +1142,18 @@
         /// </example>
         public ZipFile()
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             this._InitInstance(null, null);
         }
 
@@ -1245,18 +1247,18 @@
         /// <param name="fileName">The filename to use for the new zip archive.</param>
         public ZipFile(string fileName)
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             try
             {
                 this._InitInstance(fileName, null);
@@ -1287,18 +1289,18 @@
         /// </param>
         public ZipFile(Encoding encoding)
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             this.AlternateEncoding = encoding;
             this.AlternateEncodingUsage = ZipOption.Always;
             this._InitInstance(null, null);
@@ -1374,18 +1376,18 @@
         /// verbose status messages.</param>
         public ZipFile(string fileName, TextWriter statusMessageWriter)
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             try
             {
                 this._InitInstance(fileName, statusMessageWriter);
@@ -1434,18 +1436,18 @@
         /// with the IBM437 code page. </param>
         public ZipFile(string fileName, Encoding encoding)
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             try
             {
                 this.AlternateEncoding = encoding;
@@ -1517,18 +1519,18 @@
         /// </param>
         public ZipFile(string fileName, TextWriter statusMessageWriter, Encoding encoding)
         {
-            this._emitNtfsTimes = true;
-            this._Strategy = CompressionStrategy.Default;
-            this._compressionMethod = CompressionMethod.Deflate;
-            this._ReadStreamIsOurs = true;
-            this.LOCK = new object();
-            this._locEndOfCDS = -1L;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._BufferSize = BufferSizeDefault;
-            this._maxBufferPairs = 0x10;
-            this._zip64 = Zip64Option.Default;
-            this._lengthOfReadStream = -99L;
+            this.emitNtfsTimesField = true;
+            this.strategyField = CompressionStrategy.Default;
+            this.compressionMethodField = CompressionMethod.Deflate;
+            this.readStreamIsOursField = true;
+            this.lockField = new object();
+            this.locEndOfCdsField = -1L;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.bufferSizeField = BufferSizeDefault;
+            this.maxBufferPairsField = 0x10;
+            this.zip64Field = Zip64Option.Default;
+            this.lengthOfReadStreamField = -99L;
             try
             {
                 this.AlternateEncoding = encoding;
@@ -1592,19 +1594,19 @@
         private void _initEntriesDictionary()
         {
             StringComparer comparer = this.CaseSensitiveRetrieval ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase;
-            this._entries = (this._entries == null) ? new Dictionary<string, ZipEntry>(comparer) : new Dictionary<string, ZipEntry>(this._entries, comparer);
+            this.entriesField = (this.entriesField == null) ? new Dictionary<string, ZipEntry>(comparer) : new Dictionary<string, ZipEntry>(this.entriesField, comparer);
         }
 
         private void _InitInstance(string zipFileName, TextWriter statusMessageWriter)
         {
-            this._name = zipFileName;
-            this._StatusMessageTextWriter = statusMessageWriter;
-            this._contentsChanged = true;
+            this.nameField = zipFileName;
+            this.statusMessageTextWriterField = statusMessageWriter;
+            this.contentsChangedField = true;
             this.AddDirectoryWillTraverseReparsePoints = true;
             this.CompressionLevel = CompressionLevel.Default;
             this.ParallelDeflateThreshold = 0x80000L;
             this._initEntriesDictionary();
-            if (File.Exists(this._name))
+            if (File.Exists(this.nameField))
             {
                 if (this.FullScan)
                 {
@@ -1614,13 +1616,13 @@
                 {
                     ReadIntoInstance(this);
                 }
-                this._fileAlreadyExists = true;
+                this.fileAlreadyExistsField = true;
             }
         }
 
         private ZipEntry _InternalAddEntry(ZipEntry ze)
         {
-            ze._container = new ZipContainer(this);
+            ze.containerField = new ZipContainer(this);
             ze.CompressionMethod = this.CompressionMethod;
             ze.CompressionLevel = this.CompressionLevel;
             ze.ExtractExistingFile = this.ExtractExistingFile;
@@ -1628,10 +1630,10 @@
             ze.SetCompression = this.SetCompression;
             ze.AlternateEncoding = this.AlternateEncoding;
             ze.AlternateEncodingUsage = this.AlternateEncodingUsage;
-            ze.Password = this._Password;
+            ze.Password = this.passwordField;
             ze.Encryption = this.Encryption;
-            ze.EmitTimesInWindowsFormatWhenSaving = this._emitNtfsTimes;
-            ze.EmitTimesInUnixFormatWhenSaving = this._emitUnixTimes;
+            ze.EmitTimesInWindowsFormatWhenSaving = this.emitNtfsTimesField;
+            ze.EmitTimesInUnixFormatWhenSaving = this.emitUnixTimesField;
             this.InternalAddEntry(ze.FileName, ze);
             this.AfterAddEntry(ze);
             return ze;
@@ -1640,12 +1642,12 @@
         private void _InternalExtractAll(string path, bool overrideExtractExistingProperty)
         {
             bool verbose = this.Verbose;
-            this._inExtractAll = true;
+            this.inExtractAllField = true;
             try
             {
                 this.OnExtractAllStarted(path);
                 int current = 0;
-                foreach (ZipEntry entry in this._entries.Values)
+                foreach (ZipEntry entry in this.entriesField.Values)
                 {
                     if (verbose)
                     {
@@ -1661,7 +1663,7 @@
                             this.StatusMessageTextWriter.WriteLine("  Comment: {0}", entry.Comment);
                         }
                     }
-                    entry.Password = this._Password;
+                    entry.Password = this.passwordField;
                     this.OnExtractEntry(current, true, entry, path);
                     if (overrideExtractExistingProperty)
                     {
@@ -1670,14 +1672,14 @@
                     entry.Extract(path);
                     current++;
                     this.OnExtractEntry(current, false, entry, path);
-                    if (this._extractOperationCanceled)
+                    if (this.extractOperationCanceledField)
                     {
                         break;
                     }
                 }
-                if (!this._extractOperationCanceled)
+                if (!this.extractOperationCanceledField)
                 {
-                    foreach (ZipEntry entry in this._entries.Values)
+                    foreach (ZipEntry entry in this.entriesField.Values)
                     {
                         if (entry.IsDirectory || entry.FileName.EndsWith("/"))
                         {
@@ -1690,7 +1692,7 @@
             }
             finally
             {
-                this._inExtractAll = false;
+                this.inExtractAllField = false;
             }
         }
 
@@ -1716,7 +1718,7 @@
                 using (CSharpCodeProvider provider = new CSharpCodeProvider())
                 {
                     ExtractorSettings settings = null;
-                    foreach (ExtractorSettings settings2 in SettingsList)
+                    foreach (ExtractorSettings settings2 in settingsListField)
                     {
                         if (settings2.Flavor == options.Flavor)
                         {
@@ -2086,14 +2088,14 @@
         public ZipEntry AddDirectoryByName(string directoryNameInArchive)
         {
             ZipEntry entry = ZipEntry.CreateFromNothing(directoryNameInArchive);
-            entry._container = new ZipContainer(this);
+            entry.containerField = new ZipContainer(this);
             entry.MarkAsDirectory();
             entry.AlternateEncoding = this.AlternateEncoding;
             entry.AlternateEncodingUsage = this.AlternateEncodingUsage;
             entry.SetEntryTimes(DateTime.Now, DateTime.Now, DateTime.Now);
-            entry.EmitTimesInWindowsFormatWhenSaving = this._emitNtfsTimes;
-            entry.EmitTimesInUnixFormatWhenSaving = this._emitUnixTimes;
-            entry._Source = ZipEntrySource.Stream;
+            entry.EmitTimesInWindowsFormatWhenSaving = this.emitNtfsTimesField;
+            entry.EmitTimesInUnixFormatWhenSaving = this.emitUnixTimesField;
+            entry.sourceField = ZipEntrySource.Stream;
             this.InternalAddEntry(entry.FileName, entry);
             this.AfterAddEntry(entry);
             return entry;
@@ -2954,13 +2956,13 @@
             {
                 throw new ArgumentNullException("fileNames");
             }
-            this._addOperationCanceled = false;
+            this.addOperationCanceledField = false;
             this.OnAddStarted();
             if (preserveDirHierarchy)
             {
                 foreach (string str in fileNames)
                 {
-                    if (this._addOperationCanceled)
+                    if (this.addOperationCanceledField)
                     {
                         break;
                     }
@@ -2979,14 +2981,14 @@
             {
                 foreach (string str in fileNames)
                 {
-                    if (this._addOperationCanceled)
+                    if (this.addOperationCanceledField)
                     {
                         break;
                     }
                     this.AddFile(str, directoryPathInArchive);
                 }
             }
-            if (!this._addOperationCanceled)
+            if (!this.addOperationCanceledField)
             {
                 this.OnAddCompleted();
             }
@@ -3183,10 +3185,10 @@
             }
             if (level == 0)
             {
-                this._addOperationCanceled = false;
+                this.addOperationCanceledField = false;
                 this.OnAddStarted();
             }
-            if (this._addOperationCanceled)
+            if (this.addOperationCanceledField)
             {
                 return null;
             }
@@ -3205,27 +3207,27 @@
             if ((level > 0) || (rootDirectoryPathInArchive != ""))
             {
                 entry = ZipEntry.CreateFromFile(directoryName, fileName);
-                entry._container = new ZipContainer(this);
+                entry.containerField = new ZipContainer(this);
                 entry.AlternateEncoding = this.AlternateEncoding;
                 entry.AlternateEncodingUsage = this.AlternateEncodingUsage;
                 entry.MarkAsDirectory();
-                entry.EmitTimesInWindowsFormatWhenSaving = this._emitNtfsTimes;
-                entry.EmitTimesInUnixFormatWhenSaving = this._emitUnixTimes;
-                if (!this._entries.ContainsKey(entry.FileName))
+                entry.EmitTimesInWindowsFormatWhenSaving = this.emitNtfsTimesField;
+                entry.EmitTimesInUnixFormatWhenSaving = this.emitUnixTimesField;
+                if (!this.entriesField.ContainsKey(entry.FileName))
                 {
                     this.InternalAddEntry(entry.FileName, entry);
                     this.AfterAddEntry(entry);
                 }
                 fileName = entry.FileName;
             }
-            if (!this._addOperationCanceled)
+            if (!this.addOperationCanceledField)
             {
                 string[] files = Directory.GetFiles(directoryName);
                 if (recurse)
                 {
                     foreach (string str2 in files)
                     {
-                        if (this._addOperationCanceled)
+                        if (this.addOperationCanceledField)
                         {
                             break;
                         }
@@ -3238,7 +3240,7 @@
                             this.UpdateFile(str2, fileName);
                         }
                     }
-                    if (!this._addOperationCanceled)
+                    if (!this.addOperationCanceledField)
                     {
                         string[] directories = Directory.GetDirectories(directoryName);
                         foreach (string str3 in directories)
@@ -3791,11 +3793,11 @@
             EventHandler<AddProgressEventArgs> addProgress = this.AddProgress;
             if (addProgress != null)
             {
-                AddProgressEventArgs e = AddProgressEventArgs.AfterEntry(this.ArchiveNameForEvent, entry, this._entries.Count);
+                AddProgressEventArgs e = AddProgressEventArgs.AfterEntry(this.ArchiveNameForEvent, entry, this.entriesField.Count);
                 addProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._addOperationCanceled = true;
+                    this.addOperationCanceledField = true;
                 }
             }
         }
@@ -3894,28 +3896,28 @@
                     {
                         if (entry.FileName == entry2.FileName)
                         {
-                            if (entry._RelativeOffsetOfLocalHeader != entry2._RelativeOffsetOfLocalHeader)
+                            if (entry.relativeOffsetOfLocalHeaderField != entry2.relativeOffsetOfLocalHeaderField)
                             {
                                 flag = false;
                                 if (writer != null)
                                 {
-                                    writer.WriteLine("{0}: mismatch in RelativeOffsetOfLocalHeader  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry._RelativeOffsetOfLocalHeader, entry2._RelativeOffsetOfLocalHeader);
+                                    writer.WriteLine("{0}: mismatch in RelativeOffsetOfLocalHeader  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry.relativeOffsetOfLocalHeaderField, entry2.relativeOffsetOfLocalHeaderField);
                                 }
                             }
-                            if (entry._CompressedSize != entry2._CompressedSize)
+                            if (entry.compressedSizeField != entry2.compressedSizeField)
                             {
                                 flag = false;
                                 if (writer != null)
                                 {
-                                    writer.WriteLine("{0}: mismatch in CompressedSize  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry._CompressedSize, entry2._CompressedSize);
+                                    writer.WriteLine("{0}: mismatch in CompressedSize  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry.compressedSizeField, entry2.compressedSizeField);
                                 }
                             }
-                            if (entry._UncompressedSize != entry2._UncompressedSize)
+                            if (entry.uncompressedSizeField != entry2.uncompressedSizeField)
                             {
                                 flag = false;
                                 if (writer != null)
                                 {
-                                    writer.WriteLine("{0}: mismatch in UncompressedSize  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry._UncompressedSize, entry2._UncompressedSize);
+                                    writer.WriteLine("{0}: mismatch in UncompressedSize  (0x{1:X16} != 0x{2:X16})", entry.FileName, entry.uncompressedSizeField, entry2.uncompressedSizeField);
                                 }
                             }
                             if (entry.CompressionMethod != entry2.CompressionMethod)
@@ -4011,23 +4013,23 @@
 
         private void CleanupAfterSaveOperation()
         {
-            if (this._name != null)
+            if (this.nameField != null)
             {
-                if (this._writestream != null)
+                if (this.writeStreamField != null)
                 {
                     try
                     {
-                        this._writestream.Dispose();
+                        this.writeStreamField.Dispose();
                     }
                     catch (IOException)
                     {
                     }
                 }
-                this._writestream = null;
-                if (this._temporaryFileName != null)
+                this.writeStreamField = null;
+                if (this.temporaryFileNameField != null)
                 {
                     this.RemoveTempFile();
-                    this._temporaryFileName = null;
+                    this.temporaryFileNameField = null;
                 }
             }
         }
@@ -4041,7 +4043,7 @@
         /// </returns>
         public bool ContainsEntry(string name)
         {
-            return this._entries.ContainsKey(SharedUtilities.NormalizePathForUseInZipFile(name));
+            return this.entriesField.ContainsKey(SharedUtilities.NormalizePathForUseInZipFile(name));
         }
 
         /// <summary>
@@ -4136,27 +4138,27 @@
         /// </param>
         protected virtual void Dispose(bool disposeManagedResources)
         {
-            if (!this._disposed)
+            if (!this.disposedField)
             {
                 if (disposeManagedResources)
                 {
-                    if (this._ReadStreamIsOurs && (this._readstream != null))
+                    if (this.readStreamIsOursField && (this.readstreamField != null))
                     {
-                        this._readstream.Dispose();
-                        this._readstream = null;
+                        this.readstreamField.Dispose();
+                        this.readstreamField = null;
                     }
-                    if (((this._temporaryFileName != null) && (this._name != null)) && (this._writestream != null))
+                    if (((this.temporaryFileNameField != null) && (this.nameField != null)) && (this.writeStreamField != null))
                     {
-                        this._writestream.Dispose();
-                        this._writestream = null;
+                        this.writeStreamField.Dispose();
+                        this.writeStreamField = null;
                     }
-                    if (this.ParallelDeflater != null)
+                    if (this.parallelDeflaterField != null)
                     {
-                        this.ParallelDeflater.Dispose();
-                        this.ParallelDeflater = null;
+                        this.parallelDeflaterField.Dispose();
+                        this.parallelDeflaterField = null;
                     }
                 }
-                this._disposed = true;
+                this.disposedField = true;
             }
         }
 
@@ -4407,7 +4409,7 @@
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria))
             {
-                entry.Password = this._Password;
+                entry.Password = this.passwordField;
                 entry.Extract();
             }
         }
@@ -4450,7 +4452,7 @@
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria))
             {
-                entry.Password = this._Password;
+                entry.Password = this.passwordField;
                 entry.Extract(extractExistingFile);
             }
         }
@@ -4501,7 +4503,7 @@
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria, directoryPathInArchive))
             {
-                entry.Password = this._Password;
+                entry.Password = this.passwordField;
                 entry.Extract();
             }
         }
@@ -4536,7 +4538,7 @@
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria, directoryInArchive))
             {
-                entry.Password = this._Password;
+                entry.Password = this.passwordField;
                 entry.Extract(extractDirectory);
             }
         }
@@ -4591,7 +4593,7 @@
         {
             foreach (ZipEntry entry in this.SelectEntries(selectionCriteria, directoryPathInArchive))
             {
-                entry.Password = this._Password;
+                entry.Password = this.passwordField;
                 entry.Extract(extractDirectory, extractExistingFile);
             }
         }
@@ -4728,7 +4730,7 @@
         /// <returns>A generic enumerator suitable for use  within a foreach loop.</returns>
         public IEnumerator<ZipEntry> GetEnumerator()
         {
-            foreach (ZipEntry iteratorVariable0 in this._entries.Values)
+            foreach (ZipEntry iteratorVariable0 in this.entriesField.Values)
             {
                 yield return iteratorVariable0;
             }
@@ -4790,9 +4792,9 @@
 
         internal void InternalAddEntry(string name, ZipEntry entry)
         {
-            this._entries.Add(name, entry);
-            this._zipEntriesAsList = null;
-            this._contentsChanged = true;
+            this.entriesField.Add(name, entry);
+            this.zipEntriesAsListField = null;
+            this.contentsChangedField = true;
         }
 
         /// <summary>
@@ -4956,7 +4958,7 @@
 
         internal void NotifyEntryChanged()
         {
-            this._contentsChanged = true;
+            this.contentsChangedField = true;
         }
 
         private void OnAddCompleted()
@@ -4978,7 +4980,7 @@
                 addProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._addOperationCanceled = true;
+                    this.addOperationCanceledField = true;
                 }
             }
         }
@@ -5012,10 +5014,10 @@
                 extractProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._extractOperationCanceled = true;
+                    this.extractOperationCanceledField = true;
                 }
             }
-            return this._extractOperationCanceled;
+            return this.extractOperationCanceledField;
         }
 
         private void OnExtractEntry(int current, bool before, ZipEntry currentEntry, string path)
@@ -5023,11 +5025,11 @@
             EventHandler<ExtractProgressEventArgs> extractProgress = this.ExtractProgress;
             if (extractProgress != null)
             {
-                ExtractProgressEventArgs e = new ExtractProgressEventArgs(this.ArchiveNameForEvent, before, this._entries.Count, current, currentEntry, path);
+                ExtractProgressEventArgs e = new ExtractProgressEventArgs(this.ArchiveNameForEvent, before, this.entriesField.Count, current, currentEntry, path);
                 extractProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._extractOperationCanceled = true;
+                    this.extractOperationCanceledField = true;
                 }
             }
         }
@@ -5041,10 +5043,10 @@
                 extractProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._extractOperationCanceled = true;
+                    this.extractOperationCanceledField = true;
                 }
             }
-            return this._extractOperationCanceled;
+            return this.extractOperationCanceledField;
         }
 
         internal void OnReadBytes(ZipEntry entry)
@@ -5072,7 +5074,7 @@
             EventHandler<ReadProgressEventArgs> readProgress = this.ReadProgress;
             if (readProgress != null)
             {
-                ReadProgressEventArgs e = before ? ReadProgressEventArgs.Before(this.ArchiveNameForEvent, this._entries.Count) : ReadProgressEventArgs.After(this.ArchiveNameForEvent, entry, this._entries.Count);
+                ReadProgressEventArgs e = before ? ReadProgressEventArgs.Before(this.ArchiveNameForEvent, this.entriesField.Count) : ReadProgressEventArgs.After(this.ArchiveNameForEvent, entry, this.entriesField.Count);
                 readProgress(this, e);
             }
         }
@@ -5096,10 +5098,10 @@
                 saveProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._saveOperationCanceled = true;
+                    this.saveOperationCanceledField = true;
                 }
             }
-            return this._saveOperationCanceled;
+            return this.saveOperationCanceledField;
         }
 
         private void OnSaveCompleted()
@@ -5117,11 +5119,11 @@
             EventHandler<SaveProgressEventArgs> saveProgress = this.SaveProgress;
             if (saveProgress != null)
             {
-                SaveProgressEventArgs e = new SaveProgressEventArgs(this.ArchiveNameForEvent, before, this._entries.Count, current, entry);
+                SaveProgressEventArgs e = new SaveProgressEventArgs(this.ArchiveNameForEvent, before, this.entriesField.Count, current, entry);
                 saveProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._saveOperationCanceled = true;
+                    this.saveOperationCanceledField = true;
                 }
             }
         }
@@ -5135,7 +5137,7 @@
                 saveProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._saveOperationCanceled = true;
+                    this.saveOperationCanceledField = true;
                 }
             }
         }
@@ -5149,7 +5151,7 @@
                 saveProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._saveOperationCanceled = true;
+                    this.saveOperationCanceledField = true;
                 }
             }
         }
@@ -5163,27 +5165,27 @@
                 extractProgress(this, e);
                 if (e.Cancel)
                 {
-                    this._extractOperationCanceled = true;
+                    this.extractOperationCanceledField = true;
                 }
             }
-            return this._extractOperationCanceled;
+            return this.extractOperationCanceledField;
         }
 
         internal bool OnZipErrorSaving(ZipEntry entry, Exception exc)
         {
             if (this.ZipError != null)
             {
-                lock (this.LOCK)
+                lock (this.lockField)
                 {
                     ZipErrorEventArgs e = ZipErrorEventArgs.Saving(this.Name, entry, exc);
                     this.ZipError(this, e);
                     if (e.Cancel)
                     {
-                        this._saveOperationCanceled = true;
+                        this.saveOperationCanceledField = true;
                     }
                 }
             }
-            return this._saveOperationCanceled;
+            return this.saveOperationCanceledField;
         }
 
         /// <summary>
@@ -5558,18 +5560,18 @@
                 throw new ArgumentNullException("zipStream");
             }
             ZipFile zf = new ZipFile();
-            zf._StatusMessageTextWriter = statusMessageWriter;
-            zf._alternateEncoding = encoding ?? DefaultEncoding;
-            zf._alternateEncodingUsage = ZipOption.Always;
+            zf.statusMessageTextWriterField = statusMessageWriter;
+            zf.alternateEncodingField = encoding ?? DefaultEncoding;
+            zf.alternateEncodingUsageField = ZipOption.Always;
             if (readProgress != null)
             {
                 zf.ReadProgress += readProgress;
             }
-            zf._readstream = (zipStream.Position == 0L) ? zipStream : new OffsetStream(zipStream);
-            zf._ReadStreamIsOurs = false;
+            zf.readstreamField = (zipStream.Position == 0L) ? zipStream : new OffsetStream(zipStream);
+            zf.readStreamIsOursField = false;
             if (zf.Verbose)
             {
-                zf._StatusMessageTextWriter.WriteLine("reading from stream...");
+                zf.statusMessageTextWriterField.WriteLine("reading from stream...");
             }
             ReadIntoInstance(zf);
             return zf;
@@ -5611,18 +5613,18 @@
             ZipFile zf = new ZipFile();
             zf.AlternateEncoding = encoding ?? DefaultEncoding;
             zf.AlternateEncodingUsage = ZipOption.Always;
-            zf._StatusMessageTextWriter = statusMessageWriter;
-            zf._name = fileName;
+            zf.statusMessageTextWriterField = statusMessageWriter;
+            zf.nameField = fileName;
             if (readProgress != null)
             {
                 zf.ReadProgress = readProgress;
             }
             if (zf.Verbose)
             {
-                zf._StatusMessageTextWriter.WriteLine("reading from {0}...", fileName);
+                zf.statusMessageTextWriterField.WriteLine("reading from {0}...", fileName);
             }
             ReadIntoInstance(zf);
-            zf._fileAlreadyExists = true;
+            zf.fileAlreadyExistsField = true;
             return zf;
         }
 
@@ -5639,8 +5641,8 @@
                 {
                     zf.StatusMessageTextWriter.WriteLine("entry {0}", entry.FileName);
                 }
-                zf._entries.Add(entry.FileName, entry);
-                if (entry._InputUsesZip64)
+                zf.entriesField.Add(entry.FileName, entry);
+                if (entry.inputUsesZip64Field)
                 {
                     flag = true;
                 }
@@ -5650,9 +5652,9 @@
             {
                 zf.UseZip64WhenSaving = Zip64Option.Always;
             }
-            if (zf._locEndOfCDS > 0L)
+            if (zf.locEndOfCdsField > 0L)
             {
-                zf.ReadStream.Seek(zf._locEndOfCDS, SeekOrigin.Begin);
+                zf.ReadStream.Seek(zf.locEndOfCdsField, SeekOrigin.Begin);
             }
             ReadCentralDirectoryFooter(zf);
             if (!(!zf.Verbose || string.IsNullOrEmpty(zf.Comment)))
@@ -5661,7 +5663,7 @@
             }
             if (zf.Verbose)
             {
-                zf.StatusMessageTextWriter.WriteLine("read in {0} entries.", zf._entries.Count);
+                zf.StatusMessageTextWriter.WriteLine("read in {0} entries.", zf.entriesField.Count);
             }
             zf.OnReadCompleted();
         }
@@ -5681,11 +5683,11 @@
                 {
                     throw new ZipException("Bad size in the ZIP64 Central Directory.");
                 }
-                zf._versionMadeBy = BitConverter.ToUInt16(buffer, startIndex);
+                zf.versionMadeByField = BitConverter.ToUInt16(buffer, startIndex);
                 startIndex += 2;
-                zf._versionNeededToExtract = BitConverter.ToUInt16(buffer, startIndex);
+                zf.versionNeededToExtractField = BitConverter.ToUInt16(buffer, startIndex);
                 startIndex += 2;
-                zf._diskNumberWithCd = BitConverter.ToUInt32(buffer, startIndex);
+                zf.diskNumberWithCdField = BitConverter.ToUInt32(buffer, startIndex);
                 startIndex += 2;
                 buffer = new byte[num3 - 0x2cL];
                 readStream.Read(buffer, 0, buffer.Length);
@@ -5704,9 +5706,9 @@
             }
             buffer = new byte[0x10];
             zf.ReadStream.Read(buffer, 0, buffer.Length);
-            if (zf._diskNumberWithCd == 0)
+            if (zf.diskNumberWithCdField == 0)
             {
-                zf._diskNumberWithCd = BitConverter.ToUInt16(buffer, 2);
+                zf.diskNumberWithCdField = BitConverter.ToUInt16(buffer, 2);
             }
             ReadZipFileComment(zf);
         }
@@ -5721,7 +5723,7 @@
             Stream readStream = zf.ReadStream;
             try
             {
-                zf._readName = zf._name;
+                zf.readNameField = zf.nameField;
                 if (!readStream.CanSeek)
                 {
                     ReadIntoInstance_Orig(zf);
@@ -5760,15 +5762,15 @@
                 while (!flag && (offset > num4));
                 if (flag)
                 {
-                    zf._locEndOfCDS = readStream.Position - 4L;
+                    zf.locEndOfCdsField = readStream.Position - 4L;
                     byte[] buffer = new byte[0x10];
                     readStream.Read(buffer, 0, buffer.Length);
-                    zf._diskNumberWithCd = BitConverter.ToUInt16(buffer, 2);
-                    if (zf._diskNumberWithCd == 0xffff)
+                    zf.diskNumberWithCdField = BitConverter.ToUInt16(buffer, 2);
+                    if (zf.diskNumberWithCdField == 0xffff)
                     {
                         throw new ZipException("Spanned archives with more than 65534 segments are not supported at this time.");
                     }
-                    zf._diskNumberWithCd++;
+                    zf.diskNumberWithCdField++;
                     int startIndex = 12;
                     uint num7 = BitConverter.ToUInt32(buffer, startIndex);
                     if (num7 == uint.MaxValue)
@@ -5777,7 +5779,7 @@
                     }
                     else
                     {
-                        zf._OffsetOfCentralDirectory = num7;
+                        zf.offsetOfCentralDirectoryField = num7;
                         readStream.Seek((long) num7, SeekOrigin.Begin);
                     }
                     ReadCentralDirectory(zf);
@@ -5790,12 +5792,12 @@
             }
             catch (Exception exception)
             {
-                if (zf._ReadStreamIsOurs && (zf._readstream != null))
+                if (zf.readStreamIsOursField && (zf.readstreamField != null))
                 {
                     try
                     {
-                        zf._readstream.Dispose();
-                        zf._readstream = null;
+                        zf.readstreamField.Dispose();
+                        zf.readstreamField = null;
                     }
                     finally
                     {
@@ -5803,14 +5805,14 @@
                 }
                 throw new ZipException("Cannot read that as a ZipFile", exception);
             }
-            zf._contentsChanged = false;
+            zf.contentsChangedField = false;
         }
 
         private static void ReadIntoInstance_Orig(ZipFile zf)
         {
             ZipEntry entry;
             zf.OnReadStarted();
-            zf._entries = new Dictionary<string, ZipEntry>();
+            zf.entriesField = new Dictionary<string, ZipEntry>();
             if (zf.Verbose)
             {
                 if (zf.Name == null)
@@ -5830,7 +5832,7 @@
                 {
                     zf.StatusMessageTextWriter.WriteLine("  {0}", entry.FileName);
                 }
-                zf._entries.Add(entry.FileName, entry);
+                zf.entriesField.Add(entry.FileName, entry);
                 first = false;
             }
             try
@@ -5839,10 +5841,10 @@
                 Dictionary<string, object> previouslySeen = new Dictionary<string, object>();
                 while ((entry2 = ZipEntry.ReadDirEntry(zf, previouslySeen)) != null)
                 {
-                    ZipEntry entry3 = zf._entries[entry2.FileName];
+                    ZipEntry entry3 = zf.entriesField[entry2.FileName];
                     if (entry3 != null)
                     {
-                        entry3._Comment = entry2.Comment;
+                        entry3.commentField = entry2.Comment;
                         if (entry2.IsDirectory)
                         {
                             entry3.MarkAsDirectory();
@@ -5850,9 +5852,9 @@
                     }
                     previouslySeen.Add(entry2.FileName, null);
                 }
-                if (zf._locEndOfCDS > 0L)
+                if (zf.locEndOfCdsField > 0L)
                 {
-                    zf.ReadStream.Seek(zf._locEndOfCDS, SeekOrigin.Begin);
+                    zf.ReadStream.Seek(zf.locEndOfCdsField, SeekOrigin.Begin);
                 }
                 ReadCentralDirectoryFooter(zf);
                 if (!(!zf.Verbose || string.IsNullOrEmpty(zf.Comment)))
@@ -6020,9 +6022,9 @@
             {
                 throw new ArgumentNullException("entry");
             }
-            this._entries.Remove(SharedUtilities.NormalizePathForUseInZipFile(entry.FileName));
-            this._zipEntriesAsList = null;
-            this._contentsChanged = true;
+            this.entriesField.Remove(SharedUtilities.NormalizePathForUseInZipFile(entry.FileName));
+            this.zipEntriesAsListField = null;
+            this.contentsChangedField = true;
         }
 
         /// <summary>
@@ -6241,9 +6243,9 @@
         {
             try
             {
-                if (File.Exists(this._temporaryFileName))
+                if (File.Exists(this.temporaryFileNameField))
                 {
-                    File.Delete(this._temporaryFileName);
+                    File.Delete(this.temporaryFileNameField);
                 }
             }
             catch (IOException exception)
@@ -6268,11 +6270,11 @@
 
         internal void Reset(bool whileSaving)
         {
-            if (this._JustSaved)
+            if (this.justSavedField)
             {
                 using (ZipFile file = new ZipFile())
                 {
-                    file._readName = file._name = whileSaving ? (this._readName ?? this._name) : this._name;
+                    file.readNameField = file.nameField = whileSaving ? (this.readNameField ?? this.nameField) : this.nameField;
                     file.AlternateEncoding = this.AlternateEncoding;
                     file.AlternateEncodingUsage = this.AlternateEncodingUsage;
                     ReadIntoInstance(file);
@@ -6288,7 +6290,7 @@
                         }
                     }
                 }
-                this._JustSaved = false;
+                this.justSavedField = false;
             }
         }
 
@@ -6352,18 +6354,18 @@
             try
             {
                 bool flag = false;
-                this._saveOperationCanceled = false;
-                this._numberOfSegmentsForMostRecentSave = 0;
+                this.saveOperationCanceledField = false;
+                this.numberOfSegmentsForMostRecentSaveField = 0;
                 this.OnSaveStarted();
                 if (this.WriteStream == null)
                 {
                     throw new BadStateException("You haven't specified where to save the zip.");
                 }
-                if (!(((this._name == null) || !this._name.EndsWith(".exe")) || this._SavingSfx))
+                if (!(((this.nameField == null) || !this.nameField.EndsWith(".exe")) || this.savingSfxField))
                 {
                     throw new BadStateException("You specified an EXE for a plain zip file.");
                 }
-                if (!this._contentsChanged)
+                if (!this.contentsChangedField)
                 {
                     this.OnSaveCompleted();
                     if (this.Verbose)
@@ -6378,7 +6380,7 @@
                     {
                         this.StatusMessageTextWriter.WriteLine("saving....");
                     }
-                    if ((this._entries.Count >= 0xffff) && (this._zip64 == Zip64Option.Default))
+                    if ((this.entriesField.Count >= 0xffff) && (this.zip64Field == Zip64Option.Default))
                     {
                         throw new ZipException("The number of entries is 65535 or greater. Consider setting the UseZip64WhenSaving property on the ZipFile instance.");
                     }
@@ -6388,13 +6390,13 @@
                     {
                         this.OnSaveEntry(current, entry, true);
                         entry.Write(this.WriteStream);
-                        if (this._saveOperationCanceled)
+                        if (this.saveOperationCanceledField)
                         {
                             break;
                         }
                         current++;
                         this.OnSaveEntry(current, entry, false);
-                        if (this._saveOperationCanceled)
+                        if (this.saveOperationCanceledField)
                         {
                             break;
                         }
@@ -6403,49 +6405,49 @@
                             flag |= entry.OutputUsedZip64.Value;
                         }
                     }
-                    if (!this._saveOperationCanceled)
+                    if (!this.saveOperationCanceledField)
                     {
                         ZipSegmentedStream writeStream = this.WriteStream as ZipSegmentedStream;
-                        this._numberOfSegmentsForMostRecentSave = (writeStream != null) ? writeStream.CurrentSegment : 1;
-                        bool flag2 = ZipOutput.WriteCentralDirectoryStructure(this.WriteStream, entries, this._numberOfSegmentsForMostRecentSave, this._zip64, this.Comment, new ZipContainer(this));
+                        this.numberOfSegmentsForMostRecentSaveField = (writeStream != null) ? writeStream.CurrentSegment : 1;
+                        bool flag2 = ZipOutput.WriteCentralDirectoryStructure(this.WriteStream, entries, this.numberOfSegmentsForMostRecentSaveField, this.zip64Field, this.Comment, new ZipContainer(this));
                         this.OnSaveEvent(ZipProgressEventType.Saving_AfterSaveTempArchive);
-                        this._hasBeenSaved = true;
-                        this._contentsChanged = false;
+                        this.hasBeenSavedField = true;
+                        this.contentsChangedField = false;
                         flag |= flag2;
-                        this._OutputUsesZip64 = new bool?(flag);
-                        if ((this._name != null) && ((this._temporaryFileName != null) || (writeStream != null)))
+                        this.outputUsesZip64Field = new bool?(flag);
+                        if ((this.nameField != null) && ((this.temporaryFileNameField != null) || (writeStream != null)))
                         {
                             this.WriteStream.Dispose();
-                            if (this._saveOperationCanceled)
+                            if (this.saveOperationCanceledField)
                             {
                                 return;
                             }
-                            if (this._fileAlreadyExists && (this._readstream != null))
+                            if (this.fileAlreadyExistsField && (this.readstreamField != null))
                             {
-                                this._readstream.Close();
-                                this._readstream = null;
+                                this.readstreamField.Close();
+                                this.readstreamField = null;
                                 foreach (ZipEntry entry in entries)
                                 {
-                                    ZipSegmentedStream stream2 = entry._archiveStream as ZipSegmentedStream;
+                                    ZipSegmentedStream stream2 = entry.archiveStreamField as ZipSegmentedStream;
                                     if (stream2 != null)
                                     {
                                         stream2.Dispose();
                                     }
-                                    entry._archiveStream = null;
+                                    entry.archiveStreamField = null;
                                 }
                             }
                             string path = null;
-                            if (File.Exists(this._name))
+                            if (File.Exists(this.nameField))
                             {
-                                path = this._name + "." + Path.GetRandomFileName();
+                                path = this.nameField + "." + Path.GetRandomFileName();
                                 if (File.Exists(path))
                                 {
                                     this.DeleteFileWithRetry(path);
                                 }
-                                File.Move(this._name, path);
+                                File.Move(this.nameField, path);
                             }
                             this.OnSaveEvent(ZipProgressEventType.Saving_BeforeRenameTempArchive);
-                            File.Move((writeStream != null) ? writeStream.CurrentTempName : this._temporaryFileName, this._name);
+                            File.Move((writeStream != null) ? writeStream.CurrentTempName : this.temporaryFileNameField, this.nameField);
                             this.OnSaveEvent(ZipProgressEventType.Saving_AfterRenameTempArchive);
                             if (path != null)
                             {
@@ -6460,11 +6462,11 @@
                                 {
                                 }
                             }
-                            this._fileAlreadyExists = true;
+                            this.fileAlreadyExistsField = true;
                         }
                         NotifyEntriesSaveComplete(entries);
                         this.OnSaveCompleted();
-                        this._JustSaved = true;
+                        this.justSavedField = true;
                     }
                 }
             }
@@ -6573,10 +6575,10 @@
             {
                 throw new ArgumentException("Must be a writable stream.", "outputStream");
             }
-            this._name = null;
-            this._writestream = new CountingStream(outputStream);
-            this._contentsChanged = true;
-            this._fileAlreadyExists = false;
+            this.nameField = null;
+            this.writeStreamField = new CountingStream(outputStream);
+            this.contentsChangedField = true;
+            this.fileAlreadyExistsField = false;
             this.Save();
         }
 
@@ -6654,21 +6656,21 @@
         /// </example>
         public void Save(string fileName)
         {
-            if (this._name == null)
+            if (this.nameField == null)
             {
-                this._writestream = null;
+                this.writeStreamField = null;
             }
             else
             {
-                this._readName = this._name;
+                this.readNameField = this.nameField;
             }
-            this._name = fileName;
-            if (Directory.Exists(this._name))
+            this.nameField = fileName;
+            if (Directory.Exists(this.nameField))
             {
                 throw new ZipException("Bad Directory", new ArgumentException("That name specifies an existing directory. Please specify a filename.", "fileName"));
             }
-            this._contentsChanged = true;
-            this._fileAlreadyExists = File.Exists(this._name);
+            this.contentsChangedField = true;
+            this.fileAlreadyExistsField = File.Exists(this.nameField);
             this.Save();
         }
 
@@ -6822,21 +6824,21 @@
         /// Self-extracting archive.</param>
         public void SaveSelfExtractor(string exeToGenerate, SelfExtractorSaveOptions options)
         {
-            if (this._name == null)
+            if (this.nameField == null)
             {
-                this._writestream = null;
+                this.writeStreamField = null;
             }
-            this._SavingSfx = true;
-            this._name = exeToGenerate;
-            if (Directory.Exists(this._name))
+            this.savingSfxField = true;
+            this.nameField = exeToGenerate;
+            if (Directory.Exists(this.nameField))
             {
                 throw new ZipException("Bad Directory", new ArgumentException("That name specifies an existing directory. Please specify a filename.", "exeToGenerate"));
             }
-            this._contentsChanged = true;
-            this._fileAlreadyExists = File.Exists(this._name);
+            this.contentsChangedField = true;
+            this.fileAlreadyExistsField = File.Exists(this.nameField);
             this._SaveSfxStub(exeToGenerate, options);
             this.Save();
-            this._SavingSfx = false;
+            this.savingSfxField = false;
         }
 
         /// <summary>
@@ -6973,11 +6975,11 @@
 
         internal Stream StreamForDiskNumber(uint diskNumber)
         {
-            if (((diskNumber + 1) == this._diskNumberWithCd) || ((diskNumber == 0) && (this._diskNumberWithCd == 0)))
+            if (((diskNumber + 1) == this.diskNumberWithCdField) || ((diskNumber == 0) && (this.diskNumberWithCdField == 0)))
             {
                 return this.ReadStream;
             }
-            return ZipSegmentedStream.ForReading(this._readName ?? this._name, diskNumber, this._diskNumberWithCd);
+            return ZipSegmentedStream.ForReading(this.readNameField ?? this.nameField, diskNumber, this.diskNumberWithCdField);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -7623,8 +7625,8 @@
             readStream.Seek(-40L, SeekOrigin.Current);
             readStream.Read(buffer, 0, 0x10);
             long offset = BitConverter.ToInt64(buffer, 8);
-            zf._OffsetOfCentralDirectory = uint.MaxValue;
-            zf._OffsetOfCentralDirectory64 = offset;
+            zf.offsetOfCentralDirectoryField = uint.MaxValue;
+            zf.offsetOfCentralDirectory64Field = offset;
             readStream.Seek(offset, SeekOrigin.Begin);
             uint num2 = (uint) SharedUtilities.ReadInt(readStream);
             if (num2 != 0x6064b50)
@@ -7677,11 +7679,11 @@
         {
             get
             {
-                return this._alternateEncoding;
+                return this.alternateEncodingField;
             }
             set
             {
-                this._alternateEncoding = value;
+                this.alternateEncodingField = value;
             }
         }
 
@@ -7694,11 +7696,11 @@
         {
             get
             {
-                return this._alternateEncodingUsage;
+                return this.alternateEncodingUsageField;
             }
             set
             {
-                this._alternateEncodingUsage = value;
+                this.alternateEncodingUsageField = value;
             }
         }
 
@@ -7706,7 +7708,7 @@
         {
             get
             {
-                return ((this._name != null) ? this._name : "(stream)");
+                return ((this.nameField != null) ? this.nameField : "(stream)");
             }
         }
 
@@ -7770,11 +7772,11 @@
         {
             get
             {
-                return this._BufferSize;
+                return this.bufferSizeField;
             }
             set
             {
-                this._BufferSize = value;
+                this.bufferSizeField = value;
             }
         }
 
@@ -7795,13 +7797,13 @@
         {
             get
             {
-                return this._CaseSensitiveRetrieval;
+                return this.caseSensitiveRetrievalField;
             }
             set
             {
-                if (value != this._CaseSensitiveRetrieval)
+                if (value != this.caseSensitiveRetrievalField)
                 {
-                    this._CaseSensitiveRetrieval = value;
+                    this.caseSensitiveRetrievalField = value;
                     this._initEntriesDictionary();
                 }
             }
@@ -7885,12 +7887,12 @@
         {
             get
             {
-                return this._Comment;
+                return this.commentField;
             }
             set
             {
-                this._Comment = value;
-                this._contentsChanged = true;
+                this.commentField = value;
+                this.contentsChangedField = true;
             }
         }
 
@@ -7940,11 +7942,11 @@
         {
             get
             {
-                return this._compressionMethod;
+                return this.compressionMethodField;
             }
             set
             {
-                this._compressionMethod = value;
+                this.compressionMethodField = value;
             }
         }
 
@@ -7955,7 +7957,7 @@
         {
             get
             {
-                return this._entries.Count;
+                return this.entriesField.Count;
             }
         }
 
@@ -7968,7 +7970,7 @@
         {
             get
             {
-                return _defaultEncoding;
+                return defaultEncodingField;
             }
         }
 
@@ -8046,11 +8048,11 @@
         {
             get
             {
-                return this._emitUnixTimes;
+                return this.emitUnixTimesField;
             }
             set
             {
-                this._emitUnixTimes = value;
+                this.emitUnixTimesField = value;
             }
         }
 
@@ -8158,11 +8160,11 @@
         {
             get
             {
-                return this._emitNtfsTimes;
+                return this.emitNtfsTimesField;
             }
             set
             {
-                this._emitNtfsTimes = value;
+                this.emitNtfsTimesField = value;
             }
         }
 
@@ -8286,7 +8288,7 @@
         {
             get
             {
-                return this._Encryption;
+                return this.encryptionField;
             }
             set
             {
@@ -8294,7 +8296,7 @@
                 {
                     throw new InvalidOperationException("You may not set Encryption to that value.");
                 }
-                this._Encryption = value;
+                this.encryptionField = value;
             }
         }
 
@@ -8320,7 +8322,7 @@
         {
             get
             {
-                return this._entries.Values;
+                return this.entriesField.Values;
             }
         }
 
@@ -8441,7 +8443,7 @@
         {
             get
             {
-                return this._entries.Keys;
+                return this.entriesField.Keys;
             }
         }
 
@@ -8573,30 +8575,30 @@
             {
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format(CultureInfo.InvariantCulture, "          ZipFile: {0}\n", this.Name));
-                if (!string.IsNullOrEmpty(this._Comment))
+                if (!string.IsNullOrEmpty(this.commentField))
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "          Comment: {0}\n", this._Comment));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "          Comment: {0}\n", this.commentField));
                 }
-                if (this._versionMadeBy != 0)
+                if (this.versionMadeByField != 0)
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "  version made by: 0x{0:X4}\n", this._versionMadeBy));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "  version made by: 0x{0:X4}\n", this.versionMadeByField));
                 }
-                if (this._versionNeededToExtract != 0)
+                if (this.versionNeededToExtractField != 0)
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "needed to extract: 0x{0:X4}\n", this._versionNeededToExtract));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "needed to extract: 0x{0:X4}\n", this.versionNeededToExtractField));
                 }
                 builder.Append(string.Format(CultureInfo.InvariantCulture, "       uses ZIP64: {0}\n", this.InputUsesZip64));
-                builder.Append(string.Format(CultureInfo.InvariantCulture, "     disk with CD: {0}\n", this._diskNumberWithCd));
-                if (this._OffsetOfCentralDirectory == uint.MaxValue)
+                builder.Append(string.Format(CultureInfo.InvariantCulture, "     disk with CD: {0}\n", this.diskNumberWithCdField));
+                if (this.offsetOfCentralDirectoryField == uint.MaxValue)
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "      CD64 offset: 0x{0:X16}\n", this._OffsetOfCentralDirectory64));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "      CD64 offset: 0x{0:X16}\n", this.offsetOfCentralDirectory64Field));
                 }
                 else
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "        CD offset: 0x{0:X8}\n", this._OffsetOfCentralDirectory));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "        CD offset: 0x{0:X8}\n", this.offsetOfCentralDirectoryField));
                 }
                 builder.Append("\n");
-                foreach (ZipEntry entry in this._entries.Values)
+                foreach (ZipEntry entry in this.entriesField.Values)
                 {
                     builder.Append(entry.Info);
                 }
@@ -8617,7 +8619,7 @@
         {
             get
             {
-                if (this._entries.Count > 0xfffe)
+                if (this.entriesField.Count > 0xfffe)
                 {
                     return true;
                 }
@@ -8627,7 +8629,7 @@
                     {
                         return null;
                     }
-                    if (entry._InputUsesZip64)
+                    if (entry.inputUsesZip64Field)
                     {
                         return true;
                     }
@@ -8721,14 +8723,14 @@
             get
             {
                 string key = SharedUtilities.NormalizePathForUseInZipFile(fileName);
-                if (this._entries.ContainsKey(key))
+                if (this.entriesField.ContainsKey(key))
                 {
-                    return this._entries[key];
+                    return this.entriesField[key];
                 }
                 key = key.Replace("/", @"\");
-                if (this._entries.ContainsKey(key))
+                if (this.entriesField.ContainsKey(key))
                 {
-                    return this._entries[key];
+                    return this.entriesField[key];
                 }
                 return null;
             }
@@ -8781,11 +8783,11 @@
         {
             get
             {
-                if (this._lengthOfReadStream == -99L)
+                if (this.lengthOfReadStreamField == -99L)
                 {
-                    this._lengthOfReadStream = this._ReadStreamIsOurs ? SharedUtilities.GetFileLength(this._name) : -1L;
+                    this.lengthOfReadStreamField = this.readStreamIsOursField ? SharedUtilities.GetFileLength(this.nameField) : -1L;
                 }
-                return this._lengthOfReadStream;
+                return this.lengthOfReadStreamField;
             }
         }
 
@@ -8892,7 +8894,7 @@
         {
             get
             {
-                return this._maxOutputSegmentSize;
+                return this.maxOutputSegmentSizeField;
             }
             set
             {
@@ -8900,7 +8902,7 @@
                 {
                     throw new ZipException("The minimum acceptable segment size is 65536.");
                 }
-                this._maxOutputSegmentSize = value;
+                this.maxOutputSegmentSizeField = value;
             }
         }
 
@@ -8932,11 +8934,11 @@
         {
             get
             {
-                return this._name;
+                return this.nameField;
             }
             set
             {
-                this._name = value;
+                this.nameField = value;
             }
         }
 
@@ -8960,7 +8962,7 @@
         {
             get
             {
-                return (((int) this._numberOfSegmentsForMostRecentSave) + 1);
+                return (((int) this.numberOfSegmentsForMostRecentSaveField) + 1);
             }
         }
 
@@ -9004,7 +9006,7 @@
         {
             get
             {
-                return this._OutputUsesZip64;
+                return this.outputUsesZip64Field;
             }
         }
 
@@ -9085,7 +9087,7 @@
         {
             get
             {
-                return this._maxBufferPairs;
+                return this.maxBufferPairsField;
             }
             set
             {
@@ -9093,7 +9095,7 @@
                 {
                     throw new ArgumentOutOfRangeException("ParallelDeflateMaxBufferPairs", "Value must be 4 or greater.");
                 }
-                this._maxBufferPairs = value;
+                this.maxBufferPairsField = value;
             }
         }
 
@@ -9156,7 +9158,7 @@
         {
             get
             {
-                return this._ParallelDeflateThreshold;
+                return this.parallelDeflateThresholdField;
             }
             set
             {
@@ -9164,7 +9166,7 @@
                 {
                     throw new ArgumentOutOfRangeException("ParallelDeflateThreshold should be -1, 0, or > 65536");
                 }
-                this._ParallelDeflateThreshold = value;
+                this.parallelDeflateThresholdField = value;
             }
         }
 
@@ -9309,12 +9311,12 @@
         {
             private get
             {
-                return this._Password;
+                return this.passwordField;
             }
             set
             {
-                this._Password = value;
-                if (this._Password == null)
+                this.passwordField = value;
+                if (this.passwordField == null)
                 {
                     this.Encryption = EncryptionAlgorithm.None;
                 }
@@ -9329,12 +9331,12 @@
         {
             get
             {
-                if ((this._readstream == null) && ((this._readName != null) || (this._name != null)))
+                if ((this.readstreamField == null) && ((this.readNameField != null) || (this.nameField != null)))
                 {
-                    this._readstream = File.Open(this._readName ?? this._name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    this._ReadStreamIsOurs = true;
+                    this.readstreamField = File.Open(this.readNameField ?? this.nameField, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    this.readStreamIsOursField = true;
                 }
-                return this._readstream;
+                return this.readstreamField;
             }
         }
 
@@ -9382,15 +9384,15 @@
         {
             get
             {
-                if (this._entries.Count > 0xfffe)
+                if (this.entriesField.Count > 0xfffe)
                 {
                     return true;
                 }
-                if (!(this._hasBeenSaved && !this._contentsChanged))
+                if (!(this.hasBeenSavedField && !this.contentsChangedField))
                 {
                     return null;
                 }
-                foreach (ZipEntry entry in this._entries.Values)
+                foreach (ZipEntry entry in this.entriesField.Values)
                 {
                     if (entry.RequiresZip64.Value)
                     {
@@ -9547,11 +9549,11 @@
         {
             get
             {
-                return this._StatusMessageTextWriter;
+                return this.statusMessageTextWriterField;
             }
             set
             {
-                this._StatusMessageTextWriter = value;
+                this.statusMessageTextWriterField = value;
             }
         }
 
@@ -9571,11 +9573,11 @@
         {
             get
             {
-                return this._Strategy;
+                return this.strategyField;
             }
             set
             {
-                this._Strategy = value;
+                this.strategyField = value;
             }
         }
 
@@ -9632,11 +9634,11 @@
         {
             get
             {
-                return this._TempFileFolder;
+                return this.tempFileFolderField;
             }
             set
             {
-                this._TempFileFolder = value;
+                this.tempFileFolderField = value;
                 if ((value != null) && !Directory.Exists(value))
                 {
                     throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "That directory ({0}) does not exist.", value));
@@ -9686,11 +9688,11 @@
         {
             get
             {
-                return this._zip64;
+                return this.zip64Field;
             }
             set
             {
-                this._zip64 = value;
+                this.zip64Field = value;
             }
         }
 
@@ -9706,7 +9708,7 @@
         {
             get
             {
-                return (this._StatusMessageTextWriter != null);
+                return (this.statusMessageTextWriterField != null);
             }
         }
 
@@ -9714,20 +9716,20 @@
         {
             get
             {
-                if (this._writestream == null)
+                if (this.writeStreamField == null)
                 {
-                    if (this._name == null)
+                    if (this.nameField == null)
                     {
-                        return this._writestream;
+                        return this.writeStreamField;
                     }
-                    if (this._maxOutputSegmentSize != 0)
+                    if (this.maxOutputSegmentSizeField != 0)
                     {
-                        this._writestream = ZipSegmentedStream.ForWriting(this._name, this._maxOutputSegmentSize);
-                        return this._writestream;
+                        this.writeStreamField = ZipSegmentedStream.ForWriting(this.nameField, this.maxOutputSegmentSizeField);
+                        return this.writeStreamField;
                     }
-                    SharedUtilities.CreateAndOpenUniqueTempFile(this.TempFileFolder ?? Path.GetDirectoryName(this._name), out this._writestream, out this._temporaryFileName);
+                    SharedUtilities.CreateAndOpenUniqueTempFile(this.TempFileFolder ?? Path.GetDirectoryName(this.nameField), out this.writeStreamField, out this.temporaryFileNameField);
                 }
-                return this._writestream;
+                return this.writeStreamField;
             }
             set
             {
@@ -9735,7 +9737,7 @@
                 {
                     throw new ZipException("Cannot set the stream to a non-null value.");
                 }
-                this._writestream = null;
+                this.writeStreamField = null;
             }
         }
 
@@ -9743,11 +9745,11 @@
         {
             get
             {
-                if (this._zipEntriesAsList == null)
+                if (this.zipEntriesAsListField == null)
                 {
-                    this._zipEntriesAsList = new List<ZipEntry>(this._entries.Values);
+                    this.zipEntriesAsListField = new List<ZipEntry>(this.entriesField.Values);
                 }
-                return this._zipEntriesAsList;
+                return this.zipEntriesAsListField;
             }
         }
 
@@ -9846,14 +9848,14 @@
             {
                 if (this.ZipError != null)
                 {
-                    this._zipErrorAction = ZipErrorAction.InvokeErrorEvent;
+                    this.zipErrorActionField = ZipErrorAction.InvokeErrorEvent;
                 }
-                return this._zipErrorAction;
+                return this.zipErrorActionField;
             }
             set
             {
-                this._zipErrorAction = value;
-                if ((this._zipErrorAction != ZipErrorAction.InvokeErrorEvent) && (this.ZipError != null))
+                this.zipErrorActionField = value;
+                if ((this.zipErrorActionField != ZipErrorAction.InvokeErrorEvent) && (this.ZipError != null))
                 {
                     this.ZipError = null;
                 }

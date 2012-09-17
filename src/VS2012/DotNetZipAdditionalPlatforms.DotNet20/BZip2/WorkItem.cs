@@ -6,16 +6,16 @@
 
     internal class WorkItem
     {
-        public BitWriter bw;
-        public int index;
-        public MemoryStream ms = new MemoryStream();
-        public int ordinal;
+        public BitWriter bitWriterField;
+        public int indexField;
+        public MemoryStream memoryStreamField = new MemoryStream();
+        public int ordinalField;
 
         public WorkItem(int ix, int blockSize)
         {
-            this.bw = new BitWriter(this.ms);
-            this.Compressor = new BZip2Compressor(this.bw, blockSize);
-            this.index = ix;
+            this.bitWriterField = new BitWriter(this.memoryStreamField);
+            this.Compressor = new BZip2Compressor(this.bitWriterField, blockSize);
+            this.indexField = ix;
         }
 
         public BZip2Compressor Compressor { get; set; }

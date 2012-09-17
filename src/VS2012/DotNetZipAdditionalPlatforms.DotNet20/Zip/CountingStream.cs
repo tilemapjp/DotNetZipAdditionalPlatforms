@@ -43,10 +43,10 @@
     /// </remarks>
     public class CountingStream : Stream
     {
-        private long _bytesRead;
-        private long _bytesWritten;
-        private long _initialOffset;
-        private Stream _s;
+        private long bytesReadField;
+        private long bytesWrittenField;
+        private long initialOffsetField;
+        private Stream streamField;
 
         /// <summary>
         /// The constructor.
@@ -54,14 +54,14 @@
         /// <param name="stream">The underlying stream</param>
         public CountingStream(Stream stream)
         {
-            this._s = stream;
+            this.streamField = stream;
             try
             {
-                this._initialOffset = this._s.Position;
+                this.initialOffsetField = this.streamField.Position;
             }
             catch
             {
-                this._initialOffset = 0L;
+                this.initialOffsetField = 0L;
             }
         }
 
@@ -82,14 +82,14 @@
         /// </remarks>
         public void Adjust(long delta)
         {
-            this._bytesWritten -= delta;
-            if (this._bytesWritten < 0L)
+            this.bytesWrittenField -= delta;
+            if (this.bytesWrittenField < 0L)
             {
                 throw new InvalidOperationException();
             }
-            if (this._s is CountingStream)
+            if (this.streamField is CountingStream)
             {
-                ((CountingStream) this._s).Adjust(delta);
+                ((CountingStream) this.streamField).Adjust(delta);
             }
         }
 
@@ -98,7 +98,7 @@
         /// </summary>
         public override void Flush()
         {
-            this._s.Flush();
+            this.streamField.Flush();
         }
 
         /// <summary>
@@ -110,8 +110,8 @@
         /// <returns>the number of bytes read, after decryption and decompression.</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            int num = this._s.Read(buffer, offset, count);
-            this._bytesRead += num;
+            int num = this.streamField.Read(buffer, offset, count);
+            this.bytesReadField += num;
             return num;
         }
 
@@ -123,7 +123,7 @@
         /// <returns>The new position</returns>
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return this._s.Seek(offset, origin);
+            return this.streamField.Seek(offset, origin);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@
         /// <param name="value">the length to set on the underlying stream.</param>
         public override void SetLength(long value)
         {
-            this._s.SetLength(value);
+            this.streamField.SetLength(value);
         }
 
         /// <summary>
@@ -146,8 +146,8 @@
         {
             if (count != 0)
             {
-                this._s.Write(buffer, offset, count);
-                this._bytesWritten += count;
+                this.streamField.Write(buffer, offset, count);
+                this.bytesWrittenField += count;
             }
         }
 
@@ -158,7 +158,7 @@
         {
             get
             {
-                return this._bytesRead;
+                return this.bytesReadField;
             }
         }
 
@@ -169,7 +169,7 @@
         {
             get
             {
-                return this._bytesWritten;
+                return this.bytesWrittenField;
             }
         }
 
@@ -180,7 +180,7 @@
         {
             get
             {
-                return this._s.CanRead;
+                return this.streamField.CanRead;
             }
         }
 
@@ -191,7 +191,7 @@
         {
             get
             {
-                return this._s.CanSeek;
+                return this.streamField.CanSeek;
             }
         }
 
@@ -202,7 +202,7 @@
         {
             get
             {
-                return this._s.CanWrite;
+                return this.streamField.CanWrite;
             }
         }
 
@@ -214,7 +214,7 @@
         {
             get
             {
-                return (this._initialOffset + this._bytesWritten);
+                return (this.initialOffsetField + this.bytesWrittenField);
             }
         }
 
@@ -225,7 +225,7 @@
         {
             get
             {
-                return this._s.Length;
+                return this.streamField.Length;
             }
         }
 
@@ -236,11 +236,11 @@
         {
             get
             {
-                return this._s.Position;
+                return this.streamField.Position;
             }
             set
             {
-                this._s.Seek(value, SeekOrigin.Begin);
+                this.streamField.Seek(value, SeekOrigin.Begin);
             }
         }
 
@@ -251,7 +251,7 @@
         {
             get
             {
-                return this._s;
+                return this.streamField;
             }
         }
     }

@@ -9,9 +9,9 @@
     /// </summary>
     internal class ZipCipherStream : Stream
     {
-        private ZipCrypto _cipher;
-        private CryptoMode _mode;
-        private Stream _s;
+        private ZipCrypto cipherField;
+        private CryptoMode modeField;
+        private Stream streamField;
 
         /// <summary>  The constructor. </summary>
         /// <param name="s">The underlying stream</param>
@@ -19,9 +19,9 @@
         /// <param name="cipher">The pre-initialized ZipCrypto object.</param>
         public ZipCipherStream(Stream s, ZipCrypto cipher, CryptoMode mode)
         {
-            this._cipher = cipher;
-            this._s = s;
-            this._mode = mode;
+            this.cipherField = cipher;
+            this.streamField = s;
+            this.modeField = mode;
         }
 
         public override void Flush()
@@ -30,7 +30,7 @@
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (this._mode == CryptoMode.Encrypt)
+            if (this.modeField == CryptoMode.Encrypt)
             {
                 throw new NotSupportedException("This stream does not encrypt via Read()");
             }
@@ -39,8 +39,8 @@
                 throw new ArgumentNullException("buffer");
             }
             byte[] buffer2 = new byte[count];
-            int length = this._s.Read(buffer2, 0, count);
-            byte[] buffer3 = this._cipher.DecryptMessage(buffer2, length);
+            int length = this.streamField.Read(buffer2, 0, count);
+            byte[] buffer3 = this.cipherField.DecryptMessage(buffer2, length);
             for (int i = 0; i < length; i++)
             {
                 buffer[offset + i] = buffer3[i];
@@ -60,7 +60,7 @@
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (this._mode == CryptoMode.Decrypt)
+            if (this.modeField == CryptoMode.Decrypt)
             {
                 throw new NotSupportedException("This stream does not Decrypt via Write()");
             }
@@ -83,8 +83,8 @@
                 {
                     plainText = buffer;
                 }
-                byte[] buffer3 = this._cipher.EncryptMessage(plainText, count);
-                this._s.Write(buffer3, 0, buffer3.Length);
+                byte[] buffer3 = this.cipherField.EncryptMessage(plainText, count);
+                this.streamField.Write(buffer3, 0, buffer3.Length);
             }
         }
 
@@ -92,7 +92,7 @@
         {
             get
             {
-                return (this._mode == CryptoMode.Decrypt);
+                return (this.modeField == CryptoMode.Decrypt);
             }
         }
 
@@ -108,7 +108,7 @@
         {
             get
             {
-                return (this._mode == CryptoMode.Encrypt);
+                return (this.modeField == CryptoMode.Encrypt);
             }
         }
 

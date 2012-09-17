@@ -17,58 +17,58 @@
     /// </remarks>
     internal class WinZipAesCrypto
     {
-        private bool _cryptoGenerated;
-        internal byte[] _generatedPv;
-        private byte[] _keyBytes;
-        internal int _KeyStrengthInBits;
-        private byte[] _MacInitializationVector;
-        private string _Password;
-        internal byte[] _providedPv;
-        internal byte[] _Salt;
-        private byte[] _StoredMac;
-        public byte[] CalculatedMac;
-        private short PasswordVerificationGenerated;
-        private short PasswordVerificationStored;
-        private int Rfc2898KeygenIterations = 0x3e8;
+        private bool cryptoGeneratedField;
+        internal byte[] generatedPvField;
+        private byte[] keyBytesField;
+        internal int keyStrengthInBitsField;
+        private byte[] macInitializationVectorField;
+        private string passwordField;
+        internal byte[] providedPvField;
+        internal byte[] saltField;
+        private byte[] storedMacField;
+        public byte[] calculatedMacField;
+        private short passwordVerificationGeneratedField;
+        private short passwordVerificationStoredField;
+        private int rfc2898KeygenIterationsField = 0x3e8;
 
         private WinZipAesCrypto(string password, int KeyStrengthInBits)
         {
-            this._Password = password;
-            this._KeyStrengthInBits = KeyStrengthInBits;
+            this.passwordField = password;
+            this.keyStrengthInBitsField = KeyStrengthInBits;
         }
 
         private void _GenerateCryptoBytes()
         {
-            Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(this._Password, this.Salt, this.Rfc2898KeygenIterations);
-            this._keyBytes = bytes.GetBytes(this._KeyStrengthInBytes);
-            this._MacInitializationVector = bytes.GetBytes(this._KeyStrengthInBytes);
-            this._generatedPv = bytes.GetBytes(2);
-            this._cryptoGenerated = true;
+            Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(this.passwordField, this.Salt, this.rfc2898KeygenIterationsField);
+            this.keyBytesField = bytes.GetBytes(this._KeyStrengthInBytes);
+            this.macInitializationVectorField = bytes.GetBytes(this._KeyStrengthInBytes);
+            this.generatedPvField = bytes.GetBytes(2);
+            this.cryptoGeneratedField = true;
         }
 
         public static WinZipAesCrypto Generate(string password, int KeyStrengthInBits)
         {
             WinZipAesCrypto crypto = new WinZipAesCrypto(password, KeyStrengthInBits);
             int num = crypto._KeyStrengthInBytes / 2;
-            crypto._Salt = new byte[num];
-            new Random().NextBytes(crypto._Salt);
+            crypto.saltField = new byte[num];
+            new Random().NextBytes(crypto.saltField);
             return crypto;
         }
 
         public void ReadAndVerifyMac(Stream s)
         {
             bool flag = false;
-            this._StoredMac = new byte[10];
-            s.Read(this._StoredMac, 0, this._StoredMac.Length);
-            if (this._StoredMac.Length != this.CalculatedMac.Length)
+            this.storedMacField = new byte[10];
+            s.Read(this.storedMacField, 0, this.storedMacField.Length);
+            if (this.storedMacField.Length != this.calculatedMacField.Length)
             {
                 flag = true;
             }
             if (!flag)
             {
-                for (int i = 0; i < this._StoredMac.Length; i++)
+                for (int i = 0; i < this.storedMacField.Length; i++)
                 {
-                    if (this._StoredMac[i] != this.CalculatedMac[i])
+                    if (this.storedMacField[i] != this.calculatedMacField[i])
                     {
                         flag = true;
                     }
@@ -84,15 +84,15 @@
         {
             WinZipAesCrypto crypto = new WinZipAesCrypto(password, KeyStrengthInBits);
             int num = crypto._KeyStrengthInBytes / 2;
-            crypto._Salt = new byte[num];
-            crypto._providedPv = new byte[2];
-            s.Read(crypto._Salt, 0, crypto._Salt.Length);
-            s.Read(crypto._providedPv, 0, crypto._providedPv.Length);
-            crypto.PasswordVerificationStored = (short) (crypto._providedPv[0] + (crypto._providedPv[1] * 0x100));
+            crypto.saltField = new byte[num];
+            crypto.providedPvField = new byte[2];
+            s.Read(crypto.saltField, 0, crypto.saltField.Length);
+            s.Read(crypto.providedPvField, 0, crypto.providedPvField.Length);
+            crypto.passwordVerificationStoredField = (short) (crypto.providedPvField[0] + (crypto.providedPvField[1] * 0x100));
             if (password != null)
             {
-                crypto.PasswordVerificationGenerated = (short) (crypto.GeneratedPV[0] + (crypto.GeneratedPV[1] * 0x100));
-                if (crypto.PasswordVerificationGenerated != crypto.PasswordVerificationStored)
+                crypto.passwordVerificationGeneratedField = (short) (crypto.GeneratedPV[0] + (crypto.GeneratedPV[1] * 0x100));
+                if (crypto.passwordVerificationGeneratedField != crypto.passwordVerificationStoredField)
                 {
                     throw new BadPasswordException("bad password");
                 }
@@ -104,7 +104,7 @@
         {
             get
             {
-                return (this._KeyStrengthInBits / 8);
+                return (this.keyStrengthInBitsField / 8);
             }
         }
 
@@ -112,11 +112,11 @@
         {
             get
             {
-                if (!this._cryptoGenerated)
+                if (!this.cryptoGeneratedField)
                 {
                     this._GenerateCryptoBytes();
                 }
-                return this._generatedPv;
+                return this.generatedPvField;
             }
         }
 
@@ -124,11 +124,11 @@
         {
             get
             {
-                if (!this._cryptoGenerated)
+                if (!this.cryptoGeneratedField)
                 {
                     this._GenerateCryptoBytes();
                 }
-                return this._keyBytes;
+                return this.keyBytesField;
             }
         }
 
@@ -136,11 +136,11 @@
         {
             get
             {
-                if (!this._cryptoGenerated)
+                if (!this.cryptoGeneratedField)
                 {
                     this._GenerateCryptoBytes();
                 }
-                return this._MacInitializationVector;
+                return this.macInitializationVectorField;
             }
         }
 
@@ -148,15 +148,15 @@
         {
             private get
             {
-                return this._Password;
+                return this.passwordField;
             }
             set
             {
-                this._Password = value;
-                if (this._Password != null)
+                this.passwordField = value;
+                if (this.passwordField != null)
                 {
-                    this.PasswordVerificationGenerated = (short) (this.GeneratedPV[0] + (this.GeneratedPV[1] * 0x100));
-                    if (this.PasswordVerificationGenerated != this.PasswordVerificationStored)
+                    this.passwordVerificationGeneratedField = (short) (this.GeneratedPV[0] + (this.GeneratedPV[1] * 0x100));
+                    if (this.passwordVerificationGeneratedField != this.passwordVerificationStoredField)
                     {
                         throw new BadPasswordException();
                     }
@@ -168,7 +168,7 @@
         {
             get
             {
-                return this._Salt;
+                return this.saltField;
             }
         }
 

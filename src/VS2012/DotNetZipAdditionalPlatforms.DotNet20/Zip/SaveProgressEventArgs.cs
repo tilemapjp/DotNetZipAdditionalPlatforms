@@ -7,7 +7,7 @@
     /// </summary>
     public class SaveProgressEventArgs : ZipProgressEventArgs
     {
-        private int _entriesSaved;
+        private int entriesSavedField;
 
         internal SaveProgressEventArgs()
         {
@@ -29,7 +29,7 @@
         {
             base.EntriesTotal = entriesTotal;
             base.CurrentEntry = entry;
-            this._entriesSaved = entriesSaved;
+            this.entriesSavedField = entriesSaved;
         }
 
         internal static SaveProgressEventArgs ByteUpdate(string archiveName, ZipEntry entry, long bytesXferred, long totalBytes)
@@ -59,7 +59,7 @@
         {
             get
             {
-                return this._entriesSaved;
+                return this.entriesSavedField;
             }
         }
     }

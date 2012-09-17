@@ -24,10 +24,10 @@
     /// </remarks>
     public class CrcCalculatorStream : Stream, IDisposable
     {
-        private CRC32 _Crc32;
-        internal Stream _innerStream;
-        private bool _leaveOpen;
-        private long _lengthLimit;
+        private CRC32 crc32Field;
+        internal Stream innerStreamField;
+        private bool leaveOpenField;
+        private long lengthLimitField;
         private const long UnsetLengthLimit = -99L;
 
         /// <summary>
@@ -111,11 +111,11 @@
 
         private CrcCalculatorStream(bool leaveOpen, long length, Stream stream, CRC32 crc32)
         {
-            this._lengthLimit = -99L;
-            this._innerStream = stream;
-            this._Crc32 = crc32 ?? new CRC32();
-            this._lengthLimit = length;
-            this._leaveOpen = leaveOpen;
+            this.lengthLimitField = -99L;
+            this.innerStreamField = stream;
+            this.crc32Field = crc32 ?? new CRC32();
+            this.lengthLimitField = length;
+            this.leaveOpenField = leaveOpen;
         }
 
         /// <summary>
@@ -148,9 +148,9 @@
         public override void Close()
         {
             base.Close();
-            if (!this._leaveOpen)
+            if (!this.leaveOpenField)
             {
-                this._innerStream.Close();
+                this.innerStreamField.Close();
             }
         }
 
@@ -159,7 +159,7 @@
         /// </summary>
         public override void Flush()
         {
-            this._innerStream.Flush();
+            this.innerStreamField.Flush();
         }
 
         /// <summary>
@@ -172,22 +172,22 @@
         public override int Read(byte[] buffer, int offset, int count)
         {
             int num = count;
-            if (this._lengthLimit != UnsetLengthLimit)
+            if (this.lengthLimitField != UnsetLengthLimit)
             {
-                if (this._Crc32.TotalBytesRead >= this._lengthLimit)
+                if (this.crc32Field.TotalBytesRead >= this.lengthLimitField)
                 {
                     return 0;
                 }
-                long num2 = this._lengthLimit - this._Crc32.TotalBytesRead;
+                long num2 = this.lengthLimitField - this.crc32Field.TotalBytesRead;
                 if (num2 < count)
                 {
                     num = (int) num2;
                 }
             }
-            int num3 = this._innerStream.Read(buffer, offset, num);
+            int num3 = this.innerStreamField.Read(buffer, offset, num);
             if (num3 > 0)
             {
-                this._Crc32.SlurpBlock(buffer, offset, num3);
+                this.crc32Field.SlurpBlock(buffer, offset, num3);
             }
             return num3;
         }
@@ -229,9 +229,9 @@
         {
             if (count > 0)
             {
-                this._Crc32.SlurpBlock(buffer, offset, count);
+                this.crc32Field.SlurpBlock(buffer, offset, count);
             }
-            this._innerStream.Write(buffer, offset, count);
+            this.innerStreamField.Write(buffer, offset, count);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@
         {
             get
             {
-                return this._innerStream.CanRead;
+                return this.innerStreamField.CanRead;
             }
         }
 
@@ -268,7 +268,7 @@
         {
             get
             {
-                return this._innerStream.CanWrite;
+                return this.innerStreamField.CanWrite;
             }
         }
 
@@ -286,7 +286,7 @@
         {
             get
             {
-                return this._Crc32.Crc32Result;
+                return this.crc32Field.Crc32Result;
             }
         }
 
@@ -303,11 +303,11 @@
         {
             get
             {
-                return this._leaveOpen;
+                return this.leaveOpenField;
             }
             set
             {
-                this._leaveOpen = value;
+                this.leaveOpenField = value;
             }
         }
 
@@ -318,11 +318,11 @@
         {
             get
             {
-                if (this._lengthLimit == UnsetLengthLimit)
+                if (this.lengthLimitField == UnsetLengthLimit)
                 {
-                    return this._innerStream.Length;
+                    return this.innerStreamField.Length;
                 }
-                return this._lengthLimit;
+                return this.lengthLimitField;
             }
         }
 
@@ -335,7 +335,7 @@
         {
             get
             {
-                return this._Crc32.TotalBytesRead;
+                return this.crc32Field.TotalBytesRead;
             }
             set
             {
@@ -355,7 +355,7 @@
         {
             get
             {
-                return this._Crc32.TotalBytesRead;
+                return this.crc32Field.TotalBytesRead;
             }
         }
     }

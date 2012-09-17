@@ -263,26 +263,26 @@
 
         internal void flush_pending()
         {
-            int pendingCount = this.dstate.pendingCount;
+            int pendingCount = this.dstate.pendingCountField;
             if (pendingCount > this.AvailableBytesOut)
             {
                 pendingCount = this.AvailableBytesOut;
             }
             if (pendingCount != 0)
             {
-                if ((((this.dstate.pending.Length <= this.dstate.nextPending) || (this.OutputBuffer.Length <= this.NextOut)) || (this.dstate.pending.Length < (this.dstate.nextPending + pendingCount))) || (this.OutputBuffer.Length < (this.NextOut + pendingCount)))
+                if ((((this.dstate.pendingField.Length <= this.dstate.nextPendingField) || (this.OutputBuffer.Length <= this.NextOut)) || (this.dstate.pendingField.Length < (this.dstate.nextPendingField + pendingCount))) || (this.OutputBuffer.Length < (this.NextOut + pendingCount)))
                 {
-                    throw new ZlibException(string.Format(CultureInfo.InvariantCulture, "Invalid State. (pending.Length={0}, pendingCount={1})", this.dstate.pending.Length, this.dstate.pendingCount));
+                    throw new ZlibException(string.Format(CultureInfo.InvariantCulture, "Invalid State. (pending.Length={0}, pendingCount={1})", this.dstate.pendingField.Length, this.dstate.pendingCountField));
                 }
-                Array.Copy(this.dstate.pending, this.dstate.nextPending, this.OutputBuffer, this.NextOut, pendingCount);
+                Array.Copy(this.dstate.pendingField, this.dstate.nextPendingField, this.OutputBuffer, this.NextOut, pendingCount);
                 this.NextOut += pendingCount;
-                this.dstate.nextPending += pendingCount;
+                this.dstate.nextPendingField += pendingCount;
                 this.TotalBytesOut += pendingCount;
                 this.AvailableBytesOut -= pendingCount;
-                this.dstate.pendingCount -= pendingCount;
-                if (this.dstate.pendingCount == 0)
+                this.dstate.pendingCountField -= pendingCount;
+                if (this.dstate.pendingCountField == 0)
                 {
-                    this.dstate.nextPending = 0;
+                    this.dstate.nextPendingField = 0;
                 }
             }
         }

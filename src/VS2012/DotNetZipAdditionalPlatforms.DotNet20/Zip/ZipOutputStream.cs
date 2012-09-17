@@ -96,32 +96,32 @@
     /// </remarks>
     public class ZipOutputStream : Stream
     {
-        private Encoding _alternateEncoding;
-        private ZipOption _alternateEncodingUsage;
-        private bool _anyEntriesUsedZip64;
-        private string _comment;
-        private ZipEntry _currentEntry;
-        private Stream _deflater;
-        private bool _directoryNeededZip64;
-        private bool _disposed;
-        private bool _DontIgnoreCase;
-        private EncryptionAlgorithm _encryption;
-        private Stream _encryptor;
-        private Dictionary<string, ZipEntry> _entriesWritten;
-        private int _entryCount;
-        private CrcCalculatorStream _entryOutputStream;
-        private bool _exceptionPending;
-        private bool _leaveUnderlyingStreamOpen;
-        private int _maxBufferPairs;
-        private string _name;
-        private bool _needToWriteEntryHeader;
-        private CountingStream _outputCounter;
-        private Stream _outputStream;
-        private long _ParallelDeflateThreshold;
-        internal string _password;
-        private ZipEntryTimestamp _timestamp;
-        internal Zip64Option _zip64;
-        internal ParallelDeflateOutputStream ParallelDeflater;
+        private Encoding alternateEncodingField;
+        private ZipOption alternateEncodingUsageField;
+        private bool anyEntriesUsedZip64Field;
+        private string commentField;
+        private ZipEntry currentEntryField;
+        private Stream deflaterField;
+        private bool directoryNeededZip64Field;
+        private bool disposedField;
+        private bool dontIgnoreCaseField;
+        private EncryptionAlgorithm encryptionField;
+        private Stream encryptorField;
+        private Dictionary<string, ZipEntry> entriesWrittenField;
+        private int entryCountField;
+        private CrcCalculatorStream entryOutputStreamField;
+        private bool exceptionPendingField;
+        private bool leaveUnderlyingStreamOpenField;
+        private int maxBufferPairsField;
+        private string nameField;
+        private bool needToWriteEntryHeaderField;
+        private CountingStream outputCounterField;
+        private Stream outputStreamField;
+        private long parallelDeflateThresholdField;
+        internal string passwordField;
+        private ZipEntryTimestamp timestampField;
+        internal Zip64Option zip64Field;
+        internal ParallelDeflateOutputStream parallelDeflaterField;
 
         /// <summary>
         /// Create a ZipOutputStream, wrapping an existing stream.
@@ -297,9 +297,9 @@
         /// </example>
         public ZipOutputStream(string fileName)
         {
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._maxBufferPairs = 0x10;
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.maxBufferPairsField = 0x10;
             Stream stream = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
             this._Init(stream, false, fileName);
         }
@@ -323,63 +323,63 @@
         /// </param>
         public ZipOutputStream(Stream stream, bool leaveOpen)
         {
-            this._alternateEncodingUsage = ZipOption.Default;
-            this._alternateEncoding = Encoding.GetEncoding("IBM437");
-            this._maxBufferPairs = 0x10;
+            this.alternateEncodingUsageField = ZipOption.Default;
+            this.alternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.maxBufferPairsField = 0x10;
             this._Init(stream, leaveOpen, null);
         }
 
         private void _FinishCurrentEntry()
         {
-            if (this._currentEntry != null)
+            if (this.currentEntryField != null)
             {
-                if (this._needToWriteEntryHeader)
+                if (this.needToWriteEntryHeaderField)
                 {
                     this._InitiateCurrentEntry(true);
                 }
-                this._currentEntry.FinishOutputStream(this._outputStream, this._outputCounter, this._encryptor, this._deflater, this._entryOutputStream);
-                this._currentEntry.PostProcessOutput(this._outputStream);
-                if (this._currentEntry.OutputUsedZip64.HasValue)
+                this.currentEntryField.FinishOutputStream(this.outputStreamField, this.outputCounterField, this.encryptorField, this.deflaterField, this.entryOutputStreamField);
+                this.currentEntryField.PostProcessOutput(this.outputStreamField);
+                if (this.currentEntryField.OutputUsedZip64.HasValue)
                 {
-                    this._anyEntriesUsedZip64 |= this._currentEntry.OutputUsedZip64.Value;
+                    this.anyEntriesUsedZip64Field |= this.currentEntryField.OutputUsedZip64.Value;
                 }
-                this._outputCounter = null;
-                this._encryptor = (Stream) (this._deflater = null);
-                this._entryOutputStream = null;
+                this.outputCounterField = null;
+                this.encryptorField = (Stream) (this.deflaterField = null);
+                this.entryOutputStreamField = null;
             }
         }
 
         private void _Init(Stream stream, bool leaveOpen, string name)
         {
-            this._outputStream = stream.CanRead ? stream : new CountingStream(stream);
+            this.outputStreamField = stream.CanRead ? stream : new CountingStream(stream);
             this.CompressionLevel = CompressionLevel.Default;
             this.CompressionMethod = CompressionMethod.Deflate;
-            this._encryption = EncryptionAlgorithm.None;
-            this._entriesWritten = new Dictionary<string, ZipEntry>(StringComparer.Ordinal);
-            this._zip64 = Zip64Option.Default;
-            this._leaveUnderlyingStreamOpen = leaveOpen;
+            this.encryptionField = EncryptionAlgorithm.None;
+            this.entriesWrittenField = new Dictionary<string, ZipEntry>(StringComparer.Ordinal);
+            this.zip64Field = Zip64Option.Default;
+            this.leaveUnderlyingStreamOpenField = leaveOpen;
             this.Strategy = CompressionStrategy.Default;
-            this._name = name ?? "(stream)";
+            this.nameField = name ?? "(stream)";
             this.ParallelDeflateThreshold = -1L;
         }
 
         private void _InitiateCurrentEntry(bool finishing)
         {
-            this._entriesWritten.Add(this._currentEntry.FileName, this._currentEntry);
-            this._entryCount++;
-            if ((this._entryCount > 0xfffe) && (this._zip64 == Zip64Option.Default))
+            this.entriesWrittenField.Add(this.currentEntryField.FileName, this.currentEntryField);
+            this.entryCountField++;
+            if ((this.entryCountField > 0xfffe) && (this.zip64Field == Zip64Option.Default))
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("Too many entries. Consider setting ZipOutputStream.EnableZip64.");
             }
-            this._currentEntry.WriteHeader(this._outputStream, finishing ? 0x63 : 0);
-            this._currentEntry.StoreRelativeOffset();
-            if (!this._currentEntry.IsDirectory)
+            this.currentEntryField.WriteHeader(this.outputStreamField, finishing ? 0x63 : 0);
+            this.currentEntryField.StoreRelativeOffset();
+            if (!this.currentEntryField.IsDirectory)
             {
-                this._currentEntry.WriteSecurityMetadata(this._outputStream);
-                this._currentEntry.PrepOutputStream(this._outputStream, finishing ? ((long) 0) : ((long) (-1)), out this._outputCounter, out this._encryptor, out this._deflater, out this._entryOutputStream);
+                this.currentEntryField.WriteSecurityMetadata(this.outputStreamField);
+                this.currentEntryField.PrepOutputStream(this.outputStreamField, finishing ? ((long) 0) : ((long) (-1)), out this.outputCounterField, out this.encryptorField, out this.deflaterField, out this.entryOutputStreamField);
             }
-            this._needToWriteEntryHeader = false;
+            this.needToWriteEntryHeaderField = false;
         }
 
         /// <summary>
@@ -396,7 +396,7 @@
         /// </returns>
         public bool ContainsEntry(string name)
         {
-            return this._entriesWritten.ContainsKey(SharedUtilities.NormalizePathForUseInZipFile(name));
+            return this.entriesWrittenField.ContainsKey(SharedUtilities.NormalizePathForUseInZipFile(name));
         }
 
         /// <summary>
@@ -419,14 +419,14 @@
         /// <param name="disposing">set this to true, always.</param>
         protected override void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (!this.disposedField)
             {
-                if (disposing && !this._exceptionPending)
+                if (disposing && !this.exceptionPendingField)
                 {
                     this._FinishCurrentEntry();
-                    this._directoryNeededZip64 = ZipOutput.WriteCentralDirectoryStructure(this._outputStream, this._entriesWritten.Values, 1, this._zip64, this.Comment, new ZipContainer(this));
+                    this.directoryNeededZip64Field = ZipOutput.WriteCentralDirectoryStructure(this.outputStreamField, this.entriesWrittenField.Values, 1, this.zip64Field, this.Comment, new ZipContainer(this));
                     Stream wrappedStream = null;
-                    CountingStream stream2 = this._outputStream as CountingStream;
+                    CountingStream stream2 = this.outputStreamField as CountingStream;
                     if (stream2 != null)
                     {
                         wrappedStream = stream2.WrappedStream;
@@ -434,15 +434,15 @@
                     }
                     else
                     {
-                        wrappedStream = this._outputStream;
+                        wrappedStream = this.outputStreamField;
                     }
-                    if (!this._leaveUnderlyingStreamOpen)
+                    if (!this.leaveUnderlyingStreamOpenField)
                     {
                         wrappedStream.Dispose();
                     }
-                    this._outputStream = null;
+                    this.outputStreamField = null;
                 }
-                this._disposed = true;
+                this.disposedField = true;
             }
         }
 
@@ -455,9 +455,9 @@
 
         private void InsureUniqueEntry(ZipEntry ze1)
         {
-            if (this._entriesWritten.ContainsKey(ze1.FileName))
+            if (this.entriesWrittenField.ContainsKey(ze1.FileName))
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The entry '{0}' already exists in the zip archive.", ze1.FileName));
             }
         }
@@ -546,31 +546,31 @@
             {
                 throw new ArgumentNullException("entryName");
             }
-            if (this._disposed)
+            if (this.disposedField)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("The stream has been closed.");
             }
             this._FinishCurrentEntry();
-            this._currentEntry = ZipEntry.CreateForZipOutputStream(entryName);
-            this._currentEntry._container = new ZipContainer(this);
-            this._currentEntry._BitField = (short) (this._currentEntry._BitField | 8);
-            this._currentEntry.SetEntryTimes(DateTime.Now, DateTime.Now, DateTime.Now);
-            this._currentEntry.CompressionLevel = this.CompressionLevel;
-            this._currentEntry.CompressionMethod = this.CompressionMethod;
-            this._currentEntry.Password = this._password;
-            this._currentEntry.Encryption = this.Encryption;
-            this._currentEntry.AlternateEncoding = this.AlternateEncoding;
-            this._currentEntry.AlternateEncodingUsage = this.AlternateEncodingUsage;
+            this.currentEntryField = ZipEntry.CreateForZipOutputStream(entryName);
+            this.currentEntryField.containerField = new ZipContainer(this);
+            this.currentEntryField.bitFieldField = (short) (this.currentEntryField.bitFieldField | 8);
+            this.currentEntryField.SetEntryTimes(DateTime.Now, DateTime.Now, DateTime.Now);
+            this.currentEntryField.CompressionLevel = this.CompressionLevel;
+            this.currentEntryField.CompressionMethod = this.CompressionMethod;
+            this.currentEntryField.Password = this.passwordField;
+            this.currentEntryField.Encryption = this.Encryption;
+            this.currentEntryField.AlternateEncoding = this.AlternateEncoding;
+            this.currentEntryField.AlternateEncodingUsage = this.AlternateEncodingUsage;
             if (entryName.EndsWith("/"))
             {
-                this._currentEntry.MarkAsDirectory();
+                this.currentEntryField.MarkAsDirectory();
             }
-            this._currentEntry.EmitTimesInWindowsFormatWhenSaving = (this._timestamp & ZipEntryTimestamp.Windows) != ZipEntryTimestamp.None;
-            this._currentEntry.EmitTimesInUnixFormatWhenSaving = (this._timestamp & ZipEntryTimestamp.Unix) != ZipEntryTimestamp.None;
-            this.InsureUniqueEntry(this._currentEntry);
-            this._needToWriteEntryHeader = true;
-            return this._currentEntry;
+            this.currentEntryField.EmitTimesInWindowsFormatWhenSaving = (this.timestampField & ZipEntryTimestamp.Windows) != ZipEntryTimestamp.None;
+            this.currentEntryField.EmitTimesInUnixFormatWhenSaving = (this.timestampField & ZipEntryTimestamp.Unix) != ZipEntryTimestamp.None;
+            this.InsureUniqueEntry(this.currentEntryField);
+            this.needToWriteEntryHeaderField = true;
+            return this.currentEntryField;
         }
 
         /// <summary>
@@ -614,7 +614,7 @@
         /// <returns>a string representation of the instance.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "ZipOutputStream::{0}(leaveOpen({1})))", this._name, this._leaveUnderlyingStreamOpen);
+            return string.Format(CultureInfo.InvariantCulture, "ZipOutputStream::{0}(leaveOpen({1})))", this.nameField, this.leaveUnderlyingStreamOpenField);
         }
 
         /// <summary>
@@ -633,33 +633,33 @@
         /// <param name="count">the number of bytes to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (this._disposed)
+            if (this.disposedField)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("The stream has been closed.");
             }
             if (buffer == null)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new ArgumentNullException("buffer");
             }
-            if (this._currentEntry == null)
+            if (this.currentEntryField == null)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("You must call PutNextEntry() before calling Write().");
             }
-            if (this._currentEntry.IsDirectory)
+            if (this.currentEntryField.IsDirectory)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("You cannot Write() data for an entry that is a directory.");
             }
-            if (this._needToWriteEntryHeader)
+            if (this.needToWriteEntryHeaderField)
             {
                 this._InitiateCurrentEntry(false);
             }
             if (count != 0)
             {
-                this._entryOutputStream.Write(buffer, offset, count);
+                this.entryOutputStreamField.Write(buffer, offset, count);
             }
         }
 
@@ -677,11 +677,11 @@
         {
             get
             {
-                return this._alternateEncoding;
+                return this.alternateEncodingField;
             }
             set
             {
-                this._alternateEncoding = value;
+                this.alternateEncodingField = value;
             }
         }
 
@@ -694,11 +694,11 @@
         {
             get
             {
-                return this._alternateEncodingUsage;
+                return this.alternateEncodingUsageField;
             }
             set
             {
-                this._alternateEncodingUsage = value;
+                this.alternateEncodingUsageField = value;
             }
         }
 
@@ -786,16 +786,16 @@
         {
             get
             {
-                return this._comment;
+                return this.commentField;
             }
             set
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
-                this._comment = value;
+                this.commentField = value;
             }
         }
 
@@ -869,16 +869,16 @@
         {
             get
             {
-                return this._zip64;
+                return this.zip64Field;
             }
             set
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
-                this._zip64 = value;
+                this.zip64Field = value;
             }
         }
 
@@ -907,21 +907,21 @@
         {
             get
             {
-                return this._encryption;
+                return this.encryptionField;
             }
             set
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
                 if (value == EncryptionAlgorithm.Unsupported)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("You may not set Encryption to that value.");
                 }
-                this._encryption = value;
+                this.encryptionField = value;
             }
         }
 
@@ -948,11 +948,11 @@
         {
             get
             {
-                return !this._DontIgnoreCase;
+                return !this.dontIgnoreCaseField;
             }
             set
             {
-                this._DontIgnoreCase = !value;
+                this.dontIgnoreCaseField = !value;
             }
         }
 
@@ -971,7 +971,7 @@
         {
             get
             {
-                return this._name;
+                return this.nameField;
             }
         }
 
@@ -979,7 +979,7 @@
         {
             get
             {
-                return this._outputStream;
+                return this.outputStreamField;
             }
         }
 
@@ -994,7 +994,7 @@
         {
             get
             {
-                return (this._anyEntriesUsedZip64 || this._directoryNeededZip64);
+                return (this.anyEntriesUsedZip64Field || this.directoryNeededZip64Field);
             }
         }
 
@@ -1076,7 +1076,7 @@
         {
             get
             {
-                return this._maxBufferPairs;
+                return this.maxBufferPairsField;
             }
             set
             {
@@ -1084,7 +1084,7 @@
                 {
                     throw new ArgumentOutOfRangeException("ParallelDeflateMaxBufferPairs", "Value must be 4 or greater.");
                 }
-                this._maxBufferPairs = value;
+                this.maxBufferPairsField = value;
             }
         }
 
@@ -1149,7 +1149,7 @@
         {
             get
             {
-                return this._ParallelDeflateThreshold;
+                return this.parallelDeflateThresholdField;
             }
             set
             {
@@ -1157,7 +1157,7 @@
                 {
                     throw new ArgumentOutOfRangeException("value must be greater than 64k, or 0, or -1");
                 }
-                this._ParallelDeflateThreshold = value;
+                this.parallelDeflateThresholdField = value;
             }
         }
 
@@ -1212,19 +1212,19 @@
         {
             set
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
-                this._password = value;
-                if (this._password == null)
+                this.passwordField = value;
+                if (this.passwordField == null)
                 {
-                    this._encryption = EncryptionAlgorithm.None;
+                    this.encryptionField = EncryptionAlgorithm.None;
                 }
-                else if (this._encryption == EncryptionAlgorithm.None)
+                else if (this.encryptionField == EncryptionAlgorithm.None)
                 {
-                    this._encryption = EncryptionAlgorithm.PkzipWeak;
+                    this.encryptionField = EncryptionAlgorithm.PkzipWeak;
                 }
             }
         }
@@ -1237,7 +1237,7 @@
         {
             get
             {
-                return this._outputStream.Position;
+                return this.outputStreamField.Position;
             }
             set
             {
@@ -1270,16 +1270,16 @@
         {
             get
             {
-                return this._timestamp;
+                return this.timestampField;
             }
             set
             {
-                if (this._disposed)
+                if (this.disposedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
-                this._timestamp = value;
+                this.timestampField = value;
             }
         }
     }

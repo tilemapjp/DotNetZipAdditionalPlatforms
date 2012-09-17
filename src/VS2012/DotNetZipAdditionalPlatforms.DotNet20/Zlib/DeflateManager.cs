@@ -6,76 +6,76 @@
 
     internal sealed class DeflateManager
     {
-        internal ZlibCodec _codec;
-        internal int _distanceOffset;
-        private static readonly string[] _ErrorMessage = new string[] { "need dictionary", "stream end", "", "file error", "stream error", "data error", "insufficient memory", "buffer error", "incompatible version", "" };
-        internal int _lengthOffset;
-        private bool _WantRfc1950HeaderBytes = true;
-        internal short bi_buf;
-        internal int bi_valid;
-        internal short[] bl_count = new short[InternalConstants.MAX_BITS + 1];
-        internal short[] bl_tree = new short[((2 * InternalConstants.BL_CODES) + 1) * 2];
-        internal int block_start;
+        internal ZlibCodec codecField;
+        internal int distanceOffsetField;
+        private static readonly string[] errorMessageField = new string[] { "need dictionary", "stream end", "", "file error", "stream error", "data error", "insufficient memory", "buffer error", "incompatible version", "" };
+        internal int lengthOffsetField;
+        private bool wantRfc1950HeaderBytesField = true;
+        internal short bibufField;
+        internal int bivalidField;
+        internal short[] blcountField = new short[InternalConstants.MAX_BITS + 1];
+        internal short[] bltreeField = new short[((2 * InternalConstants.BL_CODES) + 1) * 2];
+        internal int blockStartField;
         private const int Buf_size = 0x10;
         private const int BUSY_STATE = 0x71;
-        internal CompressionLevel compressionLevel;
-        internal CompressionStrategy compressionStrategy;
-        private Config config;
-        internal sbyte data_type;
-        private CompressFunc DeflateFunction;
-        internal sbyte[] depth = new sbyte[(2 * InternalConstants.L_CODES) + 1];
-        internal short[] dyn_dtree = new short[((2 * InternalConstants.D_CODES) + 1) * 2];
-        internal short[] dyn_ltree = new short[HEAP_SIZE * 2];
+        internal CompressionLevel compressionLevelField;
+        internal CompressionStrategy compressionStrategyField;
+        private Config configField;
+        internal sbyte dataTypeField;
+        private CompressFunc deflateFunctionField;
+        internal sbyte[] depthField = new sbyte[(2 * InternalConstants.L_CODES) + 1];
+        internal short[] dynDtreeField = new short[((2 * InternalConstants.D_CODES) + 1) * 2];
+        internal short[] dynLtreeField = new short[HEAP_SIZE * 2];
         private const int DYN_TREES = 2;
         private const int END_BLOCK = 0x100;
         private const int FINISH_STATE = 0x29a;
-        internal int hash_bits;
-        internal int hash_mask;
-        internal int hash_shift;
-        internal int hash_size;
-        internal short[] head;
-        internal int[] heap = new int[(2 * InternalConstants.L_CODES) + 1];
-        internal int heap_len;
-        internal int heap_max;
+        internal int hashBitsField;
+        internal int hashMaskField;
+        internal int hashShiftField;
+        internal int hashSizeField;
+        internal short[] headField;
+        internal int[] heapField = new int[(2 * InternalConstants.L_CODES) + 1];
+        internal int heapLenField;
+        internal int heapMaxField;
         private const int HEAP_SIZE = ((2 * InternalConstants.L_CODES) + 1);
         private const int INIT_STATE = 0x2a;
-        internal int ins_h;
-        internal int last_eob_len;
-        internal int last_flush;
-        internal int last_lit;
-        internal int lit_bufsize;
-        internal int lookahead;
-        internal int match_available;
-        internal int match_length;
-        internal int match_start;
-        internal int matches;
+        internal int inshField;
+        internal int lastEobLenField;
+        internal int lastFlushField;
+        internal int lastLitField;
+        internal int litBufSizeField;
+        internal int lookAheadField;
+        internal int matchAvailableField;
+        internal int matchLengthField;
+        internal int matchStartField;
+        internal int matchesField;
         private const int MAX_MATCH = 0x102;
         private const int MEM_LEVEL_DEFAULT = 8;
         private const int MEM_LEVEL_MAX = 9;
         private const int MIN_LOOKAHEAD = ((MAX_MATCH + MIN_MATCH) + 1);
         private const int MIN_MATCH = 3;
-        internal int nextPending;
-        internal int opt_len;
-        internal byte[] pending;
-        internal int pendingCount;
+        internal int nextPendingField;
+        internal int optLenField;
+        internal byte[] pendingField;
+        internal int pendingCountField;
         private const int PRESET_DICT = 0x20;
-        internal short[] prev;
-        internal int prev_length;
-        internal int prev_match;
-        private bool Rfc1950BytesEmitted = false;
-        internal int static_len;
+        internal short[] prevField;
+        internal int prevLengthField;
+        internal int prevMatchField;
+        private bool rfc1950BytesEmittedField = false;
+        internal int staticLenField;
         private const int STATIC_TREES = 1;
-        internal int status;
+        internal int statusField;
         private const int STORED_BLOCK = 0;
-        internal int strstart;
-        internal Tree treeBitLengths = new Tree();
-        internal Tree treeDistances = new Tree();
-        internal Tree treeLiterals = new Tree();
-        internal int w_bits;
-        internal int w_mask;
-        internal int w_size;
-        internal byte[] window;
-        internal int window_size;
+        internal int strstartField;
+        internal Tree treeBitLengthsField = new Tree();
+        internal Tree treeDistancesField = new Tree();
+        internal Tree treeLiteralsField = new Tree();
+        internal int wbitsField;
+        internal int wmaskField;
+        internal int wsizeField;
+        internal byte[] windowField;
+        internal int windowSizeField;
         private const int Z_ASCII = 1;
         private const int Z_BINARY = 0;
         private const int Z_DEFLATED = 8;
@@ -90,50 +90,50 @@
             int num;
             int num4;
         Label_0001:
-            num4 = (this.window_size - this.lookahead) - this.strstart;
-            if (((num4 == 0) && (this.strstart == 0)) && (this.lookahead == 0))
+            num4 = (this.windowSizeField - this.lookAheadField) - this.strstartField;
+            if (((num4 == 0) && (this.strstartField == 0)) && (this.lookAheadField == 0))
             {
-                num4 = this.w_size;
+                num4 = this.wsizeField;
             }
             else if (num4 == -1)
             {
                 num4--;
             }
-            else if (this.strstart >= ((this.w_size + this.w_size) - MIN_LOOKAHEAD))
+            else if (this.strstartField >= ((this.wsizeField + this.wsizeField) - MIN_LOOKAHEAD))
             {
                 int num2;
-                Array.Copy(this.window, this.w_size, this.window, 0, this.w_size);
-                this.match_start -= this.w_size;
-                this.strstart -= this.w_size;
-                this.block_start -= this.w_size;
-                num = this.hash_size;
+                Array.Copy(this.windowField, this.wsizeField, this.windowField, 0, this.wsizeField);
+                this.matchStartField -= this.wsizeField;
+                this.strstartField -= this.wsizeField;
+                this.blockStartField -= this.wsizeField;
+                num = this.hashSizeField;
                 int index = num;
                 do
                 {
-                    num2 = this.head[--index] & 0xffff;
-                    this.head[index] = (num2 >= this.w_size) ? ((short) (num2 - this.w_size)) : ((short) 0);
+                    num2 = this.headField[--index] & 0xffff;
+                    this.headField[index] = (num2 >= this.wsizeField) ? ((short) (num2 - this.wsizeField)) : ((short) 0);
                 }
                 while (--num != 0);
-                num = this.w_size;
+                num = this.wsizeField;
                 index = num;
                 do
                 {
-                    num2 = this.prev[--index] & 0xffff;
-                    this.prev[index] = (num2 >= this.w_size) ? ((short) (num2 - this.w_size)) : ((short) 0);
+                    num2 = this.prevField[--index] & 0xffff;
+                    this.prevField[index] = (num2 >= this.wsizeField) ? ((short) (num2 - this.wsizeField)) : ((short) 0);
                 }
                 while (--num != 0);
-                num4 += this.w_size;
+                num4 += this.wsizeField;
             }
-            if (this._codec.AvailableBytesIn != 0)
+            if (this.codecField.AvailableBytesIn != 0)
             {
-                num = this._codec.read_buf(this.window, this.strstart + this.lookahead, num4);
-                this.lookahead += num;
-                if (this.lookahead >= MIN_MATCH)
+                num = this.codecField.read_buf(this.windowField, this.strstartField + this.lookAheadField, num4);
+                this.lookAheadField += num;
+                if (this.lookAheadField >= MIN_MATCH)
                 {
-                    this.ins_h = this.window[this.strstart] & 0xff;
-                    this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + 1] & 0xff)) & this.hash_mask;
+                    this.inshField = this.windowField[this.strstartField] & 0xff;
+                    this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + 1] & 0xff)) & this.hashMaskField;
                 }
-                if ((this.lookahead < MIN_LOOKAHEAD) && (this._codec.AvailableBytesIn != 0))
+                if ((this.lookAheadField < MIN_LOOKAHEAD) && (this.codecField.AvailableBytesIn != 0))
                 {
                     goto Label_0001;
                 }
@@ -145,46 +145,46 @@
             int num;
             for (num = 0; num < InternalConstants.L_CODES; num++)
             {
-                this.dyn_ltree[num * 2] = 0;
+                this.dynLtreeField[num * 2] = 0;
             }
             for (num = 0; num < InternalConstants.D_CODES; num++)
             {
-                this.dyn_dtree[num * 2] = 0;
+                this.dynDtreeField[num * 2] = 0;
             }
             for (num = 0; num < InternalConstants.BL_CODES; num++)
             {
-                this.bl_tree[num * 2] = 0;
+                this.bltreeField[num * 2] = 0;
             }
-            this.dyn_ltree[END_BLOCK * 2] = 1;
-            this.opt_len = this.static_len = 0;
-            this.last_lit = this.matches = 0;
+            this.dynLtreeField[END_BLOCK * 2] = 1;
+            this.optLenField = this.staticLenField = 0;
+            this.lastLitField = this.matchesField = 0;
         }
 
         private void _InitializeLazyMatch()
         {
-            this.window_size = 2 * this.w_size;
-            Array.Clear(this.head, 0, this.hash_size);
-            this.config = Config.Lookup(this.compressionLevel);
+            this.windowSizeField = 2 * this.wsizeField;
+            Array.Clear(this.headField, 0, this.hashSizeField);
+            this.configField = Config.Lookup(this.compressionLevelField);
             this.SetDeflater();
-            this.strstart = 0;
-            this.block_start = 0;
-            this.lookahead = 0;
-            this.match_length = this.prev_length = MIN_MATCH - 1;
-            this.match_available = 0;
-            this.ins_h = 0;
+            this.strstartField = 0;
+            this.blockStartField = 0;
+            this.lookAheadField = 0;
+            this.matchLengthField = this.prevLengthField = MIN_MATCH - 1;
+            this.matchAvailableField = 0;
+            this.inshField = 0;
         }
 
         private void _InitializeTreeData()
         {
-            this.treeLiterals.dyn_tree = this.dyn_ltree;
-            this.treeLiterals.staticTree = StaticTree.Literals;
-            this.treeDistances.dyn_tree = this.dyn_dtree;
-            this.treeDistances.staticTree = StaticTree.Distances;
-            this.treeBitLengths.dyn_tree = this.bl_tree;
-            this.treeBitLengths.staticTree = StaticTree.BitLengths;
-            this.bi_buf = 0;
-            this.bi_valid = 0;
-            this.last_eob_len = 8;
+            this.treeLiteralsField.dyn_tree = this.dynLtreeField;
+            this.treeLiteralsField.staticTree = StaticTree.Literals;
+            this.treeDistancesField.dyn_tree = this.dynDtreeField;
+            this.treeDistancesField.staticTree = StaticTree.Distances;
+            this.treeBitLengthsField.dyn_tree = this.bltreeField;
+            this.treeBitLengthsField.staticTree = StaticTree.BitLengths;
+            this.bibufField = 0;
+            this.bivalidField = 0;
+            this.lastEobLenField = 8;
             this._InitializeBlocks();
         }
 
@@ -200,13 +200,13 @@
             this.send_bits(STATIC_TREES << 1, 3);
             this.send_code(END_BLOCK, StaticTree.lengthAndLiteralsTreeCodes);
             this.bi_flush();
-            if ((((1 + this.last_eob_len) + 10) - this.bi_valid) < 9)
+            if ((((1 + this.lastEobLenField) + 10) - this.bivalidField) < 9)
             {
                 this.send_bits(STATIC_TREES << 1, 3);
                 this.send_code(END_BLOCK, StaticTree.lengthAndLiteralsTreeCodes);
                 this.bi_flush();
             }
-            this.last_eob_len = 7;
+            this.lastEobLenField = 7;
         }
 
         internal void _tr_flush_block(int buf, int stored_len, bool eof)
@@ -214,17 +214,17 @@
             int num;
             int num2;
             int num3 = 0;
-            if (this.compressionLevel > CompressionLevel.None)
+            if (this.compressionLevelField > CompressionLevel.None)
             {
-                if (this.data_type == Z_UNKNOWN)
+                if (this.dataTypeField == Z_UNKNOWN)
                 {
                     this.set_data_type();
                 }
-                this.treeLiterals.build_tree(this);
-                this.treeDistances.build_tree(this);
+                this.treeLiteralsField.build_tree(this);
+                this.treeDistancesField.build_tree(this);
                 num3 = this.build_bl_tree();
-                num = ((this.opt_len + 3) + 7) >> 3;
-                num2 = ((this.static_len + 3) + 7) >> 3;
+                num = ((this.optLenField + 3) + 7) >> 3;
+                num2 = ((this.staticLenField + 3) + 7) >> 3;
                 if (num2 <= num)
                 {
                     num = num2;
@@ -246,8 +246,8 @@
             else
             {
                 this.send_bits((DYN_TREES << 1) + (eof ? 1 : 0), 3);
-                this.send_all_trees(this.treeLiterals.max_code + 1, this.treeDistances.max_code + 1, num3 + 1);
-                this.send_compressed_block(this.dyn_ltree, this.dyn_dtree);
+                this.send_all_trees(this.treeLiteralsField.max_code + 1, this.treeDistancesField.max_code + 1, num3 + 1);
+                this.send_compressed_block(this.dynLtreeField, this.dynDtreeField);
             }
             this._InitializeBlocks();
             if (eof)
@@ -264,175 +264,175 @@
 
         internal bool _tr_tally(int dist, int lc)
         {
-            this.pending[this._distanceOffset + (this.last_lit * 2)] = (byte) (dist >> 8);
-            this.pending[(this._distanceOffset + (this.last_lit * 2)) + 1] = (byte) dist;
-            this.pending[this._lengthOffset + this.last_lit] = (byte) lc;
-            this.last_lit++;
+            this.pendingField[this.distanceOffsetField + (this.lastLitField * 2)] = (byte) (dist >> 8);
+            this.pendingField[(this.distanceOffsetField + (this.lastLitField * 2)) + 1] = (byte) dist;
+            this.pendingField[this.lengthOffsetField + this.lastLitField] = (byte) lc;
+            this.lastLitField++;
             if (dist == 0)
             {
-                this.dyn_ltree[lc * 2] = (short) (this.dyn_ltree[lc * 2] + 1);
+                this.dynLtreeField[lc * 2] = (short) (this.dynLtreeField[lc * 2] + 1);
             }
             else
             {
-                this.matches++;
+                this.matchesField++;
                 dist--;
-                this.dyn_ltree[((Tree.LengthCode[lc] + InternalConstants.LITERALS) + 1) * 2] = (short) (this.dyn_ltree[((Tree.LengthCode[lc] + InternalConstants.LITERALS) + 1) * 2] + 1);
-                this.dyn_dtree[Tree.DistanceCode(dist) * 2] = (short) (this.dyn_dtree[Tree.DistanceCode(dist) * 2] + 1);
+                this.dynLtreeField[((Tree.LengthCode[lc] + InternalConstants.LITERALS) + 1) * 2] = (short) (this.dynLtreeField[((Tree.LengthCode[lc] + InternalConstants.LITERALS) + 1) * 2] + 1);
+                this.dynDtreeField[Tree.DistanceCode(dist) * 2] = (short) (this.dynDtreeField[Tree.DistanceCode(dist) * 2] + 1);
             }
-            if (((this.last_lit & 0x1fff) == 0) && (this.compressionLevel > CompressionLevel.Level2))
+            if (((this.lastLitField & 0x1fff) == 0) && (this.compressionLevelField > CompressionLevel.Level2))
             {
-                int num = this.last_lit << 3;
-                int num2 = this.strstart - this.block_start;
+                int num = this.lastLitField << 3;
+                int num2 = this.strstartField - this.blockStartField;
                 for (int i = 0; i < InternalConstants.D_CODES; i++)
                 {
-                    num += (int) (this.dyn_dtree[i * 2] * (5L + Tree.ExtraDistanceBits[i]));
+                    num += (int) (this.dynDtreeField[i * 2] * (5L + Tree.ExtraDistanceBits[i]));
                 }
                 num = num >> 3;
-                if ((this.matches < (this.last_lit / 2)) && (num < (num2 / 2)))
+                if ((this.matchesField < (this.lastLitField / 2)) && (num < (num2 / 2)))
                 {
                     return true;
                 }
             }
-            return ((this.last_lit == (this.lit_bufsize - 1)) || (this.last_lit == this.lit_bufsize));
+            return ((this.lastLitField == (this.litBufSizeField - 1)) || (this.lastLitField == this.litBufSizeField));
         }
 
         internal void bi_flush()
         {
-            if (this.bi_valid == 0x10)
+            if (this.bivalidField == 0x10)
             {
-                this.pending[this.pendingCount++] = (byte) this.bi_buf;
-                this.pending[this.pendingCount++] = (byte) (this.bi_buf >> 8);
-                this.bi_buf = 0;
-                this.bi_valid = 0;
+                this.pendingField[this.pendingCountField++] = (byte) this.bibufField;
+                this.pendingField[this.pendingCountField++] = (byte) (this.bibufField >> 8);
+                this.bibufField = 0;
+                this.bivalidField = 0;
             }
-            else if (this.bi_valid >= 8)
+            else if (this.bivalidField >= 8)
             {
-                this.pending[this.pendingCount++] = (byte) this.bi_buf;
-                this.bi_buf = (short) (this.bi_buf >> 8);
-                this.bi_valid -= 8;
+                this.pendingField[this.pendingCountField++] = (byte) this.bibufField;
+                this.bibufField = (short) (this.bibufField >> 8);
+                this.bivalidField -= 8;
             }
         }
 
         internal void bi_windup()
         {
-            if (this.bi_valid > 8)
+            if (this.bivalidField > 8)
             {
-                this.pending[this.pendingCount++] = (byte) this.bi_buf;
-                this.pending[this.pendingCount++] = (byte) (this.bi_buf >> 8);
+                this.pendingField[this.pendingCountField++] = (byte) this.bibufField;
+                this.pendingField[this.pendingCountField++] = (byte) (this.bibufField >> 8);
             }
-            else if (this.bi_valid > 0)
+            else if (this.bivalidField > 0)
             {
-                this.pending[this.pendingCount++] = (byte) this.bi_buf;
+                this.pendingField[this.pendingCountField++] = (byte) this.bibufField;
             }
-            this.bi_buf = 0;
-            this.bi_valid = 0;
+            this.bibufField = 0;
+            this.bivalidField = 0;
         }
 
         internal int build_bl_tree()
         {
-            this.scan_tree(this.dyn_ltree, this.treeLiterals.max_code);
-            this.scan_tree(this.dyn_dtree, this.treeDistances.max_code);
-            this.treeBitLengths.build_tree(this);
+            this.scan_tree(this.dynLtreeField, this.treeLiteralsField.max_code);
+            this.scan_tree(this.dynDtreeField, this.treeDistancesField.max_code);
+            this.treeBitLengthsField.build_tree(this);
             int index = InternalConstants.BL_CODES - 1;
             while (index >= 3)
             {
-                if (this.bl_tree[(Tree.bl_order[index] * 2) + 1] != 0)
+                if (this.bltreeField[(Tree.bl_order[index] * 2) + 1] != 0)
                 {
                     break;
                 }
                 index--;
             }
-            this.opt_len += (((3 * (index + 1)) + 5) + 5) + 4;
+            this.optLenField += (((3 * (index + 1)) + 5) + 5) + 4;
             return index;
         }
 
         internal void copy_block(int buf, int len, bool header)
         {
             this.bi_windup();
-            this.last_eob_len = 8;
+            this.lastEobLenField = 8;
             if (header)
             {
-                this.pending[this.pendingCount++] = (byte) len;
-                this.pending[this.pendingCount++] = (byte) (len >> 8);
-                this.pending[this.pendingCount++] = (byte) ~len;
-                this.pending[this.pendingCount++] = (byte) (~len >> 8);
+                this.pendingField[this.pendingCountField++] = (byte) len;
+                this.pendingField[this.pendingCountField++] = (byte) (len >> 8);
+                this.pendingField[this.pendingCountField++] = (byte) ~len;
+                this.pendingField[this.pendingCountField++] = (byte) (~len >> 8);
             }
-            this.put_bytes(this.window, buf, len);
+            this.put_bytes(this.windowField, buf, len);
         }
 
         internal int Deflate(FlushType flush)
         {
-            if (((this._codec.OutputBuffer == null) || ((this._codec.InputBuffer == null) && (this._codec.AvailableBytesIn != 0))) || ((this.status == FINISH_STATE) && (flush != FlushType.Finish)))
+            if (((this.codecField.OutputBuffer == null) || ((this.codecField.InputBuffer == null) && (this.codecField.AvailableBytesIn != 0))) || ((this.statusField == FINISH_STATE) && (flush != FlushType.Finish)))
             {
-                this._codec.Message = _ErrorMessage[4];
-                throw new ZlibException(string.Format(CultureInfo.InvariantCulture, "Something is fishy. [{0}]", this._codec.Message));
+                this.codecField.Message = errorMessageField[4];
+                throw new ZlibException(string.Format(CultureInfo.InvariantCulture, "Something is fishy. [{0}]", this.codecField.Message));
             }
-            if (this._codec.AvailableBytesOut == 0)
+            if (this.codecField.AvailableBytesOut == 0)
             {
-                this._codec.Message = _ErrorMessage[7];
+                this.codecField.Message = errorMessageField[7];
                 throw new ZlibException("OutputBuffer is full (AvailableBytesOut == 0)");
             }
-            int num = this.last_flush;
-            this.last_flush = (int) flush;
-            if (this.status == INIT_STATE)
+            int num = this.lastFlushField;
+            this.lastFlushField = (int) flush;
+            if (this.statusField == INIT_STATE)
             {
-                int num2 = (Z_DEFLATED + ((this.w_bits - 8) << 4)) << 8;
-                int num3 = ((int) (((int)this.compressionLevel - 1) & 0xff)) >> 1;
+                int num2 = (Z_DEFLATED + ((this.wbitsField - 8) << 4)) << 8;
+                int num3 = ((int) (((int)this.compressionLevelField - 1) & 0xff)) >> 1;
                 if (num3 > 3)
                 {
                     num3 = 3;
                 }
                 num2 |= num3 << 6;
-                if (this.strstart != 0)
+                if (this.strstartField != 0)
                 {
                     num2 |= PRESET_DICT;
                 }
                 num2 += 0x1f - (num2 % 0x1f);
-                this.status = BUSY_STATE;
-                this.pending[this.pendingCount++] = (byte) (num2 >> 8);
-                this.pending[this.pendingCount++] = (byte) num2;
-                if (this.strstart != 0)
+                this.statusField = BUSY_STATE;
+                this.pendingField[this.pendingCountField++] = (byte) (num2 >> 8);
+                this.pendingField[this.pendingCountField++] = (byte) num2;
+                if (this.strstartField != 0)
                 {
-                    this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & -16777216) >> 0x18);
-                    this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & 0xff0000) >> 0x10);
-                    this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & 0xff00) >> 8);
-                    this.pending[this.pendingCount++] = (byte) (this._codec._Adler32 & 0xff);
+                    this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & -16777216) >> 0x18);
+                    this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & 0xff0000) >> 0x10);
+                    this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & 0xff00) >> 8);
+                    this.pendingField[this.pendingCountField++] = (byte) (this.codecField._Adler32 & 0xff);
                 }
-                this._codec._Adler32 = Adler.Adler32(0, null, 0, 0);
+                this.codecField._Adler32 = Adler.Adler32(0, null, 0, 0);
             }
-            if (this.pendingCount != 0)
+            if (this.pendingCountField != 0)
             {
-                this._codec.flush_pending();
-                if (this._codec.AvailableBytesOut == 0)
+                this.codecField.flush_pending();
+                if (this.codecField.AvailableBytesOut == 0)
                 {
-                    this.last_flush = -1;
+                    this.lastFlushField = -1;
                     return 0;
                 }
             }
-            else if (((this._codec.AvailableBytesIn == 0) && ((int)flush <= num)) && (flush != FlushType.Finish))
+            else if (((this.codecField.AvailableBytesIn == 0) && ((int)flush <= num)) && (flush != FlushType.Finish))
             {
                 return 0;
             }
-            if ((this.status == FINISH_STATE) && (this._codec.AvailableBytesIn != 0))
+            if ((this.statusField == FINISH_STATE) && (this.codecField.AvailableBytesIn != 0))
             {
-                this._codec.Message = _ErrorMessage[7];
+                this.codecField.Message = errorMessageField[7];
                 throw new ZlibException("status == FINISH_STATE && _codec.AvailableBytesIn != 0");
             }
-            if (((this._codec.AvailableBytesIn != 0) || (this.lookahead != 0)) || ((flush != FlushType.None) && (this.status != FINISH_STATE)))
+            if (((this.codecField.AvailableBytesIn != 0) || (this.lookAheadField != 0)) || ((flush != FlushType.None) && (this.statusField != FINISH_STATE)))
             {
-                BlockState state = this.DeflateFunction(flush);
+                BlockState state = this.deflateFunctionField(flush);
                 switch (state)
                 {
                     case BlockState.FinishStarted:
                     case BlockState.FinishDone:
-                        this.status = FINISH_STATE;
+                        this.statusField = FINISH_STATE;
                         break;
                 }
                 if ((state == BlockState.NeedMore) || (state == BlockState.FinishStarted))
                 {
-                    if (this._codec.AvailableBytesOut == 0)
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
-                        this.last_flush = -1;
+                        this.lastFlushField = -1;
                     }
                     return 0;
                 }
@@ -447,16 +447,16 @@
                         this._tr_stored_block(0, 0, false);
                         if (flush == FlushType.Full)
                         {
-                            for (int i = 0; i < this.hash_size; i++)
+                            for (int i = 0; i < this.hashSizeField; i++)
                             {
-                                this.head[i] = 0;
+                                this.headField[i] = 0;
                             }
                         }
                     }
-                    this._codec.flush_pending();
-                    if (this._codec.AvailableBytesOut == 0)
+                    this.codecField.flush_pending();
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
-                        this.last_flush = -1;
+                        this.lastFlushField = -1;
                         return 0;
                     }
                 }
@@ -465,17 +465,17 @@
             {
                 return 0;
             }
-            if (!(this.WantRfc1950HeaderBytes && !this.Rfc1950BytesEmitted))
+            if (!(this.WantRfc1950HeaderBytes && !this.rfc1950BytesEmittedField))
             {
                 return 1;
             }
-            this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & -16777216) >> 0x18);
-            this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & 0xff0000) >> 0x10);
-            this.pending[this.pendingCount++] = (byte) ((this._codec._Adler32 & 0xff00) >> 8);
-            this.pending[this.pendingCount++] = (byte) (this._codec._Adler32 & 0xff);
-            this._codec.flush_pending();
-            this.Rfc1950BytesEmitted = true;
-            return ((this.pendingCount != 0) ? 0 : 1);
+            this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & -16777216) >> 0x18);
+            this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & 0xff0000) >> 0x10);
+            this.pendingField[this.pendingCountField++] = (byte) ((this.codecField._Adler32 & 0xff00) >> 8);
+            this.pendingField[this.pendingCountField++] = (byte) (this.codecField._Adler32 & 0xff);
+            this.codecField.flush_pending();
+            this.rfc1950BytesEmittedField = true;
+            return ((this.pendingCountField != 0) ? 0 : 1);
         }
 
         internal BlockState DeflateFast(FlushType flush)
@@ -484,17 +484,17 @@
             while (true)
             {
                 bool flag;
-                if (this.lookahead < MIN_LOOKAHEAD)
+                if (this.lookAheadField < MIN_LOOKAHEAD)
                 {
                     this._fillWindow();
-                    if ((this.lookahead < MIN_LOOKAHEAD) && (flush == FlushType.None))
+                    if ((this.lookAheadField < MIN_LOOKAHEAD) && (flush == FlushType.None))
                     {
                         return BlockState.NeedMore;
                     }
-                    if (this.lookahead == 0)
+                    if (this.lookAheadField == 0)
                     {
                         this.flush_block_only(flush == FlushType.Finish);
-                        if (this._codec.AvailableBytesOut == 0)
+                        if (this.codecField.AvailableBytesOut == 0)
                         {
                             if (flush == FlushType.Finish)
                             {
@@ -505,53 +505,53 @@
                         return ((flush == FlushType.Finish) ? BlockState.FinishDone : BlockState.BlockDone);
                     }
                 }
-                if (this.lookahead >= MIN_MATCH)
+                if (this.lookAheadField >= MIN_MATCH)
                 {
-                    this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + (MIN_MATCH - 1)] & 0xff)) & this.hash_mask;
-                    num = this.head[this.ins_h] & 0xffff;
-                    this.prev[this.strstart & this.w_mask] = this.head[this.ins_h];
-                    this.head[this.ins_h] = (short) this.strstart;
+                    this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + (MIN_MATCH - 1)] & 0xff)) & this.hashMaskField;
+                    num = this.headField[this.inshField] & 0xffff;
+                    this.prevField[this.strstartField & this.wmaskField] = this.headField[this.inshField];
+                    this.headField[this.inshField] = (short) this.strstartField;
                 }
-                if (((num != 0L) && (((this.strstart - num) & 0xffff) <= (this.w_size - MIN_LOOKAHEAD))) && (this.compressionStrategy != CompressionStrategy.HuffmanOnly))
+                if (((num != 0L) && (((this.strstartField - num) & 0xffff) <= (this.wsizeField - MIN_LOOKAHEAD))) && (this.compressionStrategyField != CompressionStrategy.HuffmanOnly))
                 {
-                    this.match_length = this.longest_match(num);
+                    this.matchLengthField = this.longest_match(num);
                 }
-                if (this.match_length >= MIN_MATCH)
+                if (this.matchLengthField >= MIN_MATCH)
                 {
-                    flag = this._tr_tally(this.strstart - this.match_start, this.match_length - MIN_MATCH);
-                    this.lookahead -= this.match_length;
-                    if ((this.match_length <= this.config.MaxLazy) && (this.lookahead >= MIN_MATCH))
+                    flag = this._tr_tally(this.strstartField - this.matchStartField, this.matchLengthField - MIN_MATCH);
+                    this.lookAheadField -= this.matchLengthField;
+                    if ((this.matchLengthField <= this.configField.MaxLazy) && (this.lookAheadField >= MIN_MATCH))
                     {
-                        this.match_length--;
+                        this.matchLengthField--;
                         do
                         {
-                            this.strstart++;
-                            this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + (MIN_MATCH - 1)] & 0xff)) & this.hash_mask;
-                            num = this.head[this.ins_h] & 0xffff;
-                            this.prev[this.strstart & this.w_mask] = this.head[this.ins_h];
-                            this.head[this.ins_h] = (short) this.strstart;
+                            this.strstartField++;
+                            this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + (MIN_MATCH - 1)] & 0xff)) & this.hashMaskField;
+                            num = this.headField[this.inshField] & 0xffff;
+                            this.prevField[this.strstartField & this.wmaskField] = this.headField[this.inshField];
+                            this.headField[this.inshField] = (short) this.strstartField;
                         }
-                        while (--this.match_length != 0);
-                        this.strstart++;
+                        while (--this.matchLengthField != 0);
+                        this.strstartField++;
                     }
                     else
                     {
-                        this.strstart += this.match_length;
-                        this.match_length = 0;
-                        this.ins_h = this.window[this.strstart] & 0xff;
-                        this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + 1] & 0xff)) & this.hash_mask;
+                        this.strstartField += this.matchLengthField;
+                        this.matchLengthField = 0;
+                        this.inshField = this.windowField[this.strstartField] & 0xff;
+                        this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + 1] & 0xff)) & this.hashMaskField;
                     }
                 }
                 else
                 {
-                    flag = this._tr_tally(0, this.window[this.strstart] & 0xff);
-                    this.lookahead--;
-                    this.strstart++;
+                    flag = this._tr_tally(0, this.windowField[this.strstartField] & 0xff);
+                    this.lookAheadField--;
+                    this.strstartField++;
                 }
                 if (flag)
                 {
                     this.flush_block_only(false);
-                    if (this._codec.AvailableBytesOut == 0)
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
                         return BlockState.NeedMore;
                     }
@@ -562,46 +562,46 @@
         internal BlockState DeflateNone(FlushType flush)
         {
             int num = 0xffff;
-            if (num > (this.pending.Length - 5))
+            if (num > (this.pendingField.Length - 5))
             {
-                num = this.pending.Length - 5;
+                num = this.pendingField.Length - 5;
             }
             while (true)
             {
-                if (this.lookahead <= 1)
+                if (this.lookAheadField <= 1)
                 {
                     this._fillWindow();
-                    if ((this.lookahead == 0) && (flush == FlushType.None))
+                    if ((this.lookAheadField == 0) && (flush == FlushType.None))
                     {
                         return BlockState.NeedMore;
                     }
-                    if (this.lookahead == 0)
+                    if (this.lookAheadField == 0)
                     {
                         this.flush_block_only(flush == FlushType.Finish);
-                        if (this._codec.AvailableBytesOut == 0)
+                        if (this.codecField.AvailableBytesOut == 0)
                         {
                             return ((flush == FlushType.Finish) ? BlockState.FinishStarted : BlockState.NeedMore);
                         }
                         return ((flush == FlushType.Finish) ? BlockState.FinishDone : BlockState.BlockDone);
                     }
                 }
-                this.strstart += this.lookahead;
-                this.lookahead = 0;
-                int num2 = this.block_start + num;
-                if ((this.strstart == 0) || (this.strstart >= num2))
+                this.strstartField += this.lookAheadField;
+                this.lookAheadField = 0;
+                int num2 = this.blockStartField + num;
+                if ((this.strstartField == 0) || (this.strstartField >= num2))
                 {
-                    this.lookahead = this.strstart - num2;
-                    this.strstart = num2;
+                    this.lookAheadField = this.strstartField - num2;
+                    this.strstartField = num2;
                     this.flush_block_only(false);
-                    if (this._codec.AvailableBytesOut == 0)
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
                         return BlockState.NeedMore;
                     }
                 }
-                if ((this.strstart - this.block_start) >= (this.w_size - MIN_LOOKAHEAD))
+                if ((this.strstartField - this.blockStartField) >= (this.wsizeField - MIN_LOOKAHEAD))
                 {
                     this.flush_block_only(false);
-                    if (this._codec.AvailableBytesOut == 0)
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
                         return BlockState.NeedMore;
                     }
@@ -615,22 +615,22 @@
             while (true)
             {
                 bool flag;
-                if (this.lookahead < MIN_LOOKAHEAD)
+                if (this.lookAheadField < MIN_LOOKAHEAD)
                 {
                     this._fillWindow();
-                    if ((this.lookahead < MIN_LOOKAHEAD) && (flush == FlushType.None))
+                    if ((this.lookAheadField < MIN_LOOKAHEAD) && (flush == FlushType.None))
                     {
                         return BlockState.NeedMore;
                     }
-                    if (this.lookahead == 0)
+                    if (this.lookAheadField == 0)
                     {
-                        if (this.match_available != 0)
+                        if (this.matchAvailableField != 0)
                         {
-                            flag = this._tr_tally(0, this.window[this.strstart - 1] & 0xff);
-                            this.match_available = 0;
+                            flag = this._tr_tally(0, this.windowField[this.strstartField - 1] & 0xff);
+                            this.matchAvailableField = 0;
                         }
                         this.flush_block_only(flush == FlushType.Finish);
-                        if (this._codec.AvailableBytesOut == 0)
+                        if (this.codecField.AvailableBytesOut == 0)
                         {
                             if (flush == FlushType.Finish)
                             {
@@ -641,96 +641,96 @@
                         return ((flush == FlushType.Finish) ? BlockState.FinishDone : BlockState.BlockDone);
                     }
                 }
-                if (this.lookahead >= MIN_MATCH)
+                if (this.lookAheadField >= MIN_MATCH)
                 {
-                    this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + (MIN_MATCH - 1)] & 0xff)) & this.hash_mask;
-                    num = this.head[this.ins_h] & 0xffff;
-                    this.prev[this.strstart & this.w_mask] = this.head[this.ins_h];
-                    this.head[this.ins_h] = (short) this.strstart;
+                    this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + (MIN_MATCH - 1)] & 0xff)) & this.hashMaskField;
+                    num = this.headField[this.inshField] & 0xffff;
+                    this.prevField[this.strstartField & this.wmaskField] = this.headField[this.inshField];
+                    this.headField[this.inshField] = (short) this.strstartField;
                 }
-                this.prev_length = this.match_length;
-                this.prev_match = this.match_start;
-                this.match_length = MIN_MATCH - 1;
-                if (((num != 0) && (this.prev_length < this.config.MaxLazy)) && (((this.strstart - num) & 0xffff) <= (this.w_size - MIN_LOOKAHEAD)))
+                this.prevLengthField = this.matchLengthField;
+                this.prevMatchField = this.matchStartField;
+                this.matchLengthField = MIN_MATCH - 1;
+                if (((num != 0) && (this.prevLengthField < this.configField.MaxLazy)) && (((this.strstartField - num) & 0xffff) <= (this.wsizeField - MIN_LOOKAHEAD)))
                 {
-                    if (this.compressionStrategy != CompressionStrategy.HuffmanOnly)
+                    if (this.compressionStrategyField != CompressionStrategy.HuffmanOnly)
                     {
-                        this.match_length = this.longest_match(num);
+                        this.matchLengthField = this.longest_match(num);
                     }
-                    if ((this.match_length <= 5) && ((this.compressionStrategy == CompressionStrategy.Filtered) || ((this.match_length == MIN_MATCH) && ((this.strstart - this.match_start) > 0x1000))))
+                    if ((this.matchLengthField <= 5) && ((this.compressionStrategyField == CompressionStrategy.Filtered) || ((this.matchLengthField == MIN_MATCH) && ((this.strstartField - this.matchStartField) > 0x1000))))
                     {
-                        this.match_length = MIN_MATCH - 1;
+                        this.matchLengthField = MIN_MATCH - 1;
                     }
                 }
-                if ((this.prev_length >= MIN_MATCH) && (this.match_length <= this.prev_length))
+                if ((this.prevLengthField >= MIN_MATCH) && (this.matchLengthField <= this.prevLengthField))
                 {
-                    int num2 = (this.strstart + this.lookahead) - MIN_MATCH;
-                    flag = this._tr_tally((this.strstart - 1) - this.prev_match, this.prev_length - MIN_MATCH);
-                    this.lookahead -= this.prev_length - 1;
-                    this.prev_length -= 2;
+                    int num2 = (this.strstartField + this.lookAheadField) - MIN_MATCH;
+                    flag = this._tr_tally((this.strstartField - 1) - this.prevMatchField, this.prevLengthField - MIN_MATCH);
+                    this.lookAheadField -= this.prevLengthField - 1;
+                    this.prevLengthField -= 2;
                     do
                     {
-                        if (++this.strstart <= num2)
+                        if (++this.strstartField <= num2)
                         {
-                            this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[this.strstart + (MIN_MATCH - 1)] & 0xff)) & this.hash_mask;
-                            num = this.head[this.ins_h] & 0xffff;
-                            this.prev[this.strstart & this.w_mask] = this.head[this.ins_h];
-                            this.head[this.ins_h] = (short) this.strstart;
+                            this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[this.strstartField + (MIN_MATCH - 1)] & 0xff)) & this.hashMaskField;
+                            num = this.headField[this.inshField] & 0xffff;
+                            this.prevField[this.strstartField & this.wmaskField] = this.headField[this.inshField];
+                            this.headField[this.inshField] = (short) this.strstartField;
                         }
                     }
-                    while (--this.prev_length != 0);
-                    this.match_available = 0;
-                    this.match_length = MIN_MATCH - 1;
-                    this.strstart++;
+                    while (--this.prevLengthField != 0);
+                    this.matchAvailableField = 0;
+                    this.matchLengthField = MIN_MATCH - 1;
+                    this.strstartField++;
                     if (flag)
                     {
                         this.flush_block_only(false);
-                        if (this._codec.AvailableBytesOut == 0)
+                        if (this.codecField.AvailableBytesOut == 0)
                         {
                             return BlockState.NeedMore;
                         }
                     }
                 }
-                else if (this.match_available != 0)
+                else if (this.matchAvailableField != 0)
                 {
-                    if (this._tr_tally(0, this.window[this.strstart - 1] & 0xff))
+                    if (this._tr_tally(0, this.windowField[this.strstartField - 1] & 0xff))
                     {
                         this.flush_block_only(false);
                     }
-                    this.strstart++;
-                    this.lookahead--;
-                    if (this._codec.AvailableBytesOut == 0)
+                    this.strstartField++;
+                    this.lookAheadField--;
+                    if (this.codecField.AvailableBytesOut == 0)
                     {
                         return BlockState.NeedMore;
                     }
                 }
                 else
                 {
-                    this.match_available = 1;
-                    this.strstart++;
-                    this.lookahead--;
+                    this.matchAvailableField = 1;
+                    this.strstartField++;
+                    this.lookAheadField--;
                 }
             }
         }
 
         internal int End()
         {
-            if (((this.status != INIT_STATE) && (this.status != BUSY_STATE)) && (this.status != FINISH_STATE))
+            if (((this.statusField != INIT_STATE) && (this.statusField != BUSY_STATE)) && (this.statusField != FINISH_STATE))
             {
                 return -2;
             }
-            this.pending = null;
-            this.head = null;
-            this.prev = null;
-            this.window = null;
-            return ((this.status == BUSY_STATE) ? -3 : 0);
+            this.pendingField = null;
+            this.headField = null;
+            this.prevField = null;
+            this.windowField = null;
+            return ((this.statusField == BUSY_STATE) ? -3 : 0);
         }
 
         internal void flush_block_only(bool eof)
         {
-            this._tr_flush_block((this.block_start >= 0) ? this.block_start : -1, this.strstart - this.block_start, eof);
-            this.block_start = this.strstart;
-            this._codec.flush_pending();
+            this._tr_flush_block((this.blockStartField >= 0) ? this.blockStartField : -1, this.strstartField - this.blockStartField, eof);
+            this.blockStartField = this.strstartField;
+            this.codecField.flush_pending();
         }
 
         internal int Initialize(ZlibCodec codec, CompressionLevel level)
@@ -750,8 +750,8 @@
 
         internal int Initialize(ZlibCodec codec, CompressionLevel level, int windowBits, int memLevel, CompressionStrategy strategy)
         {
-            this._codec = codec;
-            this._codec.Message = null;
+            this.codecField = codec;
+            this.codecField.Message = null;
             if ((windowBits < 9) || (windowBits > 15))
             {
                 throw new ZlibException("windowBits must be in the range 9..15.");
@@ -760,114 +760,114 @@
             {
                 throw new ZlibException(string.Format(CultureInfo.InvariantCulture, "memLevel must be in the range 1.. {0}", MEM_LEVEL_MAX));
             }
-            this._codec.dstate = this;
-            this.w_bits = windowBits;
-            this.w_size = ((int) 1) << this.w_bits;
-            this.w_mask = this.w_size - 1;
-            this.hash_bits = memLevel + 7;
-            this.hash_size = ((int) 1) << this.hash_bits;
-            this.hash_mask = this.hash_size - 1;
-            this.hash_shift = ((this.hash_bits + MIN_MATCH) - 1) / MIN_MATCH;
-            this.window = new byte[this.w_size * 2];
-            this.prev = new short[this.w_size];
-            this.head = new short[this.hash_size];
-            this.lit_bufsize = ((int) 1) << (memLevel + 6);
-            this.pending = new byte[this.lit_bufsize * 4];
-            this._distanceOffset = this.lit_bufsize;
-            this._lengthOffset = 3 * this.lit_bufsize;
-            this.compressionLevel = level;
-            this.compressionStrategy = strategy;
+            this.codecField.dstate = this;
+            this.wbitsField = windowBits;
+            this.wsizeField = ((int) 1) << this.wbitsField;
+            this.wmaskField = this.wsizeField - 1;
+            this.hashBitsField = memLevel + 7;
+            this.hashSizeField = ((int) 1) << this.hashBitsField;
+            this.hashMaskField = this.hashSizeField - 1;
+            this.hashShiftField = ((this.hashBitsField + MIN_MATCH) - 1) / MIN_MATCH;
+            this.windowField = new byte[this.wsizeField * 2];
+            this.prevField = new short[this.wsizeField];
+            this.headField = new short[this.hashSizeField];
+            this.litBufSizeField = ((int) 1) << (memLevel + 6);
+            this.pendingField = new byte[this.litBufSizeField * 4];
+            this.distanceOffsetField = this.litBufSizeField;
+            this.lengthOffsetField = 3 * this.litBufSizeField;
+            this.compressionLevelField = level;
+            this.compressionStrategyField = strategy;
             this.Reset();
             return 0;
         }
 
         internal int longest_match(int cur_match)
         {
-            int maxChainLength = this.config.MaxChainLength;
-            int strstart = this.strstart;
-            int num5 = this.prev_length;
-            int num6 = (this.strstart > (this.w_size - MIN_LOOKAHEAD)) ? (this.strstart - (this.w_size - MIN_LOOKAHEAD)) : 0;
-            int niceLength = this.config.NiceLength;
-            int num8 = this.w_mask;
-            int num9 = this.strstart + MAX_MATCH;
-            byte num10 = this.window[(strstart + num5) - 1];
-            byte num11 = this.window[strstart + num5];
-            if (this.prev_length >= this.config.GoodLength)
+            int maxChainLength = this.configField.MaxChainLength;
+            int strstart = this.strstartField;
+            int num5 = this.prevLengthField;
+            int num6 = (this.strstartField > (this.wsizeField - MIN_LOOKAHEAD)) ? (this.strstartField - (this.wsizeField - MIN_LOOKAHEAD)) : 0;
+            int niceLength = this.configField.NiceLength;
+            int num8 = this.wmaskField;
+            int num9 = this.strstartField + MAX_MATCH;
+            byte num10 = this.windowField[(strstart + num5) - 1];
+            byte num11 = this.windowField[strstart + num5];
+            if (this.prevLengthField >= this.configField.GoodLength)
             {
                 maxChainLength = maxChainLength >> 2;
             }
-            if (niceLength > this.lookahead)
+            if (niceLength > this.lookAheadField)
             {
-                niceLength = this.lookahead;
+                niceLength = this.lookAheadField;
             }
             do
             {
                 int index = cur_match;
-                if ((((this.window[index + num5] == num11) && (this.window[(index + num5) - 1] == num10)) && (this.window[index] == this.window[strstart])) && (this.window[++index] == this.window[strstart + 1]))
+                if ((((this.windowField[index + num5] == num11) && (this.windowField[(index + num5) - 1] == num10)) && (this.windowField[index] == this.windowField[strstart])) && (this.windowField[++index] == this.windowField[strstart + 1]))
                 {
                     strstart += 2;
                     index++;
-                    while (((((this.window[++strstart] == this.window[++index]) && (this.window[++strstart] == this.window[++index])) && ((this.window[++strstart] == this.window[++index]) && (this.window[++strstart] == this.window[++index]))) && (((this.window[++strstart] == this.window[++index]) && (this.window[++strstart] == this.window[++index])) && ((this.window[++strstart] == this.window[++index]) && (this.window[++strstart] == this.window[++index])))) && (strstart < num9))
+                    while (((((this.windowField[++strstart] == this.windowField[++index]) && (this.windowField[++strstart] == this.windowField[++index])) && ((this.windowField[++strstart] == this.windowField[++index]) && (this.windowField[++strstart] == this.windowField[++index]))) && (((this.windowField[++strstart] == this.windowField[++index]) && (this.windowField[++strstart] == this.windowField[++index])) && ((this.windowField[++strstart] == this.windowField[++index]) && (this.windowField[++strstart] == this.windowField[++index])))) && (strstart < num9))
                     {
                     }
                     int num4 = MAX_MATCH - (num9 - strstart);
                     strstart = num9 - MAX_MATCH;
                     if (num4 > num5)
                     {
-                        this.match_start = cur_match;
+                        this.matchStartField = cur_match;
                         num5 = num4;
                         if (num4 >= niceLength)
                         {
                             break;
                         }
-                        num10 = this.window[(strstart + num5) - 1];
-                        num11 = this.window[strstart + num5];
+                        num10 = this.windowField[(strstart + num5) - 1];
+                        num11 = this.windowField[strstart + num5];
                     }
                 }
             }
-            while (((cur_match = this.prev[cur_match & num8] & 0xffff) > num6) && (--maxChainLength != 0));
-            if (num5 <= this.lookahead)
+            while (((cur_match = this.prevField[cur_match & num8] & 0xffff) > num6) && (--maxChainLength != 0));
+            if (num5 <= this.lookAheadField)
             {
                 return num5;
             }
-            return this.lookahead;
+            return this.lookAheadField;
         }
 
         internal void pqdownheap(short[] tree, int k)
         {
-            int n = this.heap[k];
-            for (int i = k << 1; i <= this.heap_len; i = i << 1)
+            int n = this.heapField[k];
+            for (int i = k << 1; i <= this.heapLenField; i = i << 1)
             {
-                if ((i < this.heap_len) && _IsSmaller(tree, this.heap[i + 1], this.heap[i], this.depth))
+                if ((i < this.heapLenField) && _IsSmaller(tree, this.heapField[i + 1], this.heapField[i], this.depthField))
                 {
                     i++;
                 }
-                if (_IsSmaller(tree, n, this.heap[i], this.depth))
+                if (_IsSmaller(tree, n, this.heapField[i], this.depthField))
                 {
                     break;
                 }
-                this.heap[k] = this.heap[i];
+                this.heapField[k] = this.heapField[i];
                 k = i;
             }
-            this.heap[k] = n;
+            this.heapField[k] = n;
         }
 
         private void put_bytes(byte[] p, int start, int len)
         {
-            Array.Copy(p, start, this.pending, this.pendingCount, len);
-            this.pendingCount += len;
+            Array.Copy(p, start, this.pendingField, this.pendingCountField, len);
+            this.pendingCountField += len;
         }
 
         internal void Reset()
         {
-            this._codec.TotalBytesIn = this._codec.TotalBytesOut = 0L;
-            this._codec.Message = null;
-            this.pendingCount = 0;
-            this.nextPending = 0;
-            this.Rfc1950BytesEmitted = false;
-            this.status = this.WantRfc1950HeaderBytes ? INIT_STATE : BUSY_STATE;
-            this._codec._Adler32 = Adler.Adler32(0, null, 0, 0);
-            this.last_flush = 0;
+            this.codecField.TotalBytesIn = this.codecField.TotalBytesOut = 0L;
+            this.codecField.Message = null;
+            this.pendingCountField = 0;
+            this.nextPendingField = 0;
+            this.rfc1950BytesEmittedField = false;
+            this.statusField = this.WantRfc1950HeaderBytes ? INIT_STATE : BUSY_STATE;
+            this.codecField._Adler32 = Adler.Adler32(0, null, 0, 0);
+            this.lastFlushField = 0;
             this._InitializeTreeData();
             this._InitializeLazyMatch();
         }
@@ -893,23 +893,23 @@
                 {
                     if (num5 < num7)
                     {
-                        this.bl_tree[num3 * 2] = (short) (this.bl_tree[num3 * 2] + num5);
+                        this.bltreeField[num3 * 2] = (short) (this.bltreeField[num3 * 2] + num5);
                     }
                     else if (num3 != 0)
                     {
                         if (num3 != num2)
                         {
-                            this.bl_tree[num3 * 2] = (short) (this.bl_tree[num3 * 2] + 1);
+                            this.bltreeField[num3 * 2] = (short) (this.bltreeField[num3 * 2] + 1);
                         }
-                        this.bl_tree[InternalConstants.REP_3_6 * 2] = (short) (this.bl_tree[InternalConstants.REP_3_6 * 2] + 1);
+                        this.bltreeField[InternalConstants.REP_3_6 * 2] = (short) (this.bltreeField[InternalConstants.REP_3_6 * 2] + 1);
                     }
                     else if (num5 <= 10)
                     {
-                        this.bl_tree[InternalConstants.REPZ_3_10 * 2] = (short) (this.bl_tree[InternalConstants.REPZ_3_10 * 2] + 1);
+                        this.bltreeField[InternalConstants.REPZ_3_10 * 2] = (short) (this.bltreeField[InternalConstants.REPZ_3_10 * 2] + 1);
                     }
                     else
                     {
-                        this.bl_tree[InternalConstants.REPZ_11_138 * 2] = (short) (this.bl_tree[InternalConstants.REPZ_11_138 * 2] + 1);
+                        this.bltreeField[InternalConstants.REPZ_11_138 * 2] = (short) (this.bltreeField[InternalConstants.REPZ_11_138 * 2] + 1);
                     }
                     num5 = 0;
                     num2 = num3;
@@ -939,27 +939,27 @@
             this.send_bits(blcodes - 4, 4);
             for (int i = 0; i < blcodes; i++)
             {
-                this.send_bits(this.bl_tree[(Tree.bl_order[i] * 2) + 1], 3);
+                this.send_bits(this.bltreeField[(Tree.bl_order[i] * 2) + 1], 3);
             }
-            this.send_tree(this.dyn_ltree, lcodes - 1);
-            this.send_tree(this.dyn_dtree, dcodes - 1);
+            this.send_tree(this.dynLtreeField, lcodes - 1);
+            this.send_tree(this.dynDtreeField, dcodes - 1);
         }
 
         internal void send_bits(int value, int length)
         {
             int num = length;
-            if (this.bi_valid > (Buf_size - num))
+            if (this.bivalidField > (Buf_size - num))
             {
-                this.bi_buf = (short) (this.bi_buf | ((short) ((value << this.bi_valid) & 0xffff)));
-                this.pending[this.pendingCount++] = (byte) this.bi_buf;
-                this.pending[this.pendingCount++] = (byte) (this.bi_buf >> 8);
-                this.bi_buf = (short) (value >> (Buf_size - this.bi_valid));
-                this.bi_valid += num - Buf_size;
+                this.bibufField = (short) (this.bibufField | ((short) ((value << this.bivalidField) & 0xffff)));
+                this.pendingField[this.pendingCountField++] = (byte) this.bibufField;
+                this.pendingField[this.pendingCountField++] = (byte) (this.bibufField >> 8);
+                this.bibufField = (short) (value >> (Buf_size - this.bivalidField));
+                this.bivalidField += num - Buf_size;
             }
             else
             {
-                this.bi_buf = (short) (this.bi_buf | ((short) ((value << this.bi_valid) & 0xffff)));
-                this.bi_valid += num;
+                this.bibufField = (short) (this.bibufField | ((short) ((value << this.bivalidField) & 0xffff)));
+                this.bivalidField += num;
             }
         }
 
@@ -972,13 +972,13 @@
         internal void send_compressed_block(short[] ltree, short[] dtree)
         {
             int num3 = 0;
-            if (this.last_lit != 0)
+            if (this.lastLitField != 0)
             {
                 do
                 {
-                    int index = this._distanceOffset + (num3 * 2);
-                    int dist = ((this.pending[index] << 8) & 0xff00) | (this.pending[index + 1] & 0xff);
-                    int c = this.pending[this._lengthOffset + num3] & 0xff;
+                    int index = this.distanceOffsetField + (num3 * 2);
+                    int dist = ((this.pendingField[index] << 8) & 0xff00) | (this.pendingField[index + 1] & 0xff);
+                    int c = this.pendingField[this.lengthOffsetField + num3] & 0xff;
                     num3++;
                     if (dist == 0)
                     {
@@ -1005,10 +1005,10 @@
                         }
                     }
                 }
-                while (num3 < this.last_lit);
+                while (num3 < this.lastLitField);
             }
             this.send_code(END_BLOCK, ltree);
-            this.last_eob_len = ltree[(END_BLOCK * 2) + 1];
+            this.lastEobLenField = ltree[(END_BLOCK * 2) + 1];
         }
 
         internal void send_tree(short[] tree, int max_code)
@@ -1033,7 +1033,7 @@
                     {
                         do
                         {
-                            this.send_code(c, this.bl_tree);
+                            this.send_code(c, this.bltreeField);
                         }
                         while (--num5 != 0);
                     }
@@ -1041,20 +1041,20 @@
                     {
                         if (c != num2)
                         {
-                            this.send_code(c, this.bl_tree);
+                            this.send_code(c, this.bltreeField);
                             num5--;
                         }
-                        this.send_code(InternalConstants.REP_3_6, this.bl_tree);
+                        this.send_code(InternalConstants.REP_3_6, this.bltreeField);
                         this.send_bits(num5 - 3, 2);
                     }
                     else if (num5 <= 10)
                     {
-                        this.send_code(InternalConstants.REPZ_3_10, this.bl_tree);
+                        this.send_code(InternalConstants.REPZ_3_10, this.bltreeField);
                         this.send_bits(num5 - 3, 3);
                     }
                     else
                     {
-                        this.send_code(InternalConstants.REPZ_11_138, this.bl_tree);
+                        this.send_code(InternalConstants.REPZ_11_138, this.bltreeField);
                         this.send_bits(num5 - 11, 7);
                     }
                     num5 = 0;
@@ -1085,36 +1085,36 @@
             int num3 = 0;
             while (num < 7)
             {
-                num3 += this.dyn_ltree[num * 2];
+                num3 += this.dynLtreeField[num * 2];
                 num++;
             }
             while (num < 0x80)
             {
-                num2 += this.dyn_ltree[num * 2];
+                num2 += this.dynLtreeField[num * 2];
                 num++;
             }
             while (num < InternalConstants.LITERALS)
             {
-                num3 += this.dyn_ltree[num * 2];
+                num3 += this.dynLtreeField[num * 2];
                 num++;
             }
-            this.data_type = (num3 > (num2 >> 2)) ? ((sbyte) Z_BINARY) : ((sbyte) Z_ASCII);
+            this.dataTypeField = (num3 > (num2 >> 2)) ? ((sbyte) Z_BINARY) : ((sbyte) Z_ASCII);
         }
 
         private void SetDeflater()
         {
-            switch (this.config.Flavor)
+            switch (this.configField.Flavor)
             {
                 case DeflateFlavor.Store:
-                    this.DeflateFunction = new CompressFunc(this.DeflateNone);
+                    this.deflateFunctionField = new CompressFunc(this.DeflateNone);
                     break;
 
                 case DeflateFlavor.Fast:
-                    this.DeflateFunction = new CompressFunc(this.DeflateFast);
+                    this.deflateFunctionField = new CompressFunc(this.DeflateFast);
                     break;
 
                 case DeflateFlavor.Slow:
-                    this.DeflateFunction = new CompressFunc(this.DeflateSlow);
+                    this.deflateFunctionField = new CompressFunc(this.DeflateSlow);
                     break;
             }
         }
@@ -1123,28 +1123,28 @@
         {
             int length = dictionary.Length;
             int sourceIndex = 0;
-            if ((dictionary == null) || (this.status != INIT_STATE))
+            if ((dictionary == null) || (this.statusField != INIT_STATE))
             {
                 throw new ZlibException("Stream error.");
             }
-            this._codec._Adler32 = Adler.Adler32(this._codec._Adler32, dictionary, 0, dictionary.Length);
+            this.codecField._Adler32 = Adler.Adler32(this.codecField._Adler32, dictionary, 0, dictionary.Length);
             if (length >= MIN_MATCH)
             {
-                if (length > (this.w_size - MIN_LOOKAHEAD))
+                if (length > (this.wsizeField - MIN_LOOKAHEAD))
                 {
-                    length = this.w_size - MIN_LOOKAHEAD;
+                    length = this.wsizeField - MIN_LOOKAHEAD;
                     sourceIndex = dictionary.Length - length;
                 }
-                Array.Copy(dictionary, sourceIndex, this.window, 0, length);
-                this.strstart = length;
-                this.block_start = length;
-                this.ins_h = this.window[0] & 0xff;
-                this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[1] & 0xff)) & this.hash_mask;
+                Array.Copy(dictionary, sourceIndex, this.windowField, 0, length);
+                this.strstartField = length;
+                this.blockStartField = length;
+                this.inshField = this.windowField[0] & 0xff;
+                this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[1] & 0xff)) & this.hashMaskField;
                 for (int i = 0; i <= (length - MIN_MATCH); i++)
                 {
-                    this.ins_h = ((this.ins_h << this.hash_shift) ^ (this.window[i + (MIN_MATCH - 1)] & 0xff)) & this.hash_mask;
-                    this.prev[i & this.w_mask] = this.head[this.ins_h];
-                    this.head[this.ins_h] = (short) i;
+                    this.inshField = ((this.inshField << this.hashShiftField) ^ (this.windowField[i + (MIN_MATCH - 1)] & 0xff)) & this.hashMaskField;
+                    this.prevField[i & this.wmaskField] = this.headField[this.inshField];
+                    this.headField[this.inshField] = (short) i;
                 }
             }
             return 0;
@@ -1153,18 +1153,18 @@
         internal int SetParams(CompressionLevel level, CompressionStrategy strategy)
         {
             int num = 0;
-            if (this.compressionLevel != level)
+            if (this.compressionLevelField != level)
             {
                 Config config = Config.Lookup(level);
-                if ((config.Flavor != this.config.Flavor) && (this._codec.TotalBytesIn != 0L))
+                if ((config.Flavor != this.configField.Flavor) && (this.codecField.TotalBytesIn != 0L))
                 {
-                    num = this._codec.Deflate(FlushType.Partial);
+                    num = this.codecField.Deflate(FlushType.Partial);
                 }
-                this.compressionLevel = level;
-                this.config = config;
+                this.compressionLevelField = level;
+                this.configField = config;
                 this.SetDeflater();
             }
-            this.compressionStrategy = strategy;
+            this.compressionStrategyField = strategy;
             return num;
         }
 
@@ -1172,11 +1172,11 @@
         {
             get
             {
-                return this._WantRfc1950HeaderBytes;
+                return this.wantRfc1950HeaderBytesField;
             }
             set
             {
-                this._WantRfc1950HeaderBytes = value;
+                this.wantRfc1950HeaderBytesField = value;
             }
         }
 

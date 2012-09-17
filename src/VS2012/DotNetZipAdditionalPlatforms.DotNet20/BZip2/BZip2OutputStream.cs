@@ -12,14 +12,14 @@
     /// </summary>
     public class BZip2OutputStream : Stream
     {
-        private int blockSize100k;
-        private BitWriter bw;
-        private uint combinedCRC;
-        private BZip2Compressor compressor;
-        private TraceBits desiredTrace;
-        private bool leaveOpen;
-        private Stream output;
-        private int totalBytesWrittenIn;
+        private int blockSize100kField;
+        private BitWriter bitWriterField;
+        private uint combinedCrcField;
+        private BZip2Compressor compressorField;
+        private TraceBits desiredTraceField;
+        private bool leaveOpenField;
+        private Stream outputStreamField;
+        private int totalBytesWrittenInField;
 
         /// <summary>
         /// Constructs a new <c>BZip2OutputStream</c>, that sends its
@@ -97,21 +97,21 @@
         /// </param>
         public BZip2OutputStream(Stream output, int blockSize, bool leaveOpen)
         {
-            this.desiredTrace = TraceBits.None | TraceBits.Crc | TraceBits.Write;
+            this.desiredTraceField = TraceBits.None | TraceBits.Crc | TraceBits.Write;
             if ((blockSize < DotNetZipAdditionalPlatforms.BZip2.BZip2.MinBlockSize) || (blockSize > DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxBlockSize))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "blockSize={0} is out of range; must be between {1} and {2}", blockSize, DotNetZipAdditionalPlatforms.BZip2.BZip2.MinBlockSize, DotNetZipAdditionalPlatforms.BZip2.BZip2.MaxBlockSize), "blockSize");
             }
-            this.output = output;
-            if (!this.output.CanWrite)
+            this.outputStreamField = output;
+            if (!this.outputStreamField.CanWrite)
             {
                 throw new ArgumentException("The stream is not writable.", "output");
             }
-            this.bw = new BitWriter(this.output);
-            this.blockSize100k = blockSize;
-            this.compressor = new BZip2Compressor(this.bw, blockSize);
-            this.leaveOpen = leaveOpen;
-            this.combinedCRC = 0;
+            this.bitWriterField = new BitWriter(this.outputStreamField);
+            this.blockSize100kField = blockSize;
+            this.compressorField = new BZip2Compressor(this.bitWriterField, blockSize);
+            this.leaveOpenField = leaveOpen;
+            this.combinedCrcField = 0;
             this.EmitHeader();
         }
 
@@ -126,11 +126,11 @@
         /// </remarks>
         public override void Close()
         {
-            if (this.output != null)
+            if (this.outputStreamField != null)
             {
-                Stream output = this.output;
+                Stream output = this.outputStreamField;
                 this.Finish();
-                if (!this.leaveOpen)
+                if (!this.leaveOpenField)
                 {
                     output.Close();
                 }
@@ -140,38 +140,38 @@
         private void EmitHeader()
         {
             byte[] buffer2 = new byte[] { 0x42, 90, 0x68, 0 };
-            buffer2[3] = (byte) (0x30 + this.blockSize100k);
+            buffer2[3] = (byte) (0x30 + this.blockSize100kField);
             byte[] buffer = buffer2;
-            this.output.Write(buffer, 0, buffer.Length);
+            this.outputStreamField.Write(buffer, 0, buffer.Length);
         }
 
         private void EmitTrailer()
         {
-            this.bw.WriteByte(0x17);
-            this.bw.WriteByte(0x72);
-            this.bw.WriteByte(0x45);
-            this.bw.WriteByte(0x38);
-            this.bw.WriteByte(80);
-            this.bw.WriteByte(0x90);
-            this.bw.WriteInt(this.combinedCRC);
-            this.bw.FinishAndPad();
+            this.bitWriterField.WriteByte(0x17);
+            this.bitWriterField.WriteByte(0x72);
+            this.bitWriterField.WriteByte(0x45);
+            this.bitWriterField.WriteByte(0x38);
+            this.bitWriterField.WriteByte(80);
+            this.bitWriterField.WriteByte(0x90);
+            this.bitWriterField.WriteInt(this.combinedCrcField);
+            this.bitWriterField.FinishAndPad();
         }
 
         private void Finish()
         {
             try
             {
-                int totalBytesWrittenOut = this.bw.TotalBytesWrittenOut;
-                this.compressor.CompressAndWrite();
-                this.combinedCRC = (this.combinedCRC << 1) | (this.combinedCRC >> 0x1f);
-                this.combinedCRC ^= this.compressor.Crc32;
+                int totalBytesWrittenOut = this.bitWriterField.TotalBytesWrittenOut;
+                this.compressorField.CompressAndWrite();
+                this.combinedCrcField = (this.combinedCrcField << 1) | (this.combinedCrcField >> 0x1f);
+                this.combinedCrcField ^= this.compressorField.Crc32;
                 this.EmitTrailer();
             }
             finally
             {
-                this.output = null;
-                this.compressor = null;
-                this.bw = null;
+                this.outputStreamField = null;
+                this.compressorField = null;
+                this.bitWriterField = null;
             }
         }
 
@@ -180,10 +180,10 @@
         /// </summary>
         public override void Flush()
         {
-            if (this.output != null)
+            if (this.outputStreamField != null)
             {
-                this.bw.Flush();
-                this.output.Flush();
+                this.bitWriterField.Flush();
+                this.outputStreamField.Flush();
             }
         }
 
@@ -222,7 +222,7 @@
         [Conditional("Trace")]
         private void TraceOutput(TraceBits bits, string format, params object[] varParams)
         {
-            if ((bits & this.desiredTrace) != TraceBits.None)
+            if ((bits & this.desiredTraceField) != TraceBits.None)
             {
                 int hashCode = Thread.CurrentThread.GetHashCode();
                 Console.ForegroundColor = (ConsoleColor) ((hashCode % 8) + 10);
@@ -268,7 +268,7 @@
             {
                 throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "offset({0}) count({1}) bLength({2})", offset, count, buffer.Length));
             }
-            if (this.output == null)
+            if (this.outputStreamField == null)
             {
                 throw new IOException("the stream is not open");
             }
@@ -278,20 +278,20 @@
                 int num2 = count;
                 do
                 {
-                    int num3 = this.compressor.Fill(buffer, offset, num2);
+                    int num3 = this.compressorField.Fill(buffer, offset, num2);
                     if (num3 != num2)
                     {
-                        int totalBytesWrittenOut = this.bw.TotalBytesWrittenOut;
-                        this.compressor.CompressAndWrite();
-                        this.combinedCRC = (this.combinedCRC << 1) | (this.combinedCRC >> 0x1f);
-                        this.combinedCRC ^= this.compressor.Crc32;
+                        int totalBytesWrittenOut = this.bitWriterField.TotalBytesWrittenOut;
+                        this.compressorField.CompressAndWrite();
+                        this.combinedCrcField = (this.combinedCrcField << 1) | (this.combinedCrcField >> 0x1f);
+                        this.combinedCrcField ^= this.compressorField.Crc32;
                         offset += num3;
                     }
                     num2 -= num3;
                     num += num3;
                 }
                 while (num2 > 0);
-                this.totalBytesWrittenIn += num;
+                this.totalBytesWrittenInField += num;
             }
         }
 
@@ -302,7 +302,7 @@
         {
             get
             {
-                return this.blockSize100k;
+                return this.blockSize100kField;
             }
         }
 
@@ -345,11 +345,11 @@
         {
             get
             {
-                if (this.output == null)
+                if (this.outputStreamField == null)
                 {
                     throw new ObjectDisposedException("BZip2Stream");
                 }
-                return this.output.CanWrite;
+                return this.outputStreamField.CanWrite;
             }
         }
 
@@ -376,7 +376,7 @@
         {
             get
             {
-                return (long) this.totalBytesWrittenIn;
+                return (long) this.totalBytesWrittenInField;
             }
             set
             {

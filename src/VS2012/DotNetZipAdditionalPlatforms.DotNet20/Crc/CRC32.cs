@@ -16,12 +16,12 @@
     /// </remarks>
     public class CRC32
     {
-        private uint _register;
-        private long _TotalBytesRead;
+        private uint registerField;
+        private long totalBytesReadField;
         private const int BUFFER_SIZE = 0x2000;
-        private uint[] crc32Table;
-        private uint dwPolynomial;
-        private bool reverseBits;
+        private uint[] crc32TableField;
+        private uint dwPolynomialField;
+        private bool reverseBitsField;
 
         /// <summary>
         /// Create an instance of the CRC32 class using the default settings: no
@@ -78,15 +78,15 @@
         /// </remarks>
         public CRC32(int polynomial, bool reverseBits)
         {
-            this._register = uint.MaxValue;
-            this.reverseBits = reverseBits;
-            this.dwPolynomial = (uint) polynomial;
+            this.registerField = uint.MaxValue;
+            this.reverseBitsField = reverseBits;
+            this.dwPolynomialField = (uint) polynomial;
             this.GenerateLookupTable();
         }
 
         internal int _InternalComputeCrc32(uint W, byte B)
         {
-            return (int) (this.crc32Table[(int) ((IntPtr) ((W ^ B) & 0xff))] ^ (W >> 8));
+            return (int) (this.crc32TableField[(int) ((IntPtr) ((W ^ B) & 0xff))] ^ (W >> 8));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@
             uint[] mat = new uint[0x20];
             if (length != 0)
             {
-                uint vec = ~this._register;
+                uint vec = ~this.registerField;
                 uint num2 = (uint) crc;
-                mat[0] = this.dwPolynomial;
+                mat[0] = this.dwPolynomialField;
                 uint num3 = 1;
                 for (int i = 1; i < 0x20; i++)
                 {
@@ -139,7 +139,7 @@
                 }
                 while (num5 != 0);
                 vec ^= num2;
-                this._register = ~vec;
+                this.registerField = ~vec;
             }
         }
 
@@ -157,7 +157,7 @@
 
         private void GenerateLookupTable()
         {
-            this.crc32Table = new uint[0x100];
+            this.crc32TableField = new uint[0x100];
             byte data = 0;
             do
             {
@@ -166,20 +166,20 @@
                 {
                     if ((num & 1) == 1)
                     {
-                        num = (num >> 1) ^ this.dwPolynomial;
+                        num = (num >> 1) ^ this.dwPolynomialField;
                     }
                     else
                     {
                         num = num >> 1;
                     }
                 }
-                if (this.reverseBits)
+                if (this.reverseBitsField)
                 {
-                    this.crc32Table[ReverseBits(data)] = ReverseBits(num);
+                    this.crc32TableField[ReverseBits(data)] = ReverseBits(num);
                 }
                 else
                 {
-                    this.crc32Table[data] = num;
+                    this.crc32TableField[data] = num;
                 }
                 data = (byte) (data + 1);
             }
@@ -211,13 +211,13 @@
             }
             byte[] buffer = new byte[0x2000];
             int count = 0x2000;
-            this._TotalBytesRead = 0L;
+            this.totalBytesReadField = 0L;
             int num2 = input.Read(buffer, 0, count);
             if (output != null)
             {
                 output.Write(buffer, 0, num2);
             }
-            this._TotalBytesRead += num2;
+            this.totalBytesReadField += num2;
             while (num2 > 0)
             {
                 this.SlurpBlock(buffer, 0, num2);
@@ -226,9 +226,9 @@
                 {
                     output.Write(buffer, 0, num2);
                 }
-                this._TotalBytesRead += num2;
+                this.totalBytesReadField += num2;
             }
-            return (int) ~this._register;
+            return (int) ~this.registerField;
         }
 
         private void gf2_matrix_square(uint[] square, uint[] mat)
@@ -264,7 +264,7 @@
         /// </remarks>
         public void Reset()
         {
-            this._register = uint.MaxValue;
+            this.registerField = uint.MaxValue;
         }
 
         private static byte ReverseBits(byte data)
@@ -303,18 +303,18 @@
                 uint num4;
                 int index = offset + i;
                 byte num3 = block[index];
-                if (this.reverseBits)
+                if (this.reverseBitsField)
                 {
-                    num4 = (this._register >> 0x18) ^ num3;
-                    this._register = (this._register << 8) ^ this.crc32Table[num4];
+                    num4 = (this.registerField >> 0x18) ^ num3;
+                    this.registerField = (this.registerField << 8) ^ this.crc32TableField[num4];
                 }
                 else
                 {
-                    num4 = (this._register & 0xff) ^ num3;
-                    this._register = (this._register >> 8) ^ this.crc32Table[num4];
+                    num4 = (this.registerField & 0xff) ^ num3;
+                    this.registerField = (this.registerField >> 8) ^ this.crc32TableField[num4];
                 }
             }
-            this._TotalBytesRead += count;
+            this.totalBytesReadField += count;
         }
 
         /// <summary>
@@ -324,15 +324,15 @@
         public void UpdateCRC(byte b)
         {
             uint num;
-            if (this.reverseBits)
+            if (this.reverseBitsField)
             {
-                num = (this._register >> 0x18) ^ b;
-                this._register = (this._register << 8) ^ this.crc32Table[num];
+                num = (this.registerField >> 0x18) ^ b;
+                this.registerField = (this.registerField << 8) ^ this.crc32TableField[num];
             }
             else
             {
-                num = (this._register & 0xff) ^ b;
-                this._register = (this._register >> 8) ^ this.crc32Table[num];
+                num = (this.registerField & 0xff) ^ b;
+                this.registerField = (this.registerField >> 8) ^ this.crc32TableField[num];
             }
         }
 
@@ -355,15 +355,15 @@
             while (n-- > 0)
             {
                 uint num;
-                if (this.reverseBits)
+                if (this.reverseBitsField)
                 {
-                    num = (this._register >> 0x18) ^ b;
-                    this._register = (this._register << 8) ^ this.crc32Table[(num >= 0) ? ((int) num) : ((int) (num + 0x100))];
+                    num = (this.registerField >> 0x18) ^ b;
+                    this.registerField = (this.registerField << 8) ^ this.crc32TableField[(num >= 0) ? ((int) num) : ((int) (num + 0x100))];
                 }
                 else
                 {
-                    num = (this._register & 0xff) ^ b;
-                    this._register = (this._register >> 8) ^ this.crc32Table[(num >= 0) ? ((int) num) : ((int) (num + 0x100))];
+                    num = (this.registerField & 0xff) ^ b;
+                    this.registerField = (this.registerField >> 8) ^ this.crc32TableField[(num >= 0) ? ((int) num) : ((int) (num + 0x100))];
                 }
             }
         }
@@ -375,7 +375,7 @@
         {
             get
             {
-                return (int) ~this._register;
+                return (int) ~this.registerField;
             }
         }
 
@@ -386,7 +386,7 @@
         {
             get
             {
-                return this._TotalBytesRead;
+                return this.totalBytesReadField;
             }
         }
     }

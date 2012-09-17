@@ -8,13 +8,13 @@
     /// </summary>
     public class ZipProgressEventArgs : EventArgs
     {
-        private string _archiveName;
-        private long _bytesTransferred;
-        private bool _cancel;
-        private int _entriesTotal;
-        private ZipProgressEventType _flavor;
-        private ZipEntry _latestEntry;
-        private long _totalBytesToTransfer;
+        private string archiveNameField;
+        private long bytesTransferredField;
+        private bool cancelField;
+        private int entriesTotalField;
+        private ZipProgressEventType flavorField;
+        private ZipEntry latestEntryField;
+        private long totalBytesToTransferField;
 
         internal ZipProgressEventArgs()
         {
@@ -22,8 +22,8 @@
 
         internal ZipProgressEventArgs(string archiveName, ZipProgressEventType flavor)
         {
-            this._archiveName = archiveName;
-            this._flavor = flavor;
+            this.archiveNameField = archiveName;
+            this.flavorField = flavor;
         }
 
         /// <summary>
@@ -33,11 +33,11 @@
         {
             get
             {
-                return this._archiveName;
+                return this.archiveNameField;
             }
             set
             {
-                this._archiveName = value;
+                this.archiveNameField = value;
             }
         }
 
@@ -48,11 +48,11 @@
         {
             get
             {
-                return this._bytesTransferred;
+                return this.bytesTransferredField;
             }
             set
             {
-                this._bytesTransferred = value;
+                this.bytesTransferredField = value;
             }
         }
 
@@ -64,11 +64,11 @@
         {
             get
             {
-                return this._cancel;
+                return this.cancelField;
             }
             set
             {
-                this._cancel = this._cancel || value;
+                this.cancelField = this.cancelField || value;
             }
         }
 
@@ -79,11 +79,11 @@
         {
             get
             {
-                return this._latestEntry;
+                return this.latestEntryField;
             }
             set
             {
-                this._latestEntry = value;
+                this.latestEntryField = value;
             }
         }
 
@@ -94,11 +94,11 @@
         {
             get
             {
-                return this._entriesTotal;
+                return this.entriesTotalField;
             }
             set
             {
-                this._entriesTotal = value;
+                this.entriesTotalField = value;
             }
         }
 
@@ -109,11 +109,11 @@
         {
             get
             {
-                return this._flavor;
+                return this.flavorField;
             }
             set
             {
-                this._flavor = value;
+                this.flavorField = value;
             }
         }
 
@@ -125,11 +125,11 @@
         {
             get
             {
-                return this._totalBytesToTransfer;
+                return this.totalBytesToTransferField;
             }
             set
             {
-                this._totalBytesToTransfer = value;
+                this.totalBytesToTransferField = value;
             }
         }
     }

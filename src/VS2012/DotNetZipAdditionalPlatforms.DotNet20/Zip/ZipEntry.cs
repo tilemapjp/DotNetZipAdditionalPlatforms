@@ -20,83 +20,83 @@
     /// </summary>
     public class ZipEntry
     {
-        private long __FileDataPosition = -1L;
-        private Encoding _actualEncoding;
-        private WinZipAesCrypto _aesCrypto_forExtract;
-        private WinZipAesCrypto _aesCrypto_forWrite;
-        internal Stream _archiveStream;
-        private DateTime _Atime;
-        internal short _BitField;
-        private CloseDelegate _CloseDelegate;
-        internal string _Comment;
-        private byte[] _CommentBytes;
-        private short _commentLength;
-        internal long _CompressedFileDataSize;
-        internal long _CompressedSize;
-        private CompressionLevel _CompressionLevel = CompressionLevel.Default;
-        internal short _CompressionMethod = 8;
-        private short _CompressionMethod_FromZipFile;
-        internal ZipContainer _container;
-        internal int _Crc32;
-        private bool _crcCalculated;
-        private DateTime _Ctime;
-        private uint _diskNumber;
-        private bool _emitNtfsTimes = true;
-        private bool _emitUnixTimes;
-        internal EncryptionAlgorithm _Encryption = EncryptionAlgorithm.None;
-        internal EncryptionAlgorithm _Encryption_FromZipFile;
-        private byte[] _EntryHeader;
-        private bool? _entryRequiresZip64;
-        private int _ExternalFileAttrs;
-        internal byte[] _Extra;
-        private short _extraFieldLength;
-        private string _FileNameInArchive;
-        private short _filenameLength;
-        private long _future_ROLH;
-        private Stream _inputDecryptorStream;
-        internal bool _InputUsesZip64;
-        private short _InternalFileAttrs;
-        private bool _ioOperationCanceled;
-        private bool _IsDirectory;
-        private bool _IsText;
-        internal DateTime _LastModified;
-        private int _LengthOfHeader;
-        private int _LengthOfTrailer;
-        internal string _LocalFileName;
-        private bool _metadataChanged;
-        private DateTime _Mtime;
-        private bool _ntfsTimesAreSet;
-        private OpenDelegate _OpenDelegate;
-        private object _outputLock = new object();
-        private bool? _OutputUsesZip64;
-        internal string _Password;
-        private bool _presumeZip64;
-        private int _readExtraDepth;
-        internal long _RelativeOffsetOfLocalHeader;
-        private bool _restreamRequiredOnSave;
-        private bool _skippedDuringSave;
-        internal ZipEntrySource _Source = ZipEntrySource.None;
-        private bool _sourceIsEncrypted;
-        private Stream _sourceStream;
-        private long? _sourceStreamOriginalPosition;
-        private bool _sourceWasJitProvided;
-        internal int _TimeBlob;
-        private ZipEntryTimestamp _timestamp;
-        private long _TotalEntrySize;
-        private bool _TrimVolumeFromFullyQualifiedPaths = true;
-        internal long _UncompressedSize;
-        private static DateTime _unixEpoch = new DateTime(0x7b2, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private uint _UnsupportedAlgorithmId;
-        private short _VersionMadeBy;
-        internal short _VersionNeeded;
-        internal byte[] _WeakEncryptionHeader;
-        private static DateTime _win32Epoch = DateTime.FromFileTimeUtc(0L);
-        private short _WinZipAesMethod;
-        private WriteDelegate _WriteDelegate;
-        private static DateTime _zeroHour = new DateTime(1, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private ZipCrypto _zipCrypto_forExtract;
-        private ZipCrypto _zipCrypto_forWrite;
-        private static Encoding ibm437 = Encoding.GetEncoding("IBM437");
+        private long fileDataPositionField = -1L;
+        private Encoding actualEncodingField;
+        private WinZipAesCrypto aesCryptoForExtractField;
+        private WinZipAesCrypto aesCryptoForWriteField;
+        internal Stream archiveStreamField;
+        private DateTime atimeField;
+        internal short bitFieldField;
+        private CloseDelegate closeDelegateField;
+        internal string commentField;
+        private byte[] commentBytesField;
+        private short commentLengthField;
+        internal long compressedFileDataSizeField;
+        internal long compressedSizeField;
+        private CompressionLevel compressionLevelField = CompressionLevel.Default;
+        internal short compressionMethodField = 8;
+        private short compressionMethodFromZipFileField;
+        internal ZipContainer containerField;
+        internal int crc32Field;
+        private bool crcCalculatedField;
+        private DateTime ctimeField;
+        private uint diskNumberField;
+        private bool emitNtfsTimesField = true;
+        private bool emitUnixTimesField;
+        internal EncryptionAlgorithm encryptionField = EncryptionAlgorithm.None;
+        internal EncryptionAlgorithm encryptionFromZipFileField;
+        private byte[] entryHeaderField;
+        private bool? entryRequiresZip64Field;
+        private int externalFileAttrsField;
+        internal byte[] extraField;
+        private short extraFieldLengthField;
+        private string fileNameInArchiveField;
+        private short filenameLengthField;
+        private long futureRolhField;
+        private Stream inputDecryptorStreamField;
+        internal bool inputUsesZip64Field;
+        private short internalFileAttrsField;
+        private bool ioOperationCanceledField;
+        private bool isDirectoryField;
+        private bool isTextField;
+        internal DateTime lastModifiedField;
+        private int lengthOfHeaderField;
+        private int lengthOfTrailerField;
+        internal string localFileNameField;
+        private bool metadataChangedField;
+        private DateTime mtimeField;
+        private bool ntfsTimesAreSetField;
+        private OpenDelegate openDelegateField;
+        private object outputLockField = new object();
+        private bool? outputUsesZip64Field;
+        internal string passwordField;
+        private bool presumeZip64Field;
+        private int readExtraDepthField;
+        internal long relativeOffsetOfLocalHeaderField;
+        private bool restreamRequiredOnSaveField;
+        private bool skippedDuringSaveField;
+        internal ZipEntrySource sourceField = ZipEntrySource.None;
+        private bool sourceIsEncryptedField;
+        private Stream sourceStreamField;
+        private long? sourceStreamOriginalPositionField;
+        private bool sourceWasJitProvidedField;
+        internal int timeBlobField;
+        private ZipEntryTimestamp timestampField;
+        private long totalEntrySizeField;
+        private bool trimVolumeFromFullyQualifiedPathsField = true;
+        internal long uncompressedSizeField;
+        private static DateTime unixEpochField = new DateTime(0x7b2, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private uint unsupportedAlgorithmIdField;
+        private short versionMadeByField;
+        internal short versionNeededField;
+        internal byte[] weakEncryptionHeaderField;
+        private static DateTime win32EpochField = DateTime.FromFileTimeUtc(0L);
+        private short winZipAesMethodField;
+        private WriteDelegate writeDelegateField;
+        private static DateTime zeroHourField = new DateTime(1, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private ZipCrypto zipCryptoForExtractField;
+        private ZipCrypto zipCryptoForWriteField;
+        private static Encoding ibm437Field = Encoding.GetEncoding("IBM437");
 
         /// <summary>
         /// Default constructor.
@@ -123,22 +123,22 @@
         {
             try
             {
-                if (this._ntfsTimesAreSet)
+                if (this.ntfsTimesAreSetField)
                 {
                     if (isFile)
                     {
                         if (File.Exists(fileOrDirectory))
                         {
-                            File.SetCreationTimeUtc(fileOrDirectory, this._Ctime);
-                            File.SetLastAccessTimeUtc(fileOrDirectory, this._Atime);
-                            File.SetLastWriteTimeUtc(fileOrDirectory, this._Mtime);
+                            File.SetCreationTimeUtc(fileOrDirectory, this.ctimeField);
+                            File.SetLastAccessTimeUtc(fileOrDirectory, this.atimeField);
+                            File.SetLastWriteTimeUtc(fileOrDirectory, this.mtimeField);
                         }
                     }
                     else if (Directory.Exists(fileOrDirectory))
                     {
-                        Directory.SetCreationTimeUtc(fileOrDirectory, this._Ctime);
-                        Directory.SetLastAccessTimeUtc(fileOrDirectory, this._Atime);
-                        Directory.SetLastWriteTimeUtc(fileOrDirectory, this._Mtime);
+                        Directory.SetCreationTimeUtc(fileOrDirectory, this.ctimeField);
+                        Directory.SetLastAccessTimeUtc(fileOrDirectory, this.atimeField);
+                        Directory.SetLastWriteTimeUtc(fileOrDirectory, this.mtimeField);
                     }
                 }
                 else
@@ -187,9 +187,9 @@
                     stream3 = stream4 = stream2;
                 }
                 CrcCalculatorStream stream = new CrcCalculatorStream(stream4, true);
-                if (this._Source == ZipEntrySource.WriteDelegate)
+                if (this.sourceField == ZipEntrySource.WriteDelegate)
                 {
-                    this._WriteDelegate(this.FileName, stream);
+                    this.writeDelegateField(this.FileName, stream);
                 }
                 else
                 {
@@ -199,7 +199,7 @@
                     {
                         stream.Write(buffer, 0, num3);
                         this.OnWriteBlock(stream.TotalBytesSlurped, streamLength);
-                        if (this._ioOperationCanceled)
+                        if (this.ioOperationCanceledField)
                         {
                             break;
                         }
@@ -209,11 +209,11 @@
             }
             finally
             {
-                if (this._Source == ZipEntrySource.JitStream)
+                if (this.sourceField == ZipEntrySource.JitStream)
                 {
-                    if (this._CloseDelegate != null)
+                    if (this.closeDelegateField != null)
                     {
-                        this._CloseDelegate(this.FileName, input);
+                        this.closeDelegateField(this.FileName, input);
                     }
                 }
                 else if (input is FileStream)
@@ -221,9 +221,9 @@
                     input.Dispose();
                 }
             }
-            if (!this._ioOperationCanceled)
+            if (!this.ioOperationCanceledField)
             {
-                this.__FileDataPosition = position;
+                this.fileDataPositionField = position;
                 this.PostProcessOutput(s);
             }
         }
@@ -249,7 +249,7 @@
                         throw new ZipException(string.Format(CultureInfo.InvariantCulture, "The file {0} already exists.", targetFileName));
                     }
                     this.OnExtractExisting(baseDir);
-                    if (!this._ioOperationCanceled)
+                    if (!this.ioOperationCanceledField)
                     {
                         num++;
                         goto Label_0003;
@@ -264,12 +264,12 @@
             byte[] buffer;
             int num2;
             List<byte[]> list = new List<byte[]>();
-            if (!((this._container.Zip64 == Zip64Option.Always) ? false : ((this._container.Zip64 != Zip64Option.AsNecessary) ? true : (!forCentralDirectory ? false : !this._entryRequiresZip64.Value))))
+            if (!((this.containerField.Zip64 == Zip64Option.Always) ? false : ((this.containerField.Zip64 != Zip64Option.AsNecessary) ? true : (!forCentralDirectory ? false : !this.entryRequiresZip64Field.Value))))
             {
                 int num = 4 + (forCentralDirectory ? 0x1c : 0x10);
                 buffer = new byte[num];
                 num2 = 0;
-                if (this._presumeZip64 || forCentralDirectory)
+                if (this.presumeZip64Field || forCentralDirectory)
                 {
                     buffer[num2++] = 1;
                     buffer[num2++] = 0;
@@ -281,13 +281,13 @@
                 }
                 buffer[num2++] = (byte) (num - 4);
                 buffer[num2++] = 0;
-                Array.Copy(BitConverter.GetBytes(this._UncompressedSize), 0, buffer, num2, 8);
+                Array.Copy(BitConverter.GetBytes(this.uncompressedSizeField), 0, buffer, num2, 8);
                 num2 += 8;
-                Array.Copy(BitConverter.GetBytes(this._CompressedSize), 0, buffer, num2, 8);
+                Array.Copy(BitConverter.GetBytes(this.compressedSizeField), 0, buffer, num2, 8);
                 num2 += 8;
                 if (forCentralDirectory)
                 {
-                    Array.Copy(BitConverter.GetBytes(this._RelativeOffsetOfLocalHeader), 0, buffer, num2, 8);
+                    Array.Copy(BitConverter.GetBytes(this.relativeOffsetOfLocalHeaderField), 0, buffer, num2, 8);
                     num2 += 8;
                     Array.Copy(BitConverter.GetBytes(0), 0, buffer, num2, 4);
                 }
@@ -319,11 +319,11 @@
                     buffer[num2] = 0xff;
                 }
                 num2++;
-                buffer[num2++] = (byte) (this._CompressionMethod & 0xff);
-                buffer[num2++] = (byte) (this._CompressionMethod & 0xff00);
+                buffer[num2++] = (byte) (this.compressionMethodField & 0xff);
+                buffer[num2++] = (byte) (this.compressionMethodField & 0xff00);
                 list.Add(buffer);
             }
-            if (this._ntfsTimesAreSet && this._emitNtfsTimes)
+            if (this.ntfsTimesAreSetField && this.emitNtfsTimesField)
             {
                 buffer = new byte[0x24];
                 num2 = 0;
@@ -336,15 +336,15 @@
                 buffer[num2++] = 0;
                 buffer[num2++] = 0x18;
                 buffer[num2++] = 0;
-                Array.Copy(BitConverter.GetBytes(this._Mtime.ToFileTime()), 0, buffer, num2, 8);
+                Array.Copy(BitConverter.GetBytes(this.mtimeField.ToFileTime()), 0, buffer, num2, 8);
                 num2 += 8;
-                Array.Copy(BitConverter.GetBytes(this._Atime.ToFileTime()), 0, buffer, num2, 8);
+                Array.Copy(BitConverter.GetBytes(this.atimeField.ToFileTime()), 0, buffer, num2, 8);
                 num2 += 8;
-                Array.Copy(BitConverter.GetBytes(this._Ctime.ToFileTime()), 0, buffer, num2, 8);
+                Array.Copy(BitConverter.GetBytes(this.ctimeField.ToFileTime()), 0, buffer, num2, 8);
                 num2 += 8;
                 list.Add(buffer);
             }
-            if (this._ntfsTimesAreSet && this._emitUnixTimes)
+            if (this.ntfsTimesAreSetField && this.emitUnixTimesField)
             {
                 int num5 = 9;
                 if (!forCentralDirectory)
@@ -358,17 +358,17 @@
                 buffer[num2++] = (byte) (num5 - 4);
                 buffer[num2++] = 0;
                 buffer[num2++] = 7;
-                TimeSpan span = (TimeSpan) (this._Mtime - _unixEpoch);
+                TimeSpan span = (TimeSpan) (this.mtimeField - unixEpochField);
                 int totalSeconds = (int) span.TotalSeconds;
                 Array.Copy(BitConverter.GetBytes(totalSeconds), 0, buffer, num2, 4);
                 num2 += 4;
                 if (!forCentralDirectory)
                 {
-                    span = (TimeSpan) (this._Atime - _unixEpoch);
+                    span = (TimeSpan) (this.atimeField - unixEpochField);
                     totalSeconds = (int) span.TotalSeconds;
                     Array.Copy(BitConverter.GetBytes(totalSeconds), 0, buffer, num2, 4);
                     num2 += 4;
-                    span = (TimeSpan) (this._Ctime - _unixEpoch);
+                    span = (TimeSpan) (this.ctimeField - unixEpochField);
                     totalSeconds = (int) span.TotalSeconds;
                     Array.Copy(BitConverter.GetBytes(totalSeconds), 0, buffer, num2, 4);
                     num2 += 4;
@@ -402,20 +402,20 @@
         /// </summary>
         internal void CopyMetaData(ZipEntry source)
         {
-            this.__FileDataPosition = source.__FileDataPosition;
+            this.fileDataPositionField = source.fileDataPositionField;
             this.CompressionMethod = source.CompressionMethod;
-            this._CompressionMethod_FromZipFile = source._CompressionMethod_FromZipFile;
-            this._CompressedFileDataSize = source._CompressedFileDataSize;
-            this._UncompressedSize = source._UncompressedSize;
-            this._BitField = source._BitField;
-            this._Source = source._Source;
-            this._LastModified = source._LastModified;
-            this._Mtime = source._Mtime;
-            this._Atime = source._Atime;
-            this._Ctime = source._Ctime;
-            this._ntfsTimesAreSet = source._ntfsTimesAreSet;
-            this._emitUnixTimes = source._emitUnixTimes;
-            this._emitNtfsTimes = source._emitNtfsTimes;
+            this.compressionMethodFromZipFileField = source.compressionMethodFromZipFileField;
+            this.compressedFileDataSizeField = source.compressedFileDataSizeField;
+            this.uncompressedSizeField = source.uncompressedSizeField;
+            this.bitFieldField = source.bitFieldField;
+            this.sourceField = source.sourceField;
+            this.lastModifiedField = source.lastModifiedField;
+            this.mtimeField = source.mtimeField;
+            this.atimeField = source.atimeField;
+            this.ctimeField = source.ctimeField;
+            this.ntfsTimesAreSetField = source.ntfsTimesAreSetField;
+            this.emitUnixTimesField = source.emitUnixTimesField;
+            this.emitNtfsTimesField = source.emitNtfsTimesField;
         }
 
         private void CopyThroughOneEntry(Stream outStream)
@@ -424,7 +424,7 @@
             {
                 throw new BadStateException("Bad header length.");
             }
-            if ((((this._metadataChanged || (this.ArchiveStream is ZipSegmentedStream)) || (outStream is ZipSegmentedStream)) || (this._InputUsesZip64 && (this._container.UseZip64WhenSaving == Zip64Option.Default))) || (!this._InputUsesZip64 && (this._container.UseZip64WhenSaving == Zip64Option.Always)))
+            if ((((this.metadataChangedField || (this.ArchiveStream is ZipSegmentedStream)) || (outStream is ZipSegmentedStream)) || (this.inputUsesZip64Field && (this.containerField.UseZip64WhenSaving == Zip64Option.Default))) || (!this.inputUsesZip64Field && (this.containerField.UseZip64WhenSaving == Zip64Option.Always)))
             {
                 this.CopyThroughWithRecompute(outStream);
             }
@@ -432,30 +432,30 @@
             {
                 this.CopyThroughWithNoChange(outStream);
             }
-            this._entryRequiresZip64 = new bool?(((this._CompressedSize >= 0xffffffffL) || (this._UncompressedSize >= 0xffffffffL)) || (this._RelativeOffsetOfLocalHeader >= 0xffffffffL));
-            this._OutputUsesZip64 = new bool?((this._container.Zip64 == Zip64Option.Always) ? true : this._entryRequiresZip64.Value);
+            this.entryRequiresZip64Field = new bool?(((this.compressedSizeField >= 0xffffffffL) || (this.uncompressedSizeField >= 0xffffffffL)) || (this.relativeOffsetOfLocalHeaderField >= 0xffffffffL));
+            this.outputUsesZip64Field = new bool?((this.containerField.Zip64 == Zip64Option.Always) ? true : this.entryRequiresZip64Field.Value);
         }
 
         private void CopyThroughWithNoChange(Stream outstream)
         {
             byte[] buffer = new byte[this.BufferSize];
             CountingStream stream = new CountingStream(this.ArchiveStream);
-            stream.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
-            if (this._TotalEntrySize == 0L)
+            stream.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
+            if (this.totalEntrySizeField == 0L)
             {
-                this._TotalEntrySize = (this._LengthOfHeader + this._CompressedFileDataSize) + this._LengthOfTrailer;
+                this.totalEntrySizeField = (this.lengthOfHeaderField + this.compressedFileDataSizeField) + this.lengthOfTrailerField;
             }
             CountingStream stream2 = outstream as CountingStream;
-            this._RelativeOffsetOfLocalHeader = (stream2 != null) ? stream2.ComputedPosition : outstream.Position;
-            long num2 = this._TotalEntrySize;
+            this.relativeOffsetOfLocalHeaderField = (stream2 != null) ? stream2.ComputedPosition : outstream.Position;
+            long num2 = this.totalEntrySizeField;
             while (num2 > 0L)
             {
                 int count = (num2 > buffer.Length) ? buffer.Length : ((int) num2);
                 int num = stream.Read(buffer, 0, count);
                 outstream.Write(buffer, 0, num);
                 num2 -= num;
-                this.OnWriteBlock(stream.BytesRead, this._TotalEntrySize);
-                if (this._ioOperationCanceled)
+                this.OnWriteBlock(stream.BytesRead, this.totalEntrySizeField);
+                if (this.ioOperationCanceledField)
                 {
                     break;
                 }
@@ -466,55 +466,55 @@
         {
             byte[] buffer = new byte[this.BufferSize];
             CountingStream stream = new CountingStream(this.ArchiveStream);
-            long num2 = this._RelativeOffsetOfLocalHeader;
+            long num2 = this.relativeOffsetOfLocalHeaderField;
             int lengthOfHeader = this.LengthOfHeader;
             this.WriteHeader(outstream, 0);
             this.StoreRelativeOffset();
             if (!this.FileName.EndsWith("/"))
             {
                 long offset = num2 + lengthOfHeader;
-                int lengthOfCryptoHeaderBytes = GetLengthOfCryptoHeaderBytes(this._Encryption_FromZipFile);
+                int lengthOfCryptoHeaderBytes = GetLengthOfCryptoHeaderBytes(this.encryptionFromZipFileField);
                 offset -= lengthOfCryptoHeaderBytes;
-                this._LengthOfHeader += lengthOfCryptoHeaderBytes;
+                this.lengthOfHeaderField += lengthOfCryptoHeaderBytes;
                 stream.Seek(offset, SeekOrigin.Begin);
-                long num6 = this._CompressedSize;
+                long num6 = this.compressedSizeField;
                 while (num6 > 0L)
                 {
                     lengthOfCryptoHeaderBytes = (num6 > buffer.Length) ? buffer.Length : ((int) num6);
                     int count = stream.Read(buffer, 0, lengthOfCryptoHeaderBytes);
                     outstream.Write(buffer, 0, count);
                     num6 -= count;
-                    this.OnWriteBlock(stream.BytesRead, this._CompressedSize);
-                    if (this._ioOperationCanceled)
+                    this.OnWriteBlock(stream.BytesRead, this.compressedSizeField);
+                    if (this.ioOperationCanceledField)
                     {
                         break;
                     }
                 }
-                if ((this._BitField & 8) == 8)
+                if ((this.bitFieldField & 8) == 8)
                 {
                     int num7 = 0x10;
-                    if (this._InputUsesZip64)
+                    if (this.inputUsesZip64Field)
                     {
                         num7 += 8;
                     }
                     byte[] buffer2 = new byte[num7];
                     stream.Read(buffer2, 0, num7);
-                    if (this._InputUsesZip64 && (this._container.UseZip64WhenSaving == Zip64Option.Default))
+                    if (this.inputUsesZip64Field && (this.containerField.UseZip64WhenSaving == Zip64Option.Default))
                     {
                         outstream.Write(buffer2, 0, 8);
-                        if (this._CompressedSize > 0xffffffffL)
+                        if (this.compressedSizeField > 0xffffffffL)
                         {
                             throw new InvalidOperationException("ZIP64 is required");
                         }
                         outstream.Write(buffer2, 8, 4);
-                        if (this._UncompressedSize > 0xffffffffL)
+                        if (this.uncompressedSizeField > 0xffffffffL)
                         {
                             throw new InvalidOperationException("ZIP64 is required");
                         }
                         outstream.Write(buffer2, 0x10, 4);
-                        this._LengthOfTrailer -= 8;
+                        this.lengthOfTrailerField -= 8;
                     }
-                    else if (!(this._InputUsesZip64 || (this._container.UseZip64WhenSaving != Zip64Option.Always)))
+                    else if (!(this.inputUsesZip64Field || (this.containerField.UseZip64WhenSaving != Zip64Option.Always)))
                     {
                         byte[] buffer3 = new byte[4];
                         outstream.Write(buffer2, 0, 8);
@@ -522,7 +522,7 @@
                         outstream.Write(buffer3, 0, 4);
                         outstream.Write(buffer2, 12, 4);
                         outstream.Write(buffer3, 0, 4);
-                        this._LengthOfTrailer += 8;
+                        this.lengthOfTrailerField += 8;
                     }
                     else
                     {
@@ -530,7 +530,7 @@
                     }
                 }
             }
-            this._TotalEntrySize = (this._LengthOfHeader + this._CompressedFileDataSize) + this._LengthOfTrailer;
+            this.totalEntrySizeField = (this.lengthOfHeaderField + this.compressedFileDataSizeField) + this.lengthOfTrailerField;
         }
 
         private static ZipEntry Create(string nameInArchive, ZipEntrySource source, object arg1, object arg2)
@@ -540,27 +540,27 @@
                 throw new ZipException("The entry name must be non-null and non-empty.");
             }
             ZipEntry entry = new ZipEntry();
-            entry._VersionMadeBy = 0x2d;
-            entry._Source = source;
-            entry._Mtime = entry._Atime = entry._Ctime = DateTime.UtcNow;
+            entry.versionMadeByField = 0x2d;
+            entry.sourceField = source;
+            entry.mtimeField = entry.atimeField = entry.ctimeField = DateTime.UtcNow;
             if (source == ZipEntrySource.Stream)
             {
-                entry._sourceStream = arg1 as Stream;
+                entry.sourceStreamField = arg1 as Stream;
             }
             else if (source == ZipEntrySource.WriteDelegate)
             {
-                entry._WriteDelegate = arg1 as WriteDelegate;
+                entry.writeDelegateField = arg1 as WriteDelegate;
             }
             else if (source == ZipEntrySource.JitStream)
             {
-                entry._OpenDelegate = arg1 as OpenDelegate;
-                entry._CloseDelegate = arg2 as CloseDelegate;
+                entry.openDelegateField = arg1 as OpenDelegate;
+                entry.closeDelegateField = arg2 as CloseDelegate;
             }
             else if (source != ZipEntrySource.ZipOutputStream)
             {
                 if (source == ZipEntrySource.None)
                 {
-                    entry._Source = ZipEntrySource.FileSystem;
+                    entry.sourceField = ZipEntrySource.FileSystem;
                 }
                 else
                 {
@@ -571,15 +571,15 @@
                     }
                     try
                     {
-                        entry._Mtime = File.GetLastWriteTime(str).ToUniversalTime();
-                        entry._Ctime = File.GetCreationTime(str).ToUniversalTime();
-                        entry._Atime = File.GetLastAccessTime(str).ToUniversalTime();
+                        entry.mtimeField = File.GetLastWriteTime(str).ToUniversalTime();
+                        entry.ctimeField = File.GetCreationTime(str).ToUniversalTime();
+                        entry.atimeField = File.GetLastAccessTime(str).ToUniversalTime();
                         if (File.Exists(str) || Directory.Exists(str))
                         {
-                            entry._ExternalFileAttrs = (int) File.GetAttributes(str);
+                            entry.externalFileAttrsField = (int) File.GetAttributes(str);
                         }
-                        entry._ntfsTimesAreSet = true;
-                        entry._LocalFileName = Path.GetFullPath(str);
+                        entry.ntfsTimesAreSetField = true;
+                        entry.localFileNameField = Path.GetFullPath(str);
                     }
                     catch (PathTooLongException exception)
                     {
@@ -587,8 +587,8 @@
                     }
                 }
             }
-            entry._LastModified = entry._Mtime;
-            entry._FileNameInArchive = SharedUtilities.NormalizePathForUseInZipFile(nameInArchive);
+            entry.lastModifiedField = entry.mtimeField;
+            entry.fileNameInArchiveField = SharedUtilities.NormalizePathForUseInZipFile(nameInArchive);
             return entry;
         }
 
@@ -829,9 +829,9 @@
             {
                 archiveStream.Seek(this.FileDataPosition, SeekOrigin.Begin);
                 byte[] buffer = new byte[this.BufferSize];
-                long num2 = (this._CompressionMethod_FromZipFile != 0) ? this.UncompressedSize : this._CompressedFileDataSize;
-                this._inputDecryptorStream = this.GetExtractDecryptor(archiveStream);
-                Stream extractDecompressor = this.GetExtractDecompressor(this._inputDecryptorStream);
+                long num2 = (this.compressionMethodFromZipFileField != 0) ? this.UncompressedSize : this.compressedFileDataSizeField;
+                this.inputDecryptorStreamField = this.GetExtractDecryptor(archiveStream);
+                Stream extractDecompressor = this.GetExtractDecompressor(this.inputDecryptorStreamField);
                 long bytesWritten = 0L;
                 using (CrcCalculatorStream stream3 = new CrcCalculatorStream(extractDecompressor))
                 {
@@ -844,7 +844,7 @@
                         num2 -= nbytes;
                         bytesWritten += nbytes;
                         this.OnExtractProgress(bytesWritten, this.UncompressedSize);
-                        if (this._ioOperationCanceled)
+                        if (this.ioOperationCanceledField)
                         {
                             break;
                         }
@@ -858,7 +858,7 @@
                 if (stream4 != null)
                 {
                     stream4.Dispose();
-                    this._archiveStream = null;
+                    this.archiveStreamField = null;
                 }
             }
             return crc;
@@ -1034,44 +1034,44 @@
 
         private int FigureCrc32()
         {
-            if (!this._crcCalculated)
+            if (!this.crcCalculatedField)
             {
                 Stream input = null;
-                if (this._Source == ZipEntrySource.WriteDelegate)
+                if (this.sourceField == ZipEntrySource.WriteDelegate)
                 {
                     CrcCalculatorStream stream = new CrcCalculatorStream(Stream.Null);
-                    this._WriteDelegate(this.FileName, stream);
-                    this._Crc32 = stream.Crc;
+                    this.writeDelegateField(this.FileName, stream);
+                    this.crc32Field = stream.Crc;
                 }
-                else if (this._Source != ZipEntrySource.ZipFile)
+                else if (this.sourceField != ZipEntrySource.ZipFile)
                 {
-                    if (this._Source == ZipEntrySource.Stream)
+                    if (this.sourceField == ZipEntrySource.Stream)
                     {
                         this.PrepSourceStream();
-                        input = this._sourceStream;
+                        input = this.sourceStreamField;
                     }
-                    else if (this._Source == ZipEntrySource.JitStream)
+                    else if (this.sourceField == ZipEntrySource.JitStream)
                     {
-                        if (this._sourceStream == null)
+                        if (this.sourceStreamField == null)
                         {
-                            this._sourceStream = this._OpenDelegate(this.FileName);
+                            this.sourceStreamField = this.openDelegateField(this.FileName);
                         }
                         this.PrepSourceStream();
-                        input = this._sourceStream;
+                        input = this.sourceStreamField;
                     }
-                    else if (this._Source != ZipEntrySource.ZipOutputStream)
+                    else if (this.sourceField != ZipEntrySource.ZipOutputStream)
                     {
                         input = File.Open(this.LocalFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     }
-                    this._Crc32 = new CRC32().GetCrc32(input);
-                    if (this._sourceStream == null)
+                    this.crc32Field = new CRC32().GetCrc32(input);
+                    if (this.sourceStreamField == null)
                     {
                         input.Dispose();
                     }
                 }
-                this._crcCalculated = true;
+                this.crcCalculatedField = true;
             }
-            return this._Crc32;
+            return this.crc32Field;
         }
 
         /// <summary>
@@ -1118,17 +1118,17 @@
                 }
                 encryptor.Flush();
                 encryptor.Close();
-                this._LengthOfTrailer = 0;
-                this._UncompressedSize = output.TotalBytesSlurped;
+                this.lengthOfTrailerField = 0;
+                this.uncompressedSizeField = output.TotalBytesSlurped;
                 WinZipAesCipherStream stream = encryptor as WinZipAesCipherStream;
-                if ((stream != null) && (this._UncompressedSize > 0L))
+                if ((stream != null) && (this.uncompressedSizeField > 0L))
                 {
                     s.Write(stream.FinalAuthentication, 0, 10);
-                    this._LengthOfTrailer += 10;
+                    this.lengthOfTrailerField += 10;
                 }
-                this._CompressedFileDataSize = entryCounter.BytesWritten;
-                this._CompressedSize = this._CompressedFileDataSize;
-                this._Crc32 = output.Crc;
+                this.compressedFileDataSizeField = entryCounter.BytesWritten;
+                this.compressedSizeField = this.compressedFileDataSizeField;
+                this.crc32Field = output.Crc;
                 this.StoreRelativeOffset();
             }
         }
@@ -1152,53 +1152,53 @@
             switch (this.AlternateEncodingUsage)
             {
                 case ZipOption.Default:
-                    if ((this._Comment != null) && (this._Comment.Length != 0))
+                    if ((this.commentField != null) && (this.commentField.Length != 0))
                     {
-                        this._CommentBytes = ibm437.GetBytes(this._Comment);
+                        this.commentBytesField = ibm437Field.GetBytes(this.commentField);
                     }
-                    this._actualEncoding = ibm437;
-                    return ibm437.GetBytes(s);
+                    this.actualEncodingField = ibm437Field;
+                    return ibm437Field.GetBytes(s);
 
                 case ZipOption.Always:
-                    if ((this._Comment != null) && (this._Comment.Length != 0))
+                    if ((this.commentField != null) && (this.commentField.Length != 0))
                     {
-                        this._CommentBytes = this.AlternateEncoding.GetBytes(this._Comment);
+                        this.commentBytesField = this.AlternateEncoding.GetBytes(this.commentField);
                     }
-                    this._actualEncoding = this.AlternateEncoding;
+                    this.actualEncodingField = this.AlternateEncoding;
                     return this.AlternateEncoding.GetBytes(s);
             }
-            byte[] bytes = ibm437.GetBytes(s);
-            string str2 = ibm437.GetString(bytes, 0, bytes.Length);
-            this._CommentBytes = null;
+            byte[] bytes = ibm437Field.GetBytes(s);
+            string str2 = ibm437Field.GetString(bytes, 0, bytes.Length);
+            this.commentBytesField = null;
             if (str2 != s)
             {
                 bytes = this.AlternateEncoding.GetBytes(s);
-                if ((this._Comment != null) && (this._Comment.Length != 0))
+                if ((this.commentField != null) && (this.commentField.Length != 0))
                 {
-                    this._CommentBytes = this.AlternateEncoding.GetBytes(this._Comment);
+                    this.commentBytesField = this.AlternateEncoding.GetBytes(this.commentField);
                 }
-                this._actualEncoding = this.AlternateEncoding;
+                this.actualEncodingField = this.AlternateEncoding;
                 return bytes;
             }
-            this._actualEncoding = ibm437;
-            if ((this._Comment != null) && (this._Comment.Length != 0))
+            this.actualEncodingField = ibm437Field;
+            if ((this.commentField != null) && (this.commentField.Length != 0))
             {
-                byte[] buffer2 = ibm437.GetBytes(this._Comment);
-                if (ibm437.GetString(buffer2, 0, buffer2.Length) != this.Comment)
+                byte[] buffer2 = ibm437Field.GetBytes(this.commentField);
+                if (ibm437Field.GetString(buffer2, 0, buffer2.Length) != this.Comment)
                 {
                     bytes = this.AlternateEncoding.GetBytes(s);
-                    this._CommentBytes = this.AlternateEncoding.GetBytes(this._Comment);
-                    this._actualEncoding = this.AlternateEncoding;
+                    this.commentBytesField = this.AlternateEncoding.GetBytes(this.commentField);
+                    this.actualEncodingField = this.AlternateEncoding;
                     return bytes;
                 }
-                this._CommentBytes = buffer2;
+                this.commentBytesField = buffer2;
             }
             return bytes;
         }
 
         internal Stream GetExtractDecompressor(Stream input2)
         {
-            switch (this._CompressionMethod_FromZipFile)
+            switch (this.compressionMethodFromZipFileField)
             {
                 case 0:
                     return input2;
@@ -1214,13 +1214,13 @@
 
         internal Stream GetExtractDecryptor(Stream input)
         {
-            if (this._Encryption_FromZipFile == EncryptionAlgorithm.PkzipWeak)
+            if (this.encryptionFromZipFileField == EncryptionAlgorithm.PkzipWeak)
             {
-                return new ZipCipherStream(input, this._zipCrypto_forExtract, CryptoMode.Decrypt);
+                return new ZipCipherStream(input, this.zipCryptoForExtractField, CryptoMode.Decrypt);
             }
-            if ((this._Encryption_FromZipFile == EncryptionAlgorithm.WinZipAes128) || (this._Encryption_FromZipFile == EncryptionAlgorithm.WinZipAes256))
+            if ((this.encryptionFromZipFileField == EncryptionAlgorithm.WinZipAes128) || (this.encryptionFromZipFileField == EncryptionAlgorithm.WinZipAes256))
             {
-                return new WinZipAesCipherStream(input, this._aesCrypto_forExtract, this._CompressedFileDataSize, CryptoMode.Decrypt);
+                return new WinZipAesCipherStream(input, this.aesCryptoForExtractField, this.compressedFileDataSizeField, CryptoMode.Decrypt);
             }
             return input;
         }
@@ -1266,11 +1266,11 @@
         private static void HandleUnexpectedDataDescriptor(ZipEntry entry)
         {
             Stream archiveStream = entry.ArchiveStream;
-            if (((ulong) SharedUtilities.ReadInt(archiveStream)) == (ulong)entry._Crc32)
+            if (((ulong) SharedUtilities.ReadInt(archiveStream)) == (ulong)entry.crc32Field)
             {
-                if (SharedUtilities.ReadInt(archiveStream) == entry._CompressedSize)
+                if (SharedUtilities.ReadInt(archiveStream) == entry.compressedSizeField)
                 {
-                    if (SharedUtilities.ReadInt(archiveStream) != entry._UncompressedSize)
+                    if (SharedUtilities.ReadInt(archiveStream) != entry.uncompressedSizeField)
                     {
                         archiveStream.Seek(-12L, SeekOrigin.Current);
                     }
@@ -1288,21 +1288,21 @@
 
         private void InternalExtract(string baseDir, Stream outstream, string password)
         {
-            if (this._container == null)
+            if (this.containerField == null)
             {
                 throw new BadStateException("This entry is an orphan");
             }
-            if (this._container.ZipFile == null)
+            if (this.containerField.ZipFile == null)
             {
                 throw new InvalidOperationException("Use Extract() only with ZipFile.");
             }
-            this._container.ZipFile.Reset(false);
-            if (this._Source != ZipEntrySource.ZipFile)
+            this.containerField.ZipFile.Reset(false);
+            if (this.sourceField != ZipEntrySource.ZipFile)
             {
                 throw new BadStateException("You must call ZipFile.Save before calling any Extract method");
             }
             this.OnBeforeExtract(baseDir);
-            this._ioOperationCanceled = false;
+            this.ioOperationCanceledField = false;
             string outFileName = null;
             Stream output = null;
             bool flag = false;
@@ -1328,8 +1328,8 @@
                                 return;
                         }
                     }
-                    string str2 = password ?? (this._Password ?? this._container.Password);
-                    if (this._Encryption_FromZipFile != EncryptionAlgorithm.None)
+                    string str2 = password ?? (this.passwordField ?? this.containerField.Password);
+                    if (this.encryptionFromZipFileField != EncryptionAlgorithm.None)
                     {
                         if (str2 == null)
                         {
@@ -1346,9 +1346,9 @@
                         {
                             Directory.CreateDirectory(directoryName);
                         }
-                        else if (this._container.ZipFile != null)
+                        else if (this.containerField.ZipFile != null)
                         {
-                            flag2 = this._container.ZipFile._inExtractAll;
+                            flag2 = this.containerField.ZipFile.inExtractAllField;
                         }
                         output = new FileStream(outFileName, FileMode.CreateNew);
                     }
@@ -1357,10 +1357,10 @@
                         this.WriteStatus("extract entry {0} to stream...", new object[] { this.FileName });
                         output = outstream;
                     }
-                    if (!this._ioOperationCanceled)
+                    if (!this.ioOperationCanceledField)
                     {
                         int num2 = this.ExtractOne(output);
-                        if (!this._ioOperationCanceled)
+                        if (!this.ioOperationCanceledField)
                         {
                             this.VerifyCrcAfterExtract(num2);
                             if (outFileName != null)
@@ -1384,14 +1384,14 @@
                                 if (flag2 && (this.FileName.IndexOf('/') != -1))
                                 {
                                     string str6 = Path.GetDirectoryName(this.FileName);
-                                    if (this._container.ZipFile[str6] == null)
+                                    if (this.containerField.ZipFile[str6] == null)
                                     {
                                         this._SetTimes(Path.GetDirectoryName(outFileName), false);
                                     }
                                 }
-                                if (((this._VersionMadeBy & 0xff00) == 0xa00) || ((this._VersionMadeBy & 0xff00) == 0))
+                                if (((this.versionMadeByField & 0xff00) == 0xa00) || ((this.versionMadeByField & 0xff00) == 0))
                                 {
-                                    File.SetAttributes(outFileName, (FileAttributes) this._ExternalFileAttrs);
+                                    File.SetAttributes(outFileName, (FileAttributes) this.externalFileAttrsField);
                                 }
                             }
                             this.OnAfterExtract(baseDir);
@@ -1401,12 +1401,12 @@
             }
             catch (Exception)
             {
-                this._ioOperationCanceled = true;
+                this.ioOperationCanceledField = true;
                 throw;
             }
             finally
             {
-                if (this._ioOperationCanceled && (outFileName != null))
+                if (this.ioOperationCanceledField && (outFileName != null))
                 {
                     try
                     {
@@ -1431,15 +1431,15 @@
             this.ValidateCompression();
             this.ValidateEncryption();
             this.SetupCryptoForExtract(password);
-            if (this._Source != ZipEntrySource.ZipFile)
+            if (this.sourceField != ZipEntrySource.ZipFile)
             {
                 throw new BadStateException("You must call ZipFile.Save before calling OpenReader");
             }
-            long length = (this._CompressionMethod_FromZipFile == 0) ? this._CompressedFileDataSize : this.UncompressedSize;
+            long length = (this.compressionMethodFromZipFileField == 0) ? this.compressedFileDataSizeField : this.UncompressedSize;
             Stream archiveStream = this.ArchiveStream;
             this.ArchiveStream.Seek(this.FileDataPosition, SeekOrigin.Begin);
-            this._inputDecryptorStream = this.GetExtractDecryptor(archiveStream);
-            return new CrcCalculatorStream(this.GetExtractDecompressor(this._inputDecryptorStream), length);
+            this.inputDecryptorStreamField = this.GetExtractDecryptor(archiveStream);
+            return new CrcCalculatorStream(this.GetExtractDecompressor(this.inputDecryptorStreamField), length);
         }
 
         private static bool IsNotValidSig(int signature)
@@ -1459,46 +1459,46 @@
 
         internal void MarkAsDirectory()
         {
-            this._IsDirectory = true;
-            if (!this._FileNameInArchive.EndsWith("/"))
+            this.isDirectoryField = true;
+            if (!this.fileNameInArchiveField.EndsWith("/"))
             {
-                this._FileNameInArchive = this._FileNameInArchive + "/";
+                this.fileNameInArchiveField = this.fileNameInArchiveField + "/";
             }
         }
 
         private Stream MaybeApplyCompression(Stream s, long streamLength)
         {
-            if ((this._CompressionMethod == 8) && (this.CompressionLevel != CompressionLevel.None))
+            if ((this.compressionMethodField == 8) && (this.CompressionLevel != CompressionLevel.None))
             {
-                if ((this._container.ParallelDeflateThreshold == 0L) || ((streamLength > this._container.ParallelDeflateThreshold) && (this._container.ParallelDeflateThreshold > 0L)))
+                if ((this.containerField.ParallelDeflateThreshold == 0L) || ((streamLength > this.containerField.ParallelDeflateThreshold) && (this.containerField.ParallelDeflateThreshold > 0L)))
                 {
-                    if (this._container.ParallelDeflater == null)
+                    if (this.containerField.ParallelDeflater == null)
                     {
-                        this._container.ParallelDeflater = new ParallelDeflateOutputStream(s, this.CompressionLevel, this._container.Strategy, true);
-                        if (this._container.CodecBufferSize > 0)
+                        this.containerField.ParallelDeflater = new ParallelDeflateOutputStream(s, this.CompressionLevel, this.containerField.Strategy, true);
+                        if (this.containerField.CodecBufferSize > 0)
                         {
-                            this._container.ParallelDeflater.BufferSize = this._container.CodecBufferSize;
+                            this.containerField.ParallelDeflater.BufferSize = this.containerField.CodecBufferSize;
                         }
-                        if (this._container.ParallelDeflateMaxBufferPairs > 0)
+                        if (this.containerField.ParallelDeflateMaxBufferPairs > 0)
                         {
-                            this._container.ParallelDeflater.MaxBufferPairs = this._container.ParallelDeflateMaxBufferPairs;
+                            this.containerField.ParallelDeflater.MaxBufferPairs = this.containerField.ParallelDeflateMaxBufferPairs;
                         }
                     }
-                    ParallelDeflateOutputStream parallelDeflater = this._container.ParallelDeflater;
+                    ParallelDeflateOutputStream parallelDeflater = this.containerField.ParallelDeflater;
                     parallelDeflater.Reset(s);
                     return parallelDeflater;
                 }
                 DeflateStream stream2 = new DeflateStream(s, CompressionMode.Compress, this.CompressionLevel, true);
-                if (this._container.CodecBufferSize > 0)
+                if (this.containerField.CodecBufferSize > 0)
                 {
-                    stream2.BufferSize = this._container.CodecBufferSize;
+                    stream2.BufferSize = this.containerField.CodecBufferSize;
                 }
-                stream2.Strategy = this._container.Strategy;
+                stream2.Strategy = this.containerField.Strategy;
                 return stream2;
             }
-            if (this._CompressionMethod == 12)
+            if (this.compressionMethodField == 12)
             {
-                if ((this._container.ParallelDeflateThreshold == 0L) || ((streamLength > this._container.ParallelDeflateThreshold) && (this._container.ParallelDeflateThreshold > 0L)))
+                if ((this.containerField.ParallelDeflateThreshold == 0L) || ((streamLength > this.containerField.ParallelDeflateThreshold) && (this.containerField.ParallelDeflateThreshold > 0L)))
                 {
                     return new ParallelBZip2OutputStream(s, true);
                 }
@@ -1511,11 +1511,11 @@
         {
             if (this.Encryption == EncryptionAlgorithm.PkzipWeak)
             {
-                return new ZipCipherStream(s, this._zipCrypto_forWrite, CryptoMode.Encrypt);
+                return new ZipCipherStream(s, this.zipCryptoForWriteField, CryptoMode.Encrypt);
             }
             if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
             {
-                return new WinZipAesCipherStream(s, this._aesCrypto_forWrite, CryptoMode.Encrypt);
+                return new WinZipAesCipherStream(s, this.aesCryptoForWriteField, CryptoMode.Encrypt);
             }
             return s;
         }
@@ -1524,34 +1524,34 @@
         {
             if (cycle > 1)
             {
-                this._CompressionMethod = 0;
+                this.compressionMethodField = 0;
             }
             else if (this.IsDirectory)
             {
-                this._CompressionMethod = 0;
+                this.compressionMethodField = 0;
             }
-            else if (this._Source != ZipEntrySource.ZipFile)
+            else if (this.sourceField != ZipEntrySource.ZipFile)
             {
-                if (this._Source == ZipEntrySource.Stream)
+                if (this.sourceField == ZipEntrySource.Stream)
                 {
-                    if (((this._sourceStream != null) && this._sourceStream.CanSeek) && (this._sourceStream.Length == 0L))
+                    if (((this.sourceStreamField != null) && this.sourceStreamField.CanSeek) && (this.sourceStreamField.Length == 0L))
                     {
-                        this._CompressionMethod = 0;
+                        this.compressionMethodField = 0;
                         return;
                     }
                 }
-                else if ((this._Source == ZipEntrySource.FileSystem) && (SharedUtilities.GetFileLength(this.LocalFileName) == 0L))
+                else if ((this.sourceField == ZipEntrySource.FileSystem) && (SharedUtilities.GetFileLength(this.LocalFileName) == 0L))
                 {
-                    this._CompressionMethod = 0;
+                    this.compressionMethodField = 0;
                     return;
                 }
                 if (this.SetCompression != null)
                 {
-                    this.CompressionLevel = this.SetCompression(this.LocalFileName, this._FileNameInArchive);
+                    this.CompressionLevel = this.SetCompression(this.LocalFileName, this.fileNameInArchiveField);
                 }
                 if ((this.CompressionLevel == CompressionLevel.None) && (this.CompressionMethod == CompressionMethod.Deflate))
                 {
-                    this._CompressionMethod = 0;
+                    this.compressionMethodField = 0;
                 }
             }
         }
@@ -1577,7 +1577,7 @@
         private string NormalizeFileName()
         {
             string str = this.FileName.Replace(@"\", "/");
-            if (((this._TrimVolumeFromFullyQualifiedPaths && (this.FileName.Length >= 3)) && (this.FileName[1] == ':')) && (str[2] == '/'))
+            if (((this.trimVolumeFromFullyQualifiedPathsField && (this.FileName.Length >= 3)) && (this.FileName[1] == ':')) && (str[2] == '/'))
             {
                 return str.Substring(3);
             }
@@ -1599,58 +1599,58 @@
 
         internal void NotifySaveComplete()
         {
-            this._Encryption_FromZipFile = this._Encryption;
-            this._CompressionMethod_FromZipFile = this._CompressionMethod;
-            this._restreamRequiredOnSave = false;
-            this._metadataChanged = false;
-            this._Source = ZipEntrySource.ZipFile;
+            this.encryptionFromZipFileField = this.encryptionField;
+            this.compressionMethodFromZipFileField = this.compressionMethodField;
+            this.restreamRequiredOnSaveField = false;
+            this.metadataChangedField = false;
+            this.sourceField = ZipEntrySource.ZipFile;
         }
 
         private void OnAfterExtract(string path)
         {
-            if ((this._container.ZipFile != null) && !this._container.ZipFile._inExtractAll)
+            if ((this.containerField.ZipFile != null) && !this.containerField.ZipFile.inExtractAllField)
             {
-                this._container.ZipFile.OnSingleEntryExtract(this, path, false);
+                this.containerField.ZipFile.OnSingleEntryExtract(this, path, false);
             }
         }
 
         private void OnBeforeExtract(string path)
         {
-            if ((this._container.ZipFile != null) && !this._container.ZipFile._inExtractAll)
+            if ((this.containerField.ZipFile != null) && !this.containerField.ZipFile.inExtractAllField)
             {
-                this._ioOperationCanceled = this._container.ZipFile.OnSingleEntryExtract(this, path, true);
+                this.ioOperationCanceledField = this.containerField.ZipFile.OnSingleEntryExtract(this, path, true);
             }
         }
 
         private void OnExtractExisting(string path)
         {
-            if (this._container.ZipFile != null)
+            if (this.containerField.ZipFile != null)
             {
-                this._ioOperationCanceled = this._container.ZipFile.OnExtractExisting(this, path);
+                this.ioOperationCanceledField = this.containerField.ZipFile.OnExtractExisting(this, path);
             }
         }
 
         private void OnExtractProgress(long bytesWritten, long totalBytesToWrite)
         {
-            if (this._container.ZipFile != null)
+            if (this.containerField.ZipFile != null)
             {
-                this._ioOperationCanceled = this._container.ZipFile.OnExtractBlock(this, bytesWritten, totalBytesToWrite);
+                this.ioOperationCanceledField = this.containerField.ZipFile.OnExtractBlock(this, bytesWritten, totalBytesToWrite);
             }
         }
 
         private void OnWriteBlock(long bytesXferred, long totalBytesToXfer)
         {
-            if (this._container.ZipFile != null)
+            if (this.containerField.ZipFile != null)
             {
-                this._ioOperationCanceled = this._container.ZipFile.OnSaveBlock(this, bytesXferred, totalBytesToXfer);
+                this.ioOperationCanceledField = this.containerField.ZipFile.OnSaveBlock(this, bytesXferred, totalBytesToXfer);
             }
         }
 
         private void OnZipErrorWhileSaving(Exception e)
         {
-            if (this._container.ZipFile != null)
+            if (this.containerField.ZipFile != null)
             {
-                this._ioOperationCanceled = this._container.ZipFile.OnZipErrorSaving(this, e);
+                this.ioOperationCanceledField = this.containerField.ZipFile.OnZipErrorSaving(this, e);
             }
         }
 
@@ -1772,11 +1772,11 @@
         /// <returns>The Stream for reading.</returns>
         public CrcCalculatorStream OpenReader()
         {
-            if (this._container.ZipFile == null)
+            if (this.containerField.ZipFile == null)
             {
                 throw new InvalidOperationException("Use OpenReader() only with ZipFile.");
             }
-            return this.InternalOpenReader(this._Password ?? this._container.Password);
+            return this.InternalOpenReader(this.passwordField ?? this.containerField.Password);
         }
 
         /// <summary>
@@ -1796,7 +1796,7 @@
         /// <returns>The Stream for reading.</returns>
         public CrcCalculatorStream OpenReader(string password)
         {
-            if (this._container.ZipFile == null)
+            if (this.containerField.ZipFile == null)
             {
                 throw new InvalidOperationException("Use OpenReader() only with ZipFile.");
             }
@@ -1808,13 +1808,13 @@
             int num2;
             short num9;
             CountingStream stream = s as CountingStream;
-            if ((this._UncompressedSize == 0L) && (this._CompressedSize == 0L))
+            if ((this.uncompressedSizeField == 0L) && (this.compressedSizeField == 0L))
             {
-                if (this._Source == ZipEntrySource.ZipOutputStream)
+                if (this.sourceField == ZipEntrySource.ZipOutputStream)
                 {
                     return;
                 }
-                if (this._Password != null)
+                if (this.passwordField != null)
                 {
                     int num = 0;
                     if (this.Encryption == EncryptionAlgorithm.PkzipWeak)
@@ -1823,9 +1823,9 @@
                     }
                     else if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
                     {
-                        num = this._aesCrypto_forWrite._Salt.Length + this._aesCrypto_forWrite.GeneratedPV.Length;
+                        num = this.aesCryptoForWriteField.saltField.Length + this.aesCryptoForWriteField.GeneratedPV.Length;
                     }
-                    if (!((this._Source != ZipEntrySource.ZipOutputStream) || s.CanSeek))
+                    if (!((this.sourceField != ZipEntrySource.ZipOutputStream) || s.CanSeek))
                     {
                         throw new ZipException("Zero bytes written, encryption in use, and non-seekable output.");
                     }
@@ -1837,101 +1837,101 @@
                         {
                             stream.Adjust((long) num);
                         }
-                        this._LengthOfHeader -= num;
-                        this.__FileDataPosition -= num;
+                        this.lengthOfHeaderField -= num;
+                        this.fileDataPositionField -= num;
                     }
-                    this._Password = null;
-                    this._BitField = (short) (this._BitField & -2);
+                    this.passwordField = null;
+                    this.bitFieldField = (short) (this.bitFieldField & -2);
                     num2 = 6;
-                    this._EntryHeader[num2++] = (byte) (this._BitField & 0xff);
-                    this._EntryHeader[num2++] = (byte) ((this._BitField & 0xff00) >> 8);
+                    this.entryHeaderField[num2++] = (byte) (this.bitFieldField & 0xff);
+                    this.entryHeaderField[num2++] = (byte) ((this.bitFieldField & 0xff00) >> 8);
                     if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
                     {
-                        short num3 = (short) (this._EntryHeader[0x1a] + (this._EntryHeader[0x1b] * 0x100));
+                        short num3 = (short) (this.entryHeaderField[0x1a] + (this.entryHeaderField[0x1b] * 0x100));
                         int offx = 30 + num3;
-                        int num5 = FindExtraFieldSegment(this._EntryHeader, offx, 0x9901);
+                        int num5 = FindExtraFieldSegment(this.entryHeaderField, offx, 0x9901);
                         if (num5 >= 0)
                         {
-                            this._EntryHeader[num5++] = 0x99;
-                            this._EntryHeader[num5++] = 0x99;
+                            this.entryHeaderField[num5++] = 0x99;
+                            this.entryHeaderField[num5++] = 0x99;
                         }
                     }
                 }
                 this.CompressionMethod = CompressionMethod.None;
                 this.Encryption = EncryptionAlgorithm.None;
             }
-            else if ((this._zipCrypto_forWrite != null) || (this._aesCrypto_forWrite != null))
+            else if ((this.zipCryptoForWriteField != null) || (this.aesCryptoForWriteField != null))
             {
                 if (this.Encryption == EncryptionAlgorithm.PkzipWeak)
                 {
-                    this._CompressedSize += 12L;
+                    this.compressedSizeField += 12L;
                 }
                 else if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
                 {
-                    this._CompressedSize += this._aesCrypto_forWrite.SizeOfEncryptionMetadata;
+                    this.compressedSizeField += this.aesCryptoForWriteField.SizeOfEncryptionMetadata;
                 }
             }
             int destinationIndex = 8;
-            this._EntryHeader[destinationIndex++] = (byte) (this._CompressionMethod & 0xff);
-            this._EntryHeader[destinationIndex++] = (byte) ((this._CompressionMethod & 0xff00) >> 8);
+            this.entryHeaderField[destinationIndex++] = (byte) (this.compressionMethodField & 0xff);
+            this.entryHeaderField[destinationIndex++] = (byte) ((this.compressionMethodField & 0xff00) >> 8);
             destinationIndex = 14;
-            this._EntryHeader[destinationIndex++] = (byte) (this._Crc32 & 0xff);
-            this._EntryHeader[destinationIndex++] = (byte) ((this._Crc32 & 0xff00) >> 8);
-            this._EntryHeader[destinationIndex++] = (byte) ((this._Crc32 & 0xff0000) >> 0x10);
-            this._EntryHeader[destinationIndex++] = (byte) ((this._Crc32 & 0xff000000L) >> 0x18);
+            this.entryHeaderField[destinationIndex++] = (byte) (this.crc32Field & 0xff);
+            this.entryHeaderField[destinationIndex++] = (byte) ((this.crc32Field & 0xff00) >> 8);
+            this.entryHeaderField[destinationIndex++] = (byte) ((this.crc32Field & 0xff0000) >> 0x10);
+            this.entryHeaderField[destinationIndex++] = (byte) ((this.crc32Field & 0xff000000L) >> 0x18);
             this.SetZip64Flags();
-            short num7 = (short) (this._EntryHeader[0x1a] + (this._EntryHeader[0x1b] * 0x100));
-            short num8 = (short) (this._EntryHeader[0x1c] + (this._EntryHeader[0x1d] * 0x100));
-            if (this._OutputUsesZip64.Value)
+            short num7 = (short) (this.entryHeaderField[0x1a] + (this.entryHeaderField[0x1b] * 0x100));
+            short num8 = (short) (this.entryHeaderField[0x1c] + (this.entryHeaderField[0x1d] * 0x100));
+            if (this.outputUsesZip64Field.Value)
             {
-                this._EntryHeader[4] = 0x2d;
-                this._EntryHeader[5] = 0;
+                this.entryHeaderField[4] = 0x2d;
+                this.entryHeaderField[5] = 0;
                 for (num2 = 0; num2 < 8; num2++)
                 {
-                    this._EntryHeader[destinationIndex++] = 0xff;
+                    this.entryHeaderField[destinationIndex++] = 0xff;
                 }
                 destinationIndex = 30 + num7;
-                this._EntryHeader[destinationIndex++] = 1;
-                this._EntryHeader[destinationIndex++] = 0;
+                this.entryHeaderField[destinationIndex++] = 1;
+                this.entryHeaderField[destinationIndex++] = 0;
                 destinationIndex += 2;
-                Array.Copy(BitConverter.GetBytes(this._UncompressedSize), 0, this._EntryHeader, destinationIndex, 8);
+                Array.Copy(BitConverter.GetBytes(this.uncompressedSizeField), 0, this.entryHeaderField, destinationIndex, 8);
                 destinationIndex += 8;
-                Array.Copy(BitConverter.GetBytes(this._CompressedSize), 0, this._EntryHeader, destinationIndex, 8);
+                Array.Copy(BitConverter.GetBytes(this.compressedSizeField), 0, this.entryHeaderField, destinationIndex, 8);
             }
             else
             {
-                this._EntryHeader[4] = 20;
-                this._EntryHeader[5] = 0;
+                this.entryHeaderField[4] = 20;
+                this.entryHeaderField[5] = 0;
                 destinationIndex = 0x12;
-                this._EntryHeader[destinationIndex++] = (byte) (this._CompressedSize & 0xffL);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._CompressedSize & 0xff00L) >> 8);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._CompressedSize & 0xff0000L) >> 0x10);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._CompressedSize & 0xff000000L) >> 0x18);
-                this._EntryHeader[destinationIndex++] = (byte) (this._UncompressedSize & 0xffL);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff00L) >> 8);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff0000L) >> 0x10);
-                this._EntryHeader[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff000000L) >> 0x18);
+                this.entryHeaderField[destinationIndex++] = (byte) (this.compressedSizeField & 0xffL);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff00L) >> 8);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff0000L) >> 0x10);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff000000L) >> 0x18);
+                this.entryHeaderField[destinationIndex++] = (byte) (this.uncompressedSizeField & 0xffL);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff00L) >> 8);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff0000L) >> 0x10);
+                this.entryHeaderField[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff000000L) >> 0x18);
                 if (num8 != 0)
                 {
                     destinationIndex = 30 + num7;
-                    num9 = (short) (this._EntryHeader[destinationIndex + 2] + (this._EntryHeader[destinationIndex + 3] * 0x100));
+                    num9 = (short) (this.entryHeaderField[destinationIndex + 2] + (this.entryHeaderField[destinationIndex + 3] * 0x100));
                     if (num9 == 0x10)
                     {
-                        this._EntryHeader[destinationIndex++] = 0x99;
-                        this._EntryHeader[destinationIndex++] = 0x99;
+                        this.entryHeaderField[destinationIndex++] = 0x99;
+                        this.entryHeaderField[destinationIndex++] = 0x99;
                     }
                 }
             }
             if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
             {
                 destinationIndex = 8;
-                this._EntryHeader[destinationIndex++] = 0x63;
-                this._EntryHeader[destinationIndex++] = 0;
+                this.entryHeaderField[destinationIndex++] = 0x63;
+                this.entryHeaderField[destinationIndex++] = 0;
                 destinationIndex = 30 + num7;
                 do
                 {
-                    ushort num10 = (ushort) (this._EntryHeader[destinationIndex] + (this._EntryHeader[destinationIndex + 1] * 0x100));
-                    num9 = (short) (this._EntryHeader[destinationIndex + 2] + (this._EntryHeader[destinationIndex + 3] * 0x100));
+                    ushort num10 = (ushort) (this.entryHeaderField[destinationIndex] + (this.entryHeaderField[destinationIndex + 1] * 0x100));
+                    num9 = (short) (this.entryHeaderField[destinationIndex + 2] + (this.entryHeaderField[destinationIndex + 3] * 0x100));
                     if (num10 != 0x9901)
                     {
                         destinationIndex += num9 + 4;
@@ -1939,62 +1939,62 @@
                     else
                     {
                         destinationIndex += 9;
-                        this._EntryHeader[destinationIndex++] = (byte) (this._CompressionMethod & 0xff);
-                        this._EntryHeader[destinationIndex++] = (byte) (this._CompressionMethod & 0xff00);
+                        this.entryHeaderField[destinationIndex++] = (byte) (this.compressionMethodField & 0xff);
+                        this.entryHeaderField[destinationIndex++] = (byte) (this.compressionMethodField & 0xff00);
                     }
                 }
                 while (destinationIndex < ((num8 - 30) - num7));
             }
-            if (((this._BitField & 8) != 8) || ((this._Source == ZipEntrySource.ZipOutputStream) && s.CanSeek))
+            if (((this.bitFieldField & 8) != 8) || ((this.sourceField == ZipEntrySource.ZipOutputStream) && s.CanSeek))
             {
                 ZipSegmentedStream stream2 = s as ZipSegmentedStream;
-                if ((stream2 != null) && (this._diskNumber != stream2.CurrentSegment))
+                if ((stream2 != null) && (this.diskNumberField != stream2.CurrentSegment))
                 {
-                    using (Stream stream3 = ZipSegmentedStream.ForUpdate(this._container.ZipFile.Name, this._diskNumber))
+                    using (Stream stream3 = ZipSegmentedStream.ForUpdate(this.containerField.ZipFile.Name, this.diskNumberField))
                     {
-                        stream3.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
-                        stream3.Write(this._EntryHeader, 0, this._EntryHeader.Length);
+                        stream3.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
+                        stream3.Write(this.entryHeaderField, 0, this.entryHeaderField.Length);
                     }
                 }
                 else
                 {
-                    s.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
-                    s.Write(this._EntryHeader, 0, this._EntryHeader.Length);
+                    s.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
+                    s.Write(this.entryHeaderField, 0, this.entryHeaderField.Length);
                     if (stream != null)
                     {
-                        stream.Adjust((long) this._EntryHeader.Length);
+                        stream.Adjust((long) this.entryHeaderField.Length);
                     }
-                    s.Seek(this._CompressedSize, SeekOrigin.Current);
+                    s.Seek(this.compressedSizeField, SeekOrigin.Current);
                 }
             }
-            if (((this._BitField & 8) == 8) && !this.IsDirectory)
+            if (((this.bitFieldField & 8) == 8) && !this.IsDirectory)
             {
-                byte[] destinationArray = new byte[0x10 + (this._OutputUsesZip64.Value ? 8 : 0)];
+                byte[] destinationArray = new byte[0x10 + (this.outputUsesZip64Field.Value ? 8 : 0)];
                 destinationIndex = 0;
                 Array.Copy(BitConverter.GetBytes(0x8074b50), 0, destinationArray, destinationIndex, 4);
                 destinationIndex += 4;
-                Array.Copy(BitConverter.GetBytes(this._Crc32), 0, destinationArray, destinationIndex, 4);
+                Array.Copy(BitConverter.GetBytes(this.crc32Field), 0, destinationArray, destinationIndex, 4);
                 destinationIndex += 4;
-                if (this._OutputUsesZip64.Value)
+                if (this.outputUsesZip64Field.Value)
                 {
-                    Array.Copy(BitConverter.GetBytes(this._CompressedSize), 0, destinationArray, destinationIndex, 8);
+                    Array.Copy(BitConverter.GetBytes(this.compressedSizeField), 0, destinationArray, destinationIndex, 8);
                     destinationIndex += 8;
-                    Array.Copy(BitConverter.GetBytes(this._UncompressedSize), 0, destinationArray, destinationIndex, 8);
+                    Array.Copy(BitConverter.GetBytes(this.uncompressedSizeField), 0, destinationArray, destinationIndex, 8);
                     destinationIndex += 8;
                 }
                 else
                 {
-                    destinationArray[destinationIndex++] = (byte) (this._CompressedSize & 0xffL);
-                    destinationArray[destinationIndex++] = (byte) ((this._CompressedSize & 0xff00L) >> 8);
-                    destinationArray[destinationIndex++] = (byte) ((this._CompressedSize & 0xff0000L) >> 0x10);
-                    destinationArray[destinationIndex++] = (byte) ((this._CompressedSize & 0xff000000L) >> 0x18);
-                    destinationArray[destinationIndex++] = (byte) (this._UncompressedSize & 0xffL);
-                    destinationArray[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff00L) >> 8);
-                    destinationArray[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff0000L) >> 0x10);
-                    destinationArray[destinationIndex++] = (byte) ((this._UncompressedSize & 0xff000000L) >> 0x18);
+                    destinationArray[destinationIndex++] = (byte) (this.compressedSizeField & 0xffL);
+                    destinationArray[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff00L) >> 8);
+                    destinationArray[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff0000L) >> 0x10);
+                    destinationArray[destinationIndex++] = (byte) ((this.compressedSizeField & 0xff000000L) >> 0x18);
+                    destinationArray[destinationIndex++] = (byte) (this.uncompressedSizeField & 0xffL);
+                    destinationArray[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff00L) >> 8);
+                    destinationArray[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff0000L) >> 0x10);
+                    destinationArray[destinationIndex++] = (byte) ((this.uncompressedSizeField & 0xff000000L) >> 0x18);
                 }
                 s.Write(destinationArray, 0, destinationArray.Length);
-                this._LengthOfTrailer += destinationArray.Length;
+                this.lengthOfTrailerField += destinationArray.Length;
             }
         }
 
@@ -2047,19 +2047,19 @@
         /// </remarks>
         private void PrepSourceStream()
         {
-            if (this._sourceStream == null)
+            if (this.sourceStreamField == null)
             {
                 throw new ZipException(string.Format(CultureInfo.InvariantCulture, "The input stream is null for entry '{0}'.", this.FileName));
             }
-            if (this._sourceStreamOriginalPosition.HasValue)
+            if (this.sourceStreamOriginalPositionField.HasValue)
             {
-                this._sourceStream.Position = this._sourceStreamOriginalPosition.Value;
+                this.sourceStreamField.Position = this.sourceStreamOriginalPositionField.Value;
             }
-            else if (this._sourceStream.CanSeek)
+            else if (this.sourceStreamField.CanSeek)
             {
-                this._sourceStreamOriginalPosition = new long?(this._sourceStream.Position);
+                this.sourceStreamOriginalPositionField = new long?(this.sourceStreamField.Position);
             }
-            else if ((this.Encryption == EncryptionAlgorithm.PkzipWeak) && ((this._Source != ZipEntrySource.ZipFile) && ((this._BitField & 8) != 8)))
+            else if ((this.Encryption == EncryptionAlgorithm.PkzipWeak) && ((this.sourceField != ZipEntrySource.ZipFile) && ((this.bitFieldField & 8) != 8)))
             {
                 throw new ZipException("It is not possible to use PKZIP encryption on a non-seekable input stream");
             }
@@ -2079,7 +2079,7 @@
             {
                 int num4;
                 short num6;
-                byte[] buffer = this._Extra = new byte[extraFieldLength];
+                byte[] buffer = this.extraField = new byte[extraFieldLength];
                 num = s.Read(buffer, 0, buffer.Length);
                 long posn = s.Position - num;
                 for (int i = 0; (i + 3) < buffer.Length; i = (num4 + num6) + 4)
@@ -2143,22 +2143,22 @@
                 throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Unexpected size (0x{0:X4}) for InfoZip v1 extra field at position 0x{1:X16}", dataSize, posn));
             }
             int num = BitConverter.ToInt32(buffer, j);
-            this._Mtime = _unixEpoch.AddSeconds((double) num);
+            this.mtimeField = unixEpochField.AddSeconds((double) num);
             j += 4;
             num = BitConverter.ToInt32(buffer, j);
-            this._Atime = _unixEpoch.AddSeconds((double) num);
+            this.atimeField = unixEpochField.AddSeconds((double) num);
             j += 4;
-            this._Ctime = DateTime.UtcNow;
-            this._ntfsTimesAreSet = true;
-            this._timestamp |= ZipEntryTimestamp.InfoZip1;
+            this.ctimeField = DateTime.UtcNow;
+            this.ntfsTimesAreSetField = true;
+            this.timestampField |= ZipEntryTimestamp.InfoZip1;
             return j;
         }
 
         private int ProcessExtraFieldPkwareStrongEncryption(byte[] Buffer, int j)
         {
             j += 2;
-            this._UnsupportedAlgorithmId = (ushort) (Buffer[j++] + (Buffer[j++] * 0x100));
-            this._Encryption_FromZipFile = this._Encryption = EncryptionAlgorithm.Unsupported;
+            this.unsupportedAlgorithmIdField = (ushort) (Buffer[j++] + (Buffer[j++] * 0x100));
+            this.encryptionFromZipFileField = this.encryptionField = EncryptionAlgorithm.Unsupported;
             return j;
         }
 
@@ -2173,21 +2173,21 @@
                 int num = BitConverter.ToInt32(buffer, j);
                 j += 4;
                 remainingData -= 4;
-                return _unixEpoch.AddSeconds((double) num);
+                return unixEpochField.AddSeconds((double) num);
             };
-            if ((dataSize == 13) || (this._readExtraDepth > 0))
+            if ((dataSize == 13) || (this.readExtraDepthField > 0))
             {
                 byte num = buffer[j++];
                 remainingData--;
                 if (((num & 1) != 0) && (remainingData >= 4))
                 {
-                    this._Mtime = func();
+                    this.mtimeField = func();
                 }
-                this._Atime = (((num & 2) != 0) && (remainingData >= 4)) ? func() : DateTime.UtcNow;
-                this._Ctime = (((num & 4) != 0) && (remainingData >= 4)) ? func() : DateTime.UtcNow;
-                this._timestamp |= ZipEntryTimestamp.Unix;
-                this._ntfsTimesAreSet = true;
-                this._emitUnixTimes = true;
+                this.atimeField = (((num & 2) != 0) && (remainingData >= 4)) ? func() : DateTime.UtcNow;
+                this.ctimeField = (((num & 4) != 0) && (remainingData >= 4)) ? func() : DateTime.UtcNow;
+                this.timestampField |= ZipEntryTimestamp.Unix;
+                this.ntfsTimesAreSetField = true;
+                this.emitUnixTimesField = true;
             }
             else
             {
@@ -2209,39 +2209,39 @@
             if ((num == 1) && (num2 == 0x18))
             {
                 long fileTime = BitConverter.ToInt64(buffer, j);
-                this._Mtime = DateTime.FromFileTimeUtc(fileTime);
+                this.mtimeField = DateTime.FromFileTimeUtc(fileTime);
                 j += 8;
                 fileTime = BitConverter.ToInt64(buffer, j);
-                this._Atime = DateTime.FromFileTimeUtc(fileTime);
+                this.atimeField = DateTime.FromFileTimeUtc(fileTime);
                 j += 8;
                 fileTime = BitConverter.ToInt64(buffer, j);
-                this._Ctime = DateTime.FromFileTimeUtc(fileTime);
+                this.ctimeField = DateTime.FromFileTimeUtc(fileTime);
                 j += 8;
-                this._ntfsTimesAreSet = true;
-                this._timestamp |= ZipEntryTimestamp.Windows;
-                this._emitNtfsTimes = true;
+                this.ntfsTimesAreSetField = true;
+                this.timestampField |= ZipEntryTimestamp.Windows;
+                this.emitNtfsTimesField = true;
             }
             return j;
         }
 
         private int ProcessExtraFieldWinZipAes(byte[] buffer, int j, short dataSize, long posn)
         {
-            if (this._CompressionMethod == 0x63)
+            if (this.compressionMethodField == 0x63)
             {
-                if ((this._BitField & 1) != 1)
+                if ((this.bitFieldField & 1) != 1)
                 {
                     throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Inconsistent metadata at position 0x{0:X16}", posn));
                 }
-                this._sourceIsEncrypted = true;
+                this.sourceIsEncryptedField = true;
                 if (dataSize != 7)
                 {
                     throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Inconsistent size (0x{0:X4}) in WinZip AES field at position 0x{1:X16}", dataSize, posn));
                 }
-                this._WinZipAesMethod = BitConverter.ToInt16(buffer, j);
+                this.winZipAesMethodField = BitConverter.ToInt16(buffer, j);
                 j += 2;
-                if ((this._WinZipAesMethod != 1) && (this._WinZipAesMethod != 2))
+                if ((this.winZipAesMethodField != 1) && (this.winZipAesMethodField != 2))
                 {
-                    throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Unexpected vendor version number (0x{0:X4}) for WinZip AES metadata at position 0x{1:X16}", this._WinZipAesMethod, posn));
+                    throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Unexpected vendor version number (0x{0:X4}) for WinZip AES metadata at position 0x{1:X16}", this.winZipAesMethodField, posn));
                 }
                 short num = BitConverter.ToInt16(buffer, j);
                 j += 2;
@@ -2254,9 +2254,9 @@
                 {
                     throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "Invalid key strength ({0})", num2));
                 }
-                this._Encryption_FromZipFile = this._Encryption = (num2 == 0x80) ? EncryptionAlgorithm.WinZipAes128 : EncryptionAlgorithm.WinZipAes256;
+                this.encryptionFromZipFileField = this.encryptionField = (num2 == 0x80) ? EncryptionAlgorithm.WinZipAes128 : EncryptionAlgorithm.WinZipAes256;
                 j++;
-                this._CompressionMethod_FromZipFile = this._CompressionMethod = BitConverter.ToInt16(buffer, j);
+                this.compressionMethodFromZipFileField = this.compressionMethodField = BitConverter.ToInt16(buffer, j);
                 j += 2;
             }
             return j;
@@ -2264,7 +2264,7 @@
 
         private int ProcessExtraFieldZip64(byte[] buffer, int j, short dataSize, long posn)
         {
-            this._InputUsesZip64 = true;
+            this.inputUsesZip64Field = true;
             if (dataSize > 0x1c)
             {
                 throw new BadReadException(string.Format(CultureInfo.InvariantCulture, "  Inconsistent size (0x{0:X4}) for ZIP64 extra field at position 0x{1:X16}", dataSize, posn));
@@ -2280,17 +2280,17 @@
                 remainingData -= 8;
                 return num;
             };
-            if (this._UncompressedSize == 0xffffffffL)
+            if (this.uncompressedSizeField == 0xffffffffL)
             {
-                this._UncompressedSize = func();
+                this.uncompressedSizeField = func();
             }
-            if (this._CompressedSize == 0xffffffffL)
+            if (this.compressedSizeField == 0xffffffffL)
             {
-                this._CompressedSize = func();
+                this.compressedSizeField = func();
             }
-            if (this._RelativeOffsetOfLocalHeader == 0xffffffffL)
+            if (this.relativeOffsetOfLocalHeaderField == 0xffffffffL)
             {
-                this._RelativeOffsetOfLocalHeader = func();
+                this.relativeOffsetOfLocalHeaderField = func();
             }
             return j;
         }
@@ -2334,97 +2334,97 @@
             int num4 = 0;
             ZipEntry entry = new ZipEntry();
             entry.AlternateEncoding = encoding;
-            entry._Source = ZipEntrySource.ZipFile;
-            entry._container = new ZipContainer(zf);
-            entry._VersionMadeBy = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._VersionNeeded = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._BitField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._CompressionMethod = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._TimeBlob = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
-            entry._LastModified = SharedUtilities.PackedToDateTime(entry._TimeBlob);
-            entry._timestamp |= ZipEntryTimestamp.DOS;
-            entry._Crc32 = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
-            entry._CompressedSize = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
-            entry._UncompressedSize = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
-            entry._CompressionMethod_FromZipFile = entry._CompressionMethod;
-            entry._filenameLength = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._extraFieldLength = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._commentLength = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._diskNumber = (uint) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._InternalFileAttrs = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
-            entry._ExternalFileAttrs = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
-            entry._RelativeOffsetOfLocalHeader = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
-            entry.IsText = (entry._InternalFileAttrs & 1) == 1;
-            buffer = new byte[entry._filenameLength];
+            entry.sourceField = ZipEntrySource.ZipFile;
+            entry.containerField = new ZipContainer(zf);
+            entry.versionMadeByField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.versionNeededField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.bitFieldField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.compressionMethodField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.timeBlobField = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
+            entry.lastModifiedField = SharedUtilities.PackedToDateTime(entry.timeBlobField);
+            entry.timestampField |= ZipEntryTimestamp.DOS;
+            entry.crc32Field = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
+            entry.compressedSizeField = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
+            entry.uncompressedSizeField = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
+            entry.compressionMethodFromZipFileField = entry.compressionMethodField;
+            entry.filenameLengthField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.extraFieldLengthField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.commentLengthField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.diskNumberField = (uint) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.internalFileAttrsField = (short) (buffer[num4++] + (buffer[num4++] * 0x100));
+            entry.externalFileAttrsField = ((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100);
+            entry.relativeOffsetOfLocalHeaderField = (long) ((ulong) (((buffer[num4++] + (buffer[num4++] * 0x100)) + ((buffer[num4++] * 0x100) * 0x100)) + (((buffer[num4++] * 0x100) * 0x100) * 0x100)));
+            entry.IsText = (entry.internalFileAttrsField & 1) == 1;
+            buffer = new byte[entry.filenameLengthField];
             int num3 = readStream.Read(buffer, 0, buffer.Length);
             num2 += num3;
-            if ((entry._BitField & 0x800) == 0x800)
+            if ((entry.bitFieldField & 0x800) == 0x800)
             {
-                entry._FileNameInArchive = SharedUtilities.Utf8StringFromBuffer(buffer);
+                entry.fileNameInArchiveField = SharedUtilities.Utf8StringFromBuffer(buffer);
             }
             else
             {
-                entry._FileNameInArchive = SharedUtilities.StringFromBuffer(buffer, encoding);
+                entry.fileNameInArchiveField = SharedUtilities.StringFromBuffer(buffer, encoding);
             }
-            while (previouslySeen.ContainsKey(entry._FileNameInArchive))
+            while (previouslySeen.ContainsKey(entry.fileNameInArchiveField))
             {
-                entry._FileNameInArchive = CopyHelper.AppendCopyToFileName(entry._FileNameInArchive);
-                entry._metadataChanged = true;
+                entry.fileNameInArchiveField = CopyHelper.AppendCopyToFileName(entry.fileNameInArchiveField);
+                entry.metadataChangedField = true;
             }
             if (entry.AttributesIndicateDirectory)
             {
                 entry.MarkAsDirectory();
             }
-            else if (entry._FileNameInArchive.EndsWith("/"))
+            else if (entry.fileNameInArchiveField.EndsWith("/"))
             {
                 entry.MarkAsDirectory();
             }
-            entry._CompressedFileDataSize = entry._CompressedSize;
-            if ((entry._BitField & 1) == 1)
+            entry.compressedFileDataSizeField = entry.compressedSizeField;
+            if ((entry.bitFieldField & 1) == 1)
             {
-                entry._Encryption_FromZipFile = entry._Encryption = EncryptionAlgorithm.PkzipWeak;
-                entry._sourceIsEncrypted = true;
+                entry.encryptionFromZipFileField = entry.encryptionField = EncryptionAlgorithm.PkzipWeak;
+                entry.sourceIsEncryptedField = true;
             }
-            if (entry._extraFieldLength > 0)
+            if (entry.extraFieldLengthField > 0)
             {
-                entry._InputUsesZip64 = ((entry._CompressedSize == 0xffffffffL) || (entry._UncompressedSize == 0xffffffffL)) || (entry._RelativeOffsetOfLocalHeader == 0xffffffffL);
-                num2 += entry.ProcessExtraField(readStream, entry._extraFieldLength);
-                entry._CompressedFileDataSize = entry._CompressedSize;
+                entry.inputUsesZip64Field = ((entry.compressedSizeField == 0xffffffffL) || (entry.uncompressedSizeField == 0xffffffffL)) || (entry.relativeOffsetOfLocalHeaderField == 0xffffffffL);
+                num2 += entry.ProcessExtraField(readStream, entry.extraFieldLengthField);
+                entry.compressedFileDataSizeField = entry.compressedSizeField;
             }
-            if (entry._Encryption == EncryptionAlgorithm.PkzipWeak)
+            if (entry.encryptionField == EncryptionAlgorithm.PkzipWeak)
             {
-                entry._CompressedFileDataSize -= 12L;
+                entry.compressedFileDataSizeField -= 12L;
             }
             else if ((entry.Encryption == EncryptionAlgorithm.WinZipAes128) || (entry.Encryption == EncryptionAlgorithm.WinZipAes256))
             {
-                entry._CompressedFileDataSize = entry.CompressedSize - (GetLengthOfCryptoHeaderBytes(entry.Encryption) + 10);
-                entry._LengthOfTrailer = 10;
+                entry.compressedFileDataSizeField = entry.CompressedSize - (GetLengthOfCryptoHeaderBytes(entry.Encryption) + 10);
+                entry.lengthOfTrailerField = 10;
             }
-            if ((entry._BitField & 8) == 8)
+            if ((entry.bitFieldField & 8) == 8)
             {
-                if (entry._InputUsesZip64)
+                if (entry.inputUsesZip64Field)
                 {
-                    entry._LengthOfTrailer += 0x18;
+                    entry.lengthOfTrailerField += 0x18;
                 }
                 else
                 {
-                    entry._LengthOfTrailer += 0x10;
+                    entry.lengthOfTrailerField += 0x10;
                 }
             }
-            entry.AlternateEncoding = ((entry._BitField & 0x800) == 0x800) ? Encoding.UTF8 : encoding;
+            entry.AlternateEncoding = ((entry.bitFieldField & 0x800) == 0x800) ? Encoding.UTF8 : encoding;
             entry.AlternateEncodingUsage = ZipOption.Always;
-            if (entry._commentLength > 0)
+            if (entry.commentLengthField > 0)
             {
-                buffer = new byte[entry._commentLength];
+                buffer = new byte[entry.commentLengthField];
                 num3 = readStream.Read(buffer, 0, buffer.Length);
                 num2 += num3;
-                if ((entry._BitField & 0x800) == 0x800)
+                if ((entry.bitFieldField & 0x800) == 0x800)
                 {
-                    entry._Comment = SharedUtilities.Utf8StringFromBuffer(buffer);
+                    entry.commentField = SharedUtilities.Utf8StringFromBuffer(buffer);
                 }
                 else
                 {
-                    entry._Comment = SharedUtilities.StringFromBuffer(buffer, encoding);
+                    entry.commentField = SharedUtilities.StringFromBuffer(buffer, encoding);
                 }
             }
             return entry;
@@ -2446,9 +2446,9 @@
             Stream readStream = zc.ReadStream;
             Encoding alternateEncoding = zc.AlternateEncoding;
             ZipEntry ze = new ZipEntry();
-            ze._Source = ZipEntrySource.ZipFile;
-            ze._container = zc;
-            ze._archiveStream = readStream;
+            ze.sourceField = ZipEntrySource.ZipFile;
+            ze.containerField = zc;
+            ze.archiveStreamField = readStream;
             if (zipFile != null)
             {
                 zipFile.OnReadEntry(true, null);
@@ -2461,8 +2461,8 @@
             {
                 return null;
             }
-            ze.__FileDataPosition = ze.ArchiveStream.Position;
-            readStream.Seek(ze._CompressedFileDataSize + ze._LengthOfTrailer, SeekOrigin.Current);
+            ze.fileDataPositionField = ze.ArchiveStream.Position;
+            readStream.Seek(ze.compressedFileDataSizeField + ze.lengthOfTrailerField, SeekOrigin.Current);
             HandleUnexpectedDataDescriptor(ze);
             if (zipFile != null)
             {
@@ -2474,9 +2474,9 @@
 
         private void ReadExtraField()
         {
-            this._readExtraDepth++;
+            this.readExtraDepthField++;
             long position = this.ArchiveStream.Position;
-            this.ArchiveStream.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
+            this.ArchiveStream.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
             byte[] buffer = new byte[30];
             this.ArchiveStream.Read(buffer, 0, buffer.Length);
             int num2 = 0x1a;
@@ -2485,13 +2485,13 @@
             this.ArchiveStream.Seek((long) num3, SeekOrigin.Current);
             this.ProcessExtraField(this.ArchiveStream, extraFieldLength);
             this.ArchiveStream.Seek(position, SeekOrigin.Begin);
-            this._readExtraDepth--;
+            this.readExtraDepthField--;
         }
 
         private static bool ReadHeader(ZipEntry ze, Encoding defaultEncoding)
         {
             int num = 0;
-            ze._RelativeOffsetOfLocalHeader = ze.ArchiveStream.Position;
+            ze.relativeOffsetOfLocalHeaderField = ze.ArchiveStream.Position;
             int signature = SharedUtilities.ReadEntrySignature(ze.ArchiveStream);
             num += 4;
             if (IsNotValidSig(signature))
@@ -2511,42 +2511,42 @@
             }
             num += num3;
             int startIndex = 0;
-            ze._VersionNeeded = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
-            ze._BitField = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
-            ze._CompressionMethod_FromZipFile = ze._CompressionMethod = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
-            ze._TimeBlob = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
-            ze._LastModified = SharedUtilities.PackedToDateTime(ze._TimeBlob);
-            ze._timestamp |= ZipEntryTimestamp.DOS;
-            if ((ze._BitField & 1) == 1)
+            ze.versionNeededField = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
+            ze.bitFieldField = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
+            ze.compressionMethodFromZipFileField = ze.compressionMethodField = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
+            ze.timeBlobField = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
+            ze.lastModifiedField = SharedUtilities.PackedToDateTime(ze.timeBlobField);
+            ze.timestampField |= ZipEntryTimestamp.DOS;
+            if ((ze.bitFieldField & 1) == 1)
             {
-                ze._Encryption_FromZipFile = ze._Encryption = EncryptionAlgorithm.PkzipWeak;
-                ze._sourceIsEncrypted = true;
+                ze.encryptionFromZipFileField = ze.encryptionField = EncryptionAlgorithm.PkzipWeak;
+                ze.sourceIsEncryptedField = true;
             }
-            ze._Crc32 = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
-            ze._CompressedSize = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
-            ze._UncompressedSize = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
-            if ((((uint) ze._CompressedSize) == uint.MaxValue) || (((uint) ze._UncompressedSize) == uint.MaxValue))
+            ze.crc32Field = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
+            ze.compressedSizeField = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
+            ze.uncompressedSizeField = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
+            if ((((uint) ze.compressedSizeField) == uint.MaxValue) || (((uint) ze.uncompressedSizeField) == uint.MaxValue))
             {
-                ze._InputUsesZip64 = true;
+                ze.inputUsesZip64Field = true;
             }
             short num5 = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
             short extraFieldLength = (short) (buffer[startIndex++] + (buffer[startIndex++] * 0x100));
             buffer = new byte[num5];
             num3 = ze.ArchiveStream.Read(buffer, 0, buffer.Length);
             num += num3;
-            if ((ze._BitField & 0x800) == 0x800)
+            if ((ze.bitFieldField & 0x800) == 0x800)
             {
                 ze.AlternateEncoding = Encoding.UTF8;
                 ze.AlternateEncodingUsage = ZipOption.Always;
             }
-            ze._FileNameInArchive = ze.AlternateEncoding.GetString(buffer, 0, buffer.Length);
-            if (ze._FileNameInArchive.EndsWith("/"))
+            ze.fileNameInArchiveField = ze.AlternateEncoding.GetString(buffer, 0, buffer.Length);
+            if (ze.fileNameInArchiveField.EndsWith("/"))
             {
                 ze.MarkAsDirectory();
             }
             num += ze.ProcessExtraField(ze.ArchiveStream, extraFieldLength);
-            ze._LengthOfTrailer = 0;
-            if (!ze._FileNameInArchive.EndsWith("/") && ((ze._BitField & 8) == 8))
+            ze.lengthOfTrailerField = 0;
+            if (!ze.fileNameInArchiveField.EndsWith("/") && ((ze.bitFieldField & 8) == 8))
             {
                 long position = ze.ArchiveStream.Position;
                 bool flag = true;
@@ -2555,9 +2555,9 @@
                 while (flag)
                 {
                     num9++;
-                    if (ze._container.ZipFile != null)
+                    if (ze.containerField.ZipFile != null)
                     {
-                        ze._container.ZipFile.OnReadBytes(ze);
+                        ze.containerField.ZipFile.OnReadBytes(ze);
                     }
                     long num10 = SharedUtilities.FindSignature(ze.ArchiveStream, 0x8074b50);
                     if (num10 == -1L)
@@ -2565,7 +2565,7 @@
                         return false;
                     }
                     num8 += num10;
-                    if (ze._InputUsesZip64)
+                    if (ze.inputUsesZip64Field)
                     {
                         buffer = new byte[20];
                         if (ze.ArchiveStream.Read(buffer, 0, buffer.Length) != 20)
@@ -2573,12 +2573,12 @@
                             return false;
                         }
                         startIndex = 0;
-                        ze._Crc32 = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
-                        ze._CompressedSize = BitConverter.ToInt64(buffer, startIndex);
+                        ze.crc32Field = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
+                        ze.compressedSizeField = BitConverter.ToInt64(buffer, startIndex);
                         startIndex += 8;
-                        ze._UncompressedSize = BitConverter.ToInt64(buffer, startIndex);
+                        ze.uncompressedSizeField = BitConverter.ToInt64(buffer, startIndex);
                         startIndex += 8;
-                        ze._LengthOfTrailer += 0x18;
+                        ze.lengthOfTrailerField += 0x18;
                     }
                     else
                     {
@@ -2588,12 +2588,12 @@
                             return false;
                         }
                         startIndex = 0;
-                        ze._Crc32 = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
-                        ze._CompressedSize = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
-                        ze._UncompressedSize = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
-                        ze._LengthOfTrailer += 0x10;
+                        ze.crc32Field = ((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100);
+                        ze.compressedSizeField = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
+                        ze.uncompressedSizeField = (long) ((ulong) (((buffer[startIndex++] + (buffer[startIndex++] * 0x100)) + ((buffer[startIndex++] * 0x100) * 0x100)) + (((buffer[startIndex++] * 0x100) * 0x100) * 0x100)));
+                        ze.lengthOfTrailerField += 0x10;
                     }
-                    if (num8 != ze._CompressedSize)
+                    if (num8 != ze.compressedSizeField)
                     {
                         ze.ArchiveStream.Seek(-12L, SeekOrigin.Current);
                         num8 += 4L;
@@ -2601,26 +2601,26 @@
                 }
                 ze.ArchiveStream.Seek(position, SeekOrigin.Begin);
             }
-            ze._CompressedFileDataSize = ze._CompressedSize;
-            if ((ze._BitField & 1) == 1)
+            ze.compressedFileDataSizeField = ze.compressedSizeField;
+            if ((ze.bitFieldField & 1) == 1)
             {
                 if ((ze.Encryption == EncryptionAlgorithm.WinZipAes128) || (ze.Encryption == EncryptionAlgorithm.WinZipAes256))
                 {
-                    int keyStrengthInBits = GetKeyStrengthInBits(ze._Encryption_FromZipFile);
-                    ze._aesCrypto_forExtract = WinZipAesCrypto.ReadFromStream(null, keyStrengthInBits, ze.ArchiveStream);
-                    num += ze._aesCrypto_forExtract.SizeOfEncryptionMetadata - 10;
-                    ze._CompressedFileDataSize -= ze._aesCrypto_forExtract.SizeOfEncryptionMetadata;
-                    ze._LengthOfTrailer += 10;
+                    int keyStrengthInBits = GetKeyStrengthInBits(ze.encryptionFromZipFileField);
+                    ze.aesCryptoForExtractField = WinZipAesCrypto.ReadFromStream(null, keyStrengthInBits, ze.ArchiveStream);
+                    num += ze.aesCryptoForExtractField.SizeOfEncryptionMetadata - 10;
+                    ze.compressedFileDataSizeField -= ze.aesCryptoForExtractField.SizeOfEncryptionMetadata;
+                    ze.lengthOfTrailerField += 10;
                 }
                 else
                 {
-                    ze._WeakEncryptionHeader = new byte[12];
-                    num += ReadWeakEncryptionHeader(ze._archiveStream, ze._WeakEncryptionHeader);
-                    ze._CompressedFileDataSize -= 12L;
+                    ze.weakEncryptionHeaderField = new byte[12];
+                    num += ReadWeakEncryptionHeader(ze.archiveStreamField, ze.weakEncryptionHeaderField);
+                    ze.compressedFileDataSizeField -= 12L;
                 }
             }
-            ze._LengthOfHeader = num;
-            ze._TotalEntrySize = (ze._LengthOfHeader + ze._CompressedFileDataSize) + ze._LengthOfTrailer;
+            ze.lengthOfHeaderField = num;
+            ze.totalEntrySizeField = (ze.lengthOfHeaderField + ze.compressedFileDataSizeField) + ze.lengthOfTrailerField;
             return true;
         }
 
@@ -2645,8 +2645,8 @@
 
         internal void ResetDirEntry()
         {
-            this.__FileDataPosition = -1L;
-            this._LengthOfHeader = 0;
+            this.fileDataPositionField = -1L;
+            this.lengthOfHeaderField = 0;
         }
 
         /// <summary>
@@ -2689,28 +2689,28 @@
         /// <seealso cref="P:ZipEntry.ModifiedTime" />
         public void SetEntryTimes(DateTime created, DateTime accessed, DateTime modified)
         {
-            this._ntfsTimesAreSet = true;
-            if ((created == _zeroHour) && (created.Kind == _zeroHour.Kind))
+            this.ntfsTimesAreSetField = true;
+            if ((created == zeroHourField) && (created.Kind == zeroHourField.Kind))
             {
-                created = _win32Epoch;
+                created = win32EpochField;
             }
-            if ((accessed == _zeroHour) && (accessed.Kind == _zeroHour.Kind))
+            if ((accessed == zeroHourField) && (accessed.Kind == zeroHourField.Kind))
             {
-                accessed = _win32Epoch;
+                accessed = win32EpochField;
             }
-            if ((modified == _zeroHour) && (modified.Kind == _zeroHour.Kind))
+            if ((modified == zeroHourField) && (modified.Kind == zeroHourField.Kind))
             {
-                modified = _win32Epoch;
+                modified = win32EpochField;
             }
-            this._Ctime = created.ToUniversalTime();
-            this._Atime = accessed.ToUniversalTime();
-            this._Mtime = modified.ToUniversalTime();
-            this._LastModified = this._Mtime;
-            if (!(this._emitUnixTimes || this._emitNtfsTimes))
+            this.ctimeField = created.ToUniversalTime();
+            this.atimeField = accessed.ToUniversalTime();
+            this.mtimeField = modified.ToUniversalTime();
+            this.lastModifiedField = this.mtimeField;
+            if (!(this.emitUnixTimesField || this.emitNtfsTimesField))
             {
-                this._emitNtfsTimes = true;
+                this.emitNtfsTimesField = true;
             }
-            this._metadataChanged = true;
+            this.metadataChangedField = true;
         }
 
         private void SetFdpLoh()
@@ -2718,19 +2718,19 @@
             long position = this.ArchiveStream.Position;
             try
             {
-                this.ArchiveStream.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
+                this.ArchiveStream.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
             }
             catch (IOException exception)
             {
-                throw new BadStateException(string.Format(CultureInfo.InvariantCulture, "Exception seeking  entry({0}) offset(0x{1:X8}) len(0x{2:X8})", this.FileName, this._RelativeOffsetOfLocalHeader, this.ArchiveStream.Length), exception);
+                throw new BadStateException(string.Format(CultureInfo.InvariantCulture, "Exception seeking  entry({0}) offset(0x{1:X8}) len(0x{2:X8})", this.FileName, this.relativeOffsetOfLocalHeaderField, this.ArchiveStream.Length), exception);
             }
             byte[] buffer = new byte[30];
             this.ArchiveStream.Read(buffer, 0, buffer.Length);
             short num2 = (short) (buffer[0x1a] + (buffer[0x1b] * 0x100));
             short num3 = (short) (buffer[0x1c] + (buffer[0x1d] * 0x100));
             this.ArchiveStream.Seek((long) (num2 + num3), SeekOrigin.Current);
-            this._LengthOfHeader = ((30 + num3) + num2) + GetLengthOfCryptoHeaderBytes(this._Encryption_FromZipFile);
-            this.__FileDataPosition = this._RelativeOffsetOfLocalHeader + this._LengthOfHeader;
+            this.lengthOfHeaderField = ((30 + num3) + num2) + GetLengthOfCryptoHeaderBytes(this.encryptionFromZipFileField);
+            this.fileDataPositionField = this.relativeOffsetOfLocalHeaderField + this.lengthOfHeaderField;
             this.ArchiveStream.Seek(position, SeekOrigin.Begin);
         }
 
@@ -2743,45 +2743,45 @@
         private long SetInputAndFigureFileLength(ref Stream input)
         {
             long length = -1L;
-            if (this._Source == ZipEntrySource.Stream)
+            if (this.sourceField == ZipEntrySource.Stream)
             {
                 this.PrepSourceStream();
-                input = this._sourceStream;
+                input = this.sourceStreamField;
                 try
                 {
-                    length = this._sourceStream.Length;
+                    length = this.sourceStreamField.Length;
                 }
                 catch (NotSupportedException)
                 {
                 }
                 return length;
             }
-            if (this._Source == ZipEntrySource.ZipFile)
+            if (this.sourceField == ZipEntrySource.ZipFile)
             {
-                string password = (this._Encryption_FromZipFile == EncryptionAlgorithm.None) ? null : (this._Password ?? this._container.Password);
-                this._sourceStream = this.InternalOpenReader(password);
+                string password = (this.encryptionFromZipFileField == EncryptionAlgorithm.None) ? null : (this.passwordField ?? this.containerField.Password);
+                this.sourceStreamField = this.InternalOpenReader(password);
                 this.PrepSourceStream();
-                input = this._sourceStream;
-                return this._sourceStream.Length;
+                input = this.sourceStreamField;
+                return this.sourceStreamField.Length;
             }
-            if (this._Source == ZipEntrySource.JitStream)
+            if (this.sourceField == ZipEntrySource.JitStream)
             {
-                if (this._sourceStream == null)
+                if (this.sourceStreamField == null)
                 {
-                    this._sourceStream = this._OpenDelegate(this.FileName);
+                    this.sourceStreamField = this.openDelegateField(this.FileName);
                 }
                 this.PrepSourceStream();
-                input = this._sourceStream;
+                input = this.sourceStreamField;
                 try
                 {
-                    length = this._sourceStream.Length;
+                    length = this.sourceStreamField.Length;
                 }
                 catch (NotSupportedException)
                 {
                 }
                 return length;
             }
-            if (this._Source == ZipEntrySource.FileSystem)
+            if (this.sourceField == ZipEntrySource.FileSystem)
             {
                 FileShare readWrite = FileShare.ReadWrite;
                 readWrite |= FileShare.Delete;
@@ -2793,33 +2793,33 @@
 
         private void SetupCryptoForExtract(string password)
         {
-            if (this._Encryption_FromZipFile != EncryptionAlgorithm.None)
+            if (this.encryptionFromZipFileField != EncryptionAlgorithm.None)
             {
-                if (this._Encryption_FromZipFile == EncryptionAlgorithm.PkzipWeak)
+                if (this.encryptionFromZipFileField == EncryptionAlgorithm.PkzipWeak)
                 {
                     if (password == null)
                     {
                         throw new ZipException("Missing password.");
                     }
                     this.ArchiveStream.Seek(this.FileDataPosition - 12L, SeekOrigin.Begin);
-                    this._zipCrypto_forExtract = ZipCrypto.ForRead(password, this);
+                    this.zipCryptoForExtractField = ZipCrypto.ForRead(password, this);
                 }
-                else if ((this._Encryption_FromZipFile == EncryptionAlgorithm.WinZipAes128) || (this._Encryption_FromZipFile == EncryptionAlgorithm.WinZipAes256))
+                else if ((this.encryptionFromZipFileField == EncryptionAlgorithm.WinZipAes128) || (this.encryptionFromZipFileField == EncryptionAlgorithm.WinZipAes256))
                 {
                     if (password == null)
                     {
                         throw new ZipException("Missing password.");
                     }
-                    if (this._aesCrypto_forExtract != null)
+                    if (this.aesCryptoForExtractField != null)
                     {
-                        this._aesCrypto_forExtract.Password = password;
+                        this.aesCryptoForExtractField.Password = password;
                     }
                     else
                     {
-                        int lengthOfCryptoHeaderBytes = GetLengthOfCryptoHeaderBytes(this._Encryption_FromZipFile);
+                        int lengthOfCryptoHeaderBytes = GetLengthOfCryptoHeaderBytes(this.encryptionFromZipFileField);
                         this.ArchiveStream.Seek(this.FileDataPosition - lengthOfCryptoHeaderBytes, SeekOrigin.Begin);
-                        int keyStrengthInBits = GetKeyStrengthInBits(this._Encryption_FromZipFile);
-                        this._aesCrypto_forExtract = WinZipAesCrypto.ReadFromStream(password, keyStrengthInBits, this.ArchiveStream);
+                        int keyStrengthInBits = GetKeyStrengthInBits(this.encryptionFromZipFileField);
+                        this.aesCryptoForExtractField = WinZipAesCrypto.ReadFromStream(password, keyStrengthInBits, this.ArchiveStream);
                     }
                 }
             }
@@ -2827,17 +2827,17 @@
 
         private void SetZip64Flags()
         {
-            this._entryRequiresZip64 = new bool?(((this._CompressedSize >= 0xffffffffL) || (this._UncompressedSize >= 0xffffffffL)) || (this._RelativeOffsetOfLocalHeader >= 0xffffffffL));
-            if (!((this._container.Zip64 != Zip64Option.Default) ? true : !this._entryRequiresZip64.Value))
+            this.entryRequiresZip64Field = new bool?(((this.compressedSizeField >= 0xffffffffL) || (this.uncompressedSizeField >= 0xffffffffL)) || (this.relativeOffsetOfLocalHeaderField >= 0xffffffffL));
+            if (!((this.containerField.Zip64 != Zip64Option.Default) ? true : !this.entryRequiresZip64Field.Value))
             {
                 throw new ZipException("Compressed or Uncompressed size, or offset exceeds the maximum value. Consider setting the UseZip64WhenSaving property on the ZipFile instance.");
             }
-            this._OutputUsesZip64 = new bool?((this._container.Zip64 == Zip64Option.Always) ? true : this._entryRequiresZip64.Value);
+            this.outputUsesZip64Field = new bool?((this.containerField.Zip64 == Zip64Option.Always) ? true : this.entryRequiresZip64Field.Value);
         }
 
         internal void StoreRelativeOffset()
         {
-            this._RelativeOffsetOfLocalHeader = this._future_ROLH;
+            this.relativeOffsetOfLocalHeaderField = this.futureRolhField;
         }
 
         /// <summary>Provides a string representation of the instance.</summary>
@@ -2850,7 +2850,7 @@
         [Conditional("Trace")]
         private void TraceWriteLine(string format, params object[] varParams)
         {
-            lock (this._outputLock)
+            lock (this.outputLockField)
             {
                 int hashCode = Thread.CurrentThread.GetHashCode();
                 Console.ForegroundColor = (ConsoleColor) ((hashCode % 8) + 8);
@@ -2862,9 +2862,9 @@
 
         private void ValidateCompression()
         {
-            if (((this._CompressionMethod_FromZipFile != 0) && (this._CompressionMethod_FromZipFile != 8)) && (this._CompressionMethod_FromZipFile != 12))
+            if (((this.compressionMethodFromZipFileField != 0) && (this.compressionMethodFromZipFileField != 8)) && (this.compressionMethodFromZipFileField != 12))
             {
-                throw new ZipException(string.Format(CultureInfo.InvariantCulture, "Entry {0} uses an unsupported compression method (0x{1:X2}, {2})", this.FileName, this._CompressionMethod_FromZipFile, this.UnsupportedCompressionMethod));
+                throw new ZipException(string.Format(CultureInfo.InvariantCulture, "Entry {0} uses an unsupported compression method (0x{1:X2}, {2})", this.FileName, this.compressionMethodFromZipFileField, this.UnsupportedCompressionMethod));
             }
         }
 
@@ -2872,7 +2872,7 @@
         {
             if ((((this.Encryption != EncryptionAlgorithm.PkzipWeak) && (this.Encryption != EncryptionAlgorithm.WinZipAes128)) && (this.Encryption != EncryptionAlgorithm.WinZipAes256)) && (this.Encryption != EncryptionAlgorithm.None))
             {
-                if (this._UnsupportedAlgorithmId != 0)
+                if (this.unsupportedAlgorithmIdField != 0)
                 {
                     throw new ZipException(string.Format(CultureInfo.InvariantCulture, "Cannot extract: Entry {0} is encrypted with an algorithm not supported by DotNetZip: {1}", this.FileName, this.UnsupportedAlgorithm));
                 }
@@ -2900,7 +2900,7 @@
                 {
                     path = path.Substring(1);
                 }
-                if (this._container.ZipFile.FlattenFoldersOnExtract)
+                if (this.containerField.ZipFile.FlattenFoldersOnExtract)
                 {
                     outFileName = Path.Combine(basedir, (path.IndexOf('/') != -1) ? Path.GetFileName(path) : path);
                 }
@@ -2934,25 +2934,25 @@
 
         internal void VerifyCrcAfterExtract(int actualCrc32)
         {
-            if ((actualCrc32 != this._Crc32) && (((this.Encryption != EncryptionAlgorithm.WinZipAes128) && (this.Encryption != EncryptionAlgorithm.WinZipAes256)) || (this._WinZipAesMethod != 2)))
+            if ((actualCrc32 != this.crc32Field) && (((this.Encryption != EncryptionAlgorithm.WinZipAes128) && (this.Encryption != EncryptionAlgorithm.WinZipAes256)) || (this.winZipAesMethodField != 2)))
             {
-                throw new BadCrcException("CRC error: the file being extracted appears to be corrupted. " + string.Format(CultureInfo.InvariantCulture, "Expected 0x{0:X8}, Actual 0x{1:X8}", this._Crc32, actualCrc32));
+                throw new BadCrcException("CRC error: the file being extracted appears to be corrupted. " + string.Format(CultureInfo.InvariantCulture, "Expected 0x{0:X8}, Actual 0x{1:X8}", this.crc32Field, actualCrc32));
             }
             if ((this.UncompressedSize != 0L) && ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256)))
             {
-                WinZipAesCipherStream stream = this._inputDecryptorStream as WinZipAesCipherStream;
-                this._aesCrypto_forExtract.CalculatedMac = stream.FinalAuthentication;
-                this._aesCrypto_forExtract.ReadAndVerifyMac(this.ArchiveStream);
+                WinZipAesCipherStream stream = this.inputDecryptorStreamField as WinZipAesCipherStream;
+                this.aesCryptoForExtractField.calculatedMacField = stream.FinalAuthentication;
+                this.aesCryptoForExtractField.ReadAndVerifyMac(this.ArchiveStream);
             }
         }
 
         private bool WantReadAgain()
         {
-            if (this._UncompressedSize < 0x10L)
+            if (this.uncompressedSizeField < 0x10L)
             {
                 return false;
             }
-            if (this._CompressionMethod == 0)
+            if (this.compressionMethodField == 0)
             {
                 return false;
             }
@@ -2960,19 +2960,19 @@
             {
                 return false;
             }
-            if (this._CompressedSize < this._UncompressedSize)
+            if (this.compressedSizeField < this.uncompressedSizeField)
             {
                 return false;
             }
-            if (!((this._Source != ZipEntrySource.Stream) || this._sourceStream.CanSeek))
+            if (!((this.sourceField != ZipEntrySource.Stream) || this.sourceStreamField.CanSeek))
             {
                 return false;
             }
-            if ((this._aesCrypto_forWrite != null) && ((this.CompressedSize - this._aesCrypto_forWrite.SizeOfEncryptionMetadata) <= (this.UncompressedSize + 0x10L)))
+            if ((this.aesCryptoForWriteField != null) && ((this.CompressedSize - this.aesCryptoForWriteField.SizeOfEncryptionMetadata) <= (this.UncompressedSize + 0x10L)))
             {
                 return false;
             }
-            if ((this._zipCrypto_forWrite != null) && ((this.CompressedSize - 12L) <= this.UncompressedSize))
+            if ((this.zipCryptoForWriteField != null) && ((this.CompressedSize - 12L) <= this.UncompressedSize))
             {
                 return false;
             }
@@ -2987,7 +2987,7 @@
         Label_0011:;
             try
             {
-                if (!((this._Source != ZipEntrySource.ZipFile) || this._restreamRequiredOnSave))
+                if (!((this.sourceField != ZipEntrySource.ZipFile) || this.restreamRequiredOnSaveField))
                 {
                     this.CopyThroughOneEntry(s);
                     return;
@@ -2996,11 +2996,11 @@
                 {
                     this.WriteHeader(s, 1);
                     this.StoreRelativeOffset();
-                    this._entryRequiresZip64 = new bool?(this._RelativeOffsetOfLocalHeader >= 0xffffffffL);
-                    this._OutputUsesZip64 = new bool?((this._container.Zip64 == Zip64Option.Always) ? true : this._entryRequiresZip64.Value);
+                    this.entryRequiresZip64Field = new bool?(this.relativeOffsetOfLocalHeaderField >= 0xffffffffL);
+                    this.outputUsesZip64Field = new bool?((this.containerField.Zip64 == Zip64Option.Always) ? true : this.entryRequiresZip64Field.Value);
                     if (stream2 != null)
                     {
-                        this._diskNumber = stream2.CurrentSegment;
+                        this.diskNumberField = stream2.CurrentSegment;
                     }
                     return;
                 }
@@ -3012,7 +3012,7 @@
                     this.WriteHeader(s, cycle);
                     this.WriteSecurityMetadata(s);
                     this._WriteEntryData(s);
-                    this._TotalEntrySize = (this._LengthOfHeader + this._CompressedFileDataSize) + this._LengthOfTrailer;
+                    this.totalEntrySizeField = (this.lengthOfHeaderField + this.compressedFileDataSizeField) + this.lengthOfTrailerField;
                     if (cycle > 1)
                     {
                         flag2 = false;
@@ -3029,21 +3029,21 @@
                     {
                         if (stream2 != null)
                         {
-                            stream2.TruncateBackward(this._diskNumber, this._RelativeOffsetOfLocalHeader);
+                            stream2.TruncateBackward(this.diskNumberField, this.relativeOffsetOfLocalHeaderField);
                         }
                         else
                         {
-                            s.Seek(this._RelativeOffsetOfLocalHeader, SeekOrigin.Begin);
+                            s.Seek(this.relativeOffsetOfLocalHeaderField, SeekOrigin.Begin);
                         }
                         s.SetLength(s.Position);
                         if (stream != null)
                         {
-                            stream.Adjust(this._TotalEntrySize);
+                            stream.Adjust(this.totalEntrySizeField);
                         }
                     }
                 }
                 while (flag2);
-                this._skippedDuringSave = false;
+                this.skippedDuringSaveField = false;
                 flag = true;
             }
             catch (Exception exception)
@@ -3058,7 +3058,7 @@
                 if ((this.ZipErrorAction == ZipErrorAction.Skip) || (this.ZipErrorAction == ZipErrorAction.Retry))
                 {
                     long num3 = (stream != null) ? stream.ComputedPosition : s.Position;
-                    long offset = num3 - this._future_ROLH;
+                    long offset = num3 - this.futureRolhField;
                     if (offset > 0L)
                     {
                         s.Seek(offset, SeekOrigin.Current);
@@ -3072,7 +3072,7 @@
                     if (this.ZipErrorAction == ZipErrorAction.Skip)
                     {
                         this.WriteStatus("Skipping file {0} (exception: {1})", new object[] { this.LocalFileName, exception.ToString() });
-                        this._skippedDuringSave = true;
+                        this.skippedDuringSaveField = true;
                         flag = true;
                     }
                     else
@@ -3089,7 +3089,7 @@
                     if (this.ZipErrorAction == ZipErrorAction.InvokeErrorEvent)
                     {
                         this.OnZipErrorWhileSaving(exception);
-                        if (this._ioOperationCanceled)
+                        if (this.ioOperationCanceledField)
                         {
                             flag = true;
                             goto Label_02E8;
@@ -3114,40 +3114,40 @@
             dst[dstOffset++] = 0x4b;
             dst[dstOffset++] = 1;
             dst[dstOffset++] = 2;
-            dst[dstOffset++] = (byte) (this._VersionMadeBy & 0xff);
-            dst[dstOffset++] = (byte) ((this._VersionMadeBy & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) (this.versionMadeByField & 0xff);
+            dst[dstOffset++] = (byte) ((this.versionMadeByField & 0xff00) >> 8);
             short num2 = (this.VersionNeeded != 0) ? this.VersionNeeded : ((short) 20);
-            if (!this._OutputUsesZip64.HasValue)
+            if (!this.outputUsesZip64Field.HasValue)
             {
-                this._OutputUsesZip64 = new bool?(this._container.Zip64 == Zip64Option.Always);
+                this.outputUsesZip64Field = new bool?(this.containerField.Zip64 == Zip64Option.Always);
             }
-            short num3 = this._OutputUsesZip64.Value ? ((short) 0x2d) : num2;
+            short num3 = this.outputUsesZip64Field.Value ? ((short) 0x2d) : num2;
             if (this.CompressionMethod == CompressionMethod.BZip2)
             {
                 num3 = 0x2e;
             }
             dst[dstOffset++] = (byte) (num3 & 0xff);
             dst[dstOffset++] = (byte) ((num3 & 0xff00) >> 8);
-            dst[dstOffset++] = (byte) (this._BitField & 0xff);
-            dst[dstOffset++] = (byte) ((this._BitField & 0xff00) >> 8);
-            dst[dstOffset++] = (byte) (this._CompressionMethod & 0xff);
-            dst[dstOffset++] = (byte) ((this._CompressionMethod & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) (this.bitFieldField & 0xff);
+            dst[dstOffset++] = (byte) ((this.bitFieldField & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) (this.compressionMethodField & 0xff);
+            dst[dstOffset++] = (byte) ((this.compressionMethodField & 0xff00) >> 8);
             if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
             {
                 dstOffset -= 2;
                 dst[dstOffset++] = 0x63;
                 dst[dstOffset++] = 0;
             }
-            dst[dstOffset++] = (byte) (this._TimeBlob & 0xff);
-            dst[dstOffset++] = (byte) ((this._TimeBlob & 0xff00) >> 8);
-            dst[dstOffset++] = (byte) ((this._TimeBlob & 0xff0000) >> 0x10);
-            dst[dstOffset++] = (byte) ((this._TimeBlob & 0xff000000L) >> 0x18);
-            dst[dstOffset++] = (byte) (this._Crc32 & 0xff);
-            dst[dstOffset++] = (byte) ((this._Crc32 & 0xff00) >> 8);
-            dst[dstOffset++] = (byte) ((this._Crc32 & 0xff0000) >> 0x10);
-            dst[dstOffset++] = (byte) ((this._Crc32 & 0xff000000L) >> 0x18);
+            dst[dstOffset++] = (byte) (this.timeBlobField & 0xff);
+            dst[dstOffset++] = (byte) ((this.timeBlobField & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) ((this.timeBlobField & 0xff0000) >> 0x10);
+            dst[dstOffset++] = (byte) ((this.timeBlobField & 0xff000000L) >> 0x18);
+            dst[dstOffset++] = (byte) (this.crc32Field & 0xff);
+            dst[dstOffset++] = (byte) ((this.crc32Field & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) ((this.crc32Field & 0xff0000) >> 0x10);
+            dst[dstOffset++] = (byte) ((this.crc32Field & 0xff000000L) >> 0x18);
             int num4 = 0;
-            if (this._OutputUsesZip64.Value)
+            if (this.outputUsesZip64Field.Value)
             {
                 for (num4 = 0; num4 < 8; num4++)
                 {
@@ -3156,48 +3156,48 @@
             }
             else
             {
-                dst[dstOffset++] = (byte) (this._CompressedSize & 0xffL);
-                dst[dstOffset++] = (byte) ((this._CompressedSize & 0xff00L) >> 8);
-                dst[dstOffset++] = (byte) ((this._CompressedSize & 0xff0000L) >> 0x10);
-                dst[dstOffset++] = (byte) ((this._CompressedSize & 0xff000000L) >> 0x18);
-                dst[dstOffset++] = (byte) (this._UncompressedSize & 0xffL);
-                dst[dstOffset++] = (byte) ((this._UncompressedSize & 0xff00L) >> 8);
-                dst[dstOffset++] = (byte) ((this._UncompressedSize & 0xff0000L) >> 0x10);
-                dst[dstOffset++] = (byte) ((this._UncompressedSize & 0xff000000L) >> 0x18);
+                dst[dstOffset++] = (byte) (this.compressedSizeField & 0xffL);
+                dst[dstOffset++] = (byte) ((this.compressedSizeField & 0xff00L) >> 8);
+                dst[dstOffset++] = (byte) ((this.compressedSizeField & 0xff0000L) >> 0x10);
+                dst[dstOffset++] = (byte) ((this.compressedSizeField & 0xff000000L) >> 0x18);
+                dst[dstOffset++] = (byte) (this.uncompressedSizeField & 0xffL);
+                dst[dstOffset++] = (byte) ((this.uncompressedSizeField & 0xff00L) >> 8);
+                dst[dstOffset++] = (byte) ((this.uncompressedSizeField & 0xff0000L) >> 0x10);
+                dst[dstOffset++] = (byte) ((this.uncompressedSizeField & 0xff000000L) >> 0x18);
             }
             byte[] encodedFileNameBytes = this.GetEncodedFileNameBytes();
             short length = (short) encodedFileNameBytes.Length;
             dst[dstOffset++] = (byte) (length & 0xff);
             dst[dstOffset++] = (byte) ((length & 0xff00) >> 8);
-            this._presumeZip64 = this._OutputUsesZip64.Value;
-            this._Extra = this.ConstructExtraField(true);
-            short count = (this._Extra == null) ? ((short) 0) : ((short) this._Extra.Length);
+            this.presumeZip64Field = this.outputUsesZip64Field.Value;
+            this.extraField = this.ConstructExtraField(true);
+            short count = (this.extraField == null) ? ((short) 0) : ((short) this.extraField.Length);
             dst[dstOffset++] = (byte) (count & 0xff);
             dst[dstOffset++] = (byte) ((count & 0xff00) >> 8);
-            int num7 = (this._CommentBytes == null) ? 0 : this._CommentBytes.Length;
+            int num7 = (this.commentBytesField == null) ? 0 : this.commentBytesField.Length;
             if ((num7 + dstOffset) > dst.Length)
             {
                 num7 = dst.Length - dstOffset;
             }
             dst[dstOffset++] = (byte) (num7 & 0xff);
             dst[dstOffset++] = (byte) ((num7 & 0xff00) >> 8);
-            if ((this._container.ZipFile != null) && (this._container.ZipFile.MaxOutputSegmentSize != 0))
+            if ((this.containerField.ZipFile != null) && (this.containerField.ZipFile.MaxOutputSegmentSize != 0))
             {
-                dst[dstOffset++] = (byte) (this._diskNumber & 0xff);
-                dst[dstOffset++] = (byte) ((this._diskNumber & 0xff00) >> 8);
+                dst[dstOffset++] = (byte) (this.diskNumberField & 0xff);
+                dst[dstOffset++] = (byte) ((this.diskNumberField & 0xff00) >> 8);
             }
             else
             {
                 dst[dstOffset++] = 0;
                 dst[dstOffset++] = 0;
             }
-            dst[dstOffset++] = this._IsText ? ((byte) 1) : ((byte) 0);
+            dst[dstOffset++] = this.isTextField ? ((byte) 1) : ((byte) 0);
             dst[dstOffset++] = 0;
-            dst[dstOffset++] = (byte) (this._ExternalFileAttrs & 0xff);
-            dst[dstOffset++] = (byte) ((this._ExternalFileAttrs & 0xff00) >> 8);
-            dst[dstOffset++] = (byte) ((this._ExternalFileAttrs & 0xff0000) >> 0x10);
-            dst[dstOffset++] = (byte) ((this._ExternalFileAttrs & 0xff000000L) >> 0x18);
-            if (this._RelativeOffsetOfLocalHeader > 0xffffffffL)
+            dst[dstOffset++] = (byte) (this.externalFileAttrsField & 0xff);
+            dst[dstOffset++] = (byte) ((this.externalFileAttrsField & 0xff00) >> 8);
+            dst[dstOffset++] = (byte) ((this.externalFileAttrsField & 0xff0000) >> 0x10);
+            dst[dstOffset++] = (byte) ((this.externalFileAttrsField & 0xff000000L) >> 0x18);
+            if (this.relativeOffsetOfLocalHeaderField > 0xffffffffL)
             {
                 dst[dstOffset++] = 0xff;
                 dst[dstOffset++] = 0xff;
@@ -3206,23 +3206,23 @@
             }
             else
             {
-                dst[dstOffset++] = (byte) (this._RelativeOffsetOfLocalHeader & 0xffL);
-                dst[dstOffset++] = (byte) ((this._RelativeOffsetOfLocalHeader & 0xff00L) >> 8);
-                dst[dstOffset++] = (byte) ((this._RelativeOffsetOfLocalHeader & 0xff0000L) >> 0x10);
-                dst[dstOffset++] = (byte) ((this._RelativeOffsetOfLocalHeader & 0xff000000L) >> 0x18);
+                dst[dstOffset++] = (byte) (this.relativeOffsetOfLocalHeaderField & 0xffL);
+                dst[dstOffset++] = (byte) ((this.relativeOffsetOfLocalHeaderField & 0xff00L) >> 8);
+                dst[dstOffset++] = (byte) ((this.relativeOffsetOfLocalHeaderField & 0xff0000L) >> 0x10);
+                dst[dstOffset++] = (byte) ((this.relativeOffsetOfLocalHeaderField & 0xff000000L) >> 0x18);
             }
             Buffer.BlockCopy(encodedFileNameBytes, 0, dst, dstOffset, length);
             dstOffset += length;
-            if (this._Extra != null)
+            if (this.extraField != null)
             {
-                byte[] src = this._Extra;
+                byte[] src = this.extraField;
                 int srcOffset = 0;
                 Buffer.BlockCopy(src, srcOffset, dst, dstOffset, count);
                 dstOffset += count;
             }
             if (num7 != 0)
             {
-                Buffer.BlockCopy(this._CommentBytes, 0, dst, dstOffset, num7);
+                Buffer.BlockCopy(this.commentBytesField, 0, dst, dstOffset, num7);
                 dstOffset += num7;
             }
             s.Write(dst, 0, dstOffset);
@@ -3231,7 +3231,7 @@
         internal void WriteHeader(Stream s, int cycle)
         {
             CountingStream stream = s as CountingStream;
-            this._future_ROLH = (stream != null) ? stream.ComputedPosition : s.Position;
+            this.futureRolhField = (stream != null) ? stream.ComputedPosition : s.Position;
             int num = 0;
             int count = 0;
             byte[] src = new byte[30];
@@ -3239,8 +3239,8 @@
             src[count++] = 0x4b;
             src[count++] = 3;
             src[count++] = 4;
-            this._presumeZip64 = (this._container.Zip64 == Zip64Option.Always) || ((this._container.Zip64 == Zip64Option.AsNecessary) && !s.CanSeek);
-            short num3 = this._presumeZip64 ? ((short) 0x2d) : ((short) 20);
+            this.presumeZip64Field = (this.containerField.Zip64 == Zip64Option.Always) || ((this.containerField.Zip64 == Zip64Option.AsNecessary) && !s.CanSeek);
+            short num3 = this.presumeZip64Field ? ((short) 0x2d) : ((short) 20);
             if (this.CompressionMethod == CompressionMethod.BZip2)
             {
                 num3 = 0x2e;
@@ -3249,39 +3249,39 @@
             src[count++] = (byte) ((num3 & 0xff00) >> 8);
             byte[] encodedFileNameBytes = this.GetEncodedFileNameBytes();
             short length = (short) encodedFileNameBytes.Length;
-            if (this._Encryption == EncryptionAlgorithm.None)
+            if (this.encryptionField == EncryptionAlgorithm.None)
             {
-                this._BitField = (short) (this._BitField & -2);
+                this.bitFieldField = (short) (this.bitFieldField & -2);
             }
             else
             {
-                this._BitField = (short) (this._BitField | 1);
+                this.bitFieldField = (short) (this.bitFieldField | 1);
             }
-            if (this._actualEncoding.CodePage == Encoding.UTF8.CodePage)
+            if (this.actualEncodingField.CodePage == Encoding.UTF8.CodePage)
             {
-                this._BitField = (short) (this._BitField | 0x800);
+                this.bitFieldField = (short) (this.bitFieldField | 0x800);
             }
             if (this.IsDirectory || (cycle == 0x63))
             {
-                this._BitField = (short) (this._BitField & -9);
-                this._BitField = (short) (this._BitField & -2);
+                this.bitFieldField = (short) (this.bitFieldField & -9);
+                this.bitFieldField = (short) (this.bitFieldField & -2);
                 this.Encryption = EncryptionAlgorithm.None;
                 this.Password = null;
             }
             else if (!s.CanSeek)
             {
-                this._BitField = (short) (this._BitField | 8);
+                this.bitFieldField = (short) (this.bitFieldField | 8);
             }
-            src[count++] = (byte) (this._BitField & 0xff);
-            src[count++] = (byte) ((this._BitField & 0xff00) >> 8);
-            if (this.__FileDataPosition == -1L)
+            src[count++] = (byte) (this.bitFieldField & 0xff);
+            src[count++] = (byte) ((this.bitFieldField & 0xff00) >> 8);
+            if (this.fileDataPositionField == -1L)
             {
-                this._CompressedSize = 0L;
-                this._crcCalculated = false;
+                this.compressedSizeField = 0L;
+                this.crcCalculatedField = false;
             }
             this.MaybeUnsetCompressionMethodForWriting(cycle);
-            src[count++] = (byte) (this._CompressionMethod & 0xff);
-            src[count++] = (byte) ((this._CompressionMethod & 0xff00) >> 8);
+            src[count++] = (byte) (this.compressionMethodField & 0xff);
+            src[count++] = (byte) ((this.compressionMethodField & 0xff00) >> 8);
             if (cycle == 0x63)
             {
                 this.SetZip64Flags();
@@ -3292,16 +3292,16 @@
                 src[count++] = 0x63;
                 src[count++] = 0;
             }
-            this._TimeBlob = SharedUtilities.DateTimeToPacked(this.LastModified);
-            src[count++] = (byte) (this._TimeBlob & 0xff);
-            src[count++] = (byte) ((this._TimeBlob & 0xff00) >> 8);
-            src[count++] = (byte) ((this._TimeBlob & 0xff0000) >> 0x10);
-            src[count++] = (byte) ((this._TimeBlob & 0xff000000L) >> 0x18);
-            src[count++] = (byte) (this._Crc32 & 0xff);
-            src[count++] = (byte) ((this._Crc32 & 0xff00) >> 8);
-            src[count++] = (byte) ((this._Crc32 & 0xff0000) >> 0x10);
-            src[count++] = (byte) ((this._Crc32 & 0xff000000L) >> 0x18);
-            if (this._presumeZip64)
+            this.timeBlobField = SharedUtilities.DateTimeToPacked(this.LastModified);
+            src[count++] = (byte) (this.timeBlobField & 0xff);
+            src[count++] = (byte) ((this.timeBlobField & 0xff00) >> 8);
+            src[count++] = (byte) ((this.timeBlobField & 0xff0000) >> 0x10);
+            src[count++] = (byte) ((this.timeBlobField & 0xff000000L) >> 0x18);
+            src[count++] = (byte) (this.crc32Field & 0xff);
+            src[count++] = (byte) ((this.crc32Field & 0xff00) >> 8);
+            src[count++] = (byte) ((this.crc32Field & 0xff0000) >> 0x10);
+            src[count++] = (byte) ((this.crc32Field & 0xff000000L) >> 0x18);
+            if (this.presumeZip64Field)
             {
                 for (num = 0; num < 8; num++)
                 {
@@ -3310,31 +3310,31 @@
             }
             else
             {
-                src[count++] = (byte) (this._CompressedSize & 0xffL);
-                src[count++] = (byte) ((this._CompressedSize & 0xff00L) >> 8);
-                src[count++] = (byte) ((this._CompressedSize & 0xff0000L) >> 0x10);
-                src[count++] = (byte) ((this._CompressedSize & 0xff000000L) >> 0x18);
-                src[count++] = (byte) (this._UncompressedSize & 0xffL);
-                src[count++] = (byte) ((this._UncompressedSize & 0xff00L) >> 8);
-                src[count++] = (byte) ((this._UncompressedSize & 0xff0000L) >> 0x10);
-                src[count++] = (byte) ((this._UncompressedSize & 0xff000000L) >> 0x18);
+                src[count++] = (byte) (this.compressedSizeField & 0xffL);
+                src[count++] = (byte) ((this.compressedSizeField & 0xff00L) >> 8);
+                src[count++] = (byte) ((this.compressedSizeField & 0xff0000L) >> 0x10);
+                src[count++] = (byte) ((this.compressedSizeField & 0xff000000L) >> 0x18);
+                src[count++] = (byte) (this.uncompressedSizeField & 0xffL);
+                src[count++] = (byte) ((this.uncompressedSizeField & 0xff00L) >> 8);
+                src[count++] = (byte) ((this.uncompressedSizeField & 0xff0000L) >> 0x10);
+                src[count++] = (byte) ((this.uncompressedSizeField & 0xff000000L) >> 0x18);
             }
             src[count++] = (byte) (length & 0xff);
             src[count++] = (byte) ((length & 0xff00) >> 8);
-            this._Extra = this.ConstructExtraField(false);
-            short num5 = (this._Extra == null) ? ((short) 0) : ((short) this._Extra.Length);
+            this.extraField = this.ConstructExtraField(false);
+            short num5 = (this.extraField == null) ? ((short) 0) : ((short) this.extraField.Length);
             src[count++] = (byte) (num5 & 0xff);
             src[count++] = (byte) ((num5 & 0xff00) >> 8);
             byte[] dst = new byte[(count + length) + num5];
             Buffer.BlockCopy(src, 0, dst, 0, count);
             Buffer.BlockCopy(encodedFileNameBytes, 0, dst, count, encodedFileNameBytes.Length);
             count += encodedFileNameBytes.Length;
-            if (this._Extra != null)
+            if (this.extraField != null)
             {
-                Buffer.BlockCopy(this._Extra, 0, dst, count, this._Extra.Length);
-                count += this._Extra.Length;
+                Buffer.BlockCopy(this.extraField, 0, dst, count, this.extraField.Length);
+                count += this.extraField.Length;
             }
-            this._LengthOfHeader = count;
+            this.lengthOfHeaderField = count;
             ZipSegmentedStream stream2 = s as ZipSegmentedStream;
             if (stream2 != null)
             {
@@ -3342,15 +3342,15 @@
                 uint num6 = stream2.ComputeSegment(count);
                 if (num6 != stream2.CurrentSegment)
                 {
-                    this._future_ROLH = 0L;
+                    this.futureRolhField = 0L;
                 }
                 else
                 {
-                    this._future_ROLH = stream2.Position;
+                    this.futureRolhField = stream2.Position;
                 }
-                this._diskNumber = num6;
+                this.diskNumberField = num6;
             }
-            if ((this._container.Zip64 == Zip64Option.Default) && (((uint) this._RelativeOffsetOfLocalHeader) >= uint.MaxValue))
+            if ((this.containerField.Zip64 == Zip64Option.Default) && (((uint) this.relativeOffsetOfLocalHeaderField) >= uint.MaxValue))
             {
                 throw new ZipException("Offset within the zip archive exceeds 0xFFFFFFFF. Consider setting the UseZip64WhenSaving property on the ZipFile instance.");
             }
@@ -3359,59 +3359,59 @@
             {
                 stream2.ContiguousWrite = false;
             }
-            this._EntryHeader = dst;
+            this.entryHeaderField = dst;
         }
 
         internal void WriteSecurityMetadata(Stream outstream)
         {
             if (this.Encryption != EncryptionAlgorithm.None)
             {
-                string password = this._Password;
-                if ((this._Source == ZipEntrySource.ZipFile) && (password == null))
+                string password = this.passwordField;
+                if ((this.sourceField == ZipEntrySource.ZipFile) && (password == null))
                 {
-                    password = this._container.Password;
+                    password = this.containerField.Password;
                 }
                 if (password == null)
                 {
-                    this._zipCrypto_forWrite = null;
-                    this._aesCrypto_forWrite = null;
+                    this.zipCryptoForWriteField = null;
+                    this.aesCryptoForWriteField = null;
                 }
                 else if (this.Encryption == EncryptionAlgorithm.PkzipWeak)
                 {
-                    this._zipCrypto_forWrite = ZipCrypto.ForWrite(password);
+                    this.zipCryptoForWriteField = ZipCrypto.ForWrite(password);
                     Random random = new Random();
                     byte[] buffer = new byte[12];
                     random.NextBytes(buffer);
-                    if ((this._BitField & 8) == 8)
+                    if ((this.bitFieldField & 8) == 8)
                     {
-                        this._TimeBlob = SharedUtilities.DateTimeToPacked(this.LastModified);
-                        buffer[11] = (byte) ((this._TimeBlob >> 8) & 0xff);
+                        this.timeBlobField = SharedUtilities.DateTimeToPacked(this.LastModified);
+                        buffer[11] = (byte) ((this.timeBlobField >> 8) & 0xff);
                     }
                     else
                     {
                         this.FigureCrc32();
-                        buffer[11] = (byte) ((this._Crc32 >> 0x18) & 0xff);
+                        buffer[11] = (byte) ((this.crc32Field >> 0x18) & 0xff);
                     }
-                    byte[] buffer2 = this._zipCrypto_forWrite.EncryptMessage(buffer, buffer.Length);
+                    byte[] buffer2 = this.zipCryptoForWriteField.EncryptMessage(buffer, buffer.Length);
                     outstream.Write(buffer2, 0, buffer2.Length);
-                    this._LengthOfHeader += buffer2.Length;
+                    this.lengthOfHeaderField += buffer2.Length;
                 }
                 else if ((this.Encryption == EncryptionAlgorithm.WinZipAes128) || (this.Encryption == EncryptionAlgorithm.WinZipAes256))
                 {
                     int keyStrengthInBits = GetKeyStrengthInBits(this.Encryption);
-                    this._aesCrypto_forWrite = WinZipAesCrypto.Generate(password, keyStrengthInBits);
-                    outstream.Write(this._aesCrypto_forWrite.Salt, 0, this._aesCrypto_forWrite._Salt.Length);
-                    outstream.Write(this._aesCrypto_forWrite.GeneratedPV, 0, this._aesCrypto_forWrite.GeneratedPV.Length);
-                    this._LengthOfHeader += this._aesCrypto_forWrite._Salt.Length + this._aesCrypto_forWrite.GeneratedPV.Length;
+                    this.aesCryptoForWriteField = WinZipAesCrypto.Generate(password, keyStrengthInBits);
+                    outstream.Write(this.aesCryptoForWriteField.Salt, 0, this.aesCryptoForWriteField.saltField.Length);
+                    outstream.Write(this.aesCryptoForWriteField.GeneratedPV, 0, this.aesCryptoForWriteField.GeneratedPV.Length);
+                    this.lengthOfHeaderField += this.aesCryptoForWriteField.saltField.Length + this.aesCryptoForWriteField.GeneratedPV.Length;
                 }
             }
         }
 
         private void WriteStatus(string format, params object[] args)
         {
-            if ((this._container.ZipFile != null) && this._container.ZipFile.Verbose)
+            if ((this.containerField.ZipFile != null) && this.containerField.ZipFile.Verbose)
             {
-                this._container.ZipFile.StatusMessageTextWriter.WriteLine(format, args);
+                this.containerField.ZipFile.StatusMessageTextWriter.WriteLine(format, args);
             }
         }
 
@@ -3430,11 +3430,11 @@
         {
             get
             {
-                return this._Atime;
+                return this.atimeField;
             }
             set
             {
-                this.SetEntryTimes(this._Ctime, value, this._Mtime);
+                this.SetEntryTimes(this.ctimeField, value, this.mtimeField);
             }
         }
 
@@ -3502,20 +3502,20 @@
         {
             get
             {
-                if (this._archiveStream == null)
+                if (this.archiveStreamField == null)
                 {
-                    if (this._container.ZipFile != null)
+                    if (this.containerField.ZipFile != null)
                     {
-                        ZipFile zipFile = this._container.ZipFile;
+                        ZipFile zipFile = this.containerField.ZipFile;
                         zipFile.Reset(false);
-                        this._archiveStream = zipFile.StreamForDiskNumber(this._diskNumber);
+                        this.archiveStreamField = zipFile.StreamForDiskNumber(this.diskNumberField);
                     }
                     else
                     {
-                        this._archiveStream = this._container.ZipOutputStream.OutputStream;
+                        this.archiveStreamField = this.containerField.ZipOutputStream.OutputStream;
                     }
                 }
-                return this._archiveStream;
+                return this.archiveStreamField;
             }
         }
 
@@ -3578,13 +3578,13 @@
         {
             get
             {
-                return (FileAttributes) this._ExternalFileAttrs;
+                return (FileAttributes) this.externalFileAttrsField;
             }
             set
             {
-                this._ExternalFileAttrs = (int) value;
-                this._VersionMadeBy = 0x2d;
-                this._metadataChanged = true;
+                this.externalFileAttrsField = (int) value;
+                this.versionMadeByField = 0x2d;
+                this.metadataChangedField = true;
             }
         }
 
@@ -3595,7 +3595,7 @@
         {
             get
             {
-                return ((this._InternalFileAttrs == 0) && ((this._ExternalFileAttrs & 0x10) == 0x10));
+                return ((this.internalFileAttrsField == 0) && ((this.externalFileAttrsField & 0x10) == 0x10));
             }
         }
 
@@ -3719,7 +3719,7 @@
         {
             get
             {
-                return this._BitField;
+                return this.bitFieldField;
             }
         }
 
@@ -3727,7 +3727,7 @@
         {
             get
             {
-                return this._container.BufferSize;
+                return this.containerField.BufferSize;
             }
         }
 
@@ -3754,12 +3754,12 @@
         {
             get
             {
-                return this._Comment;
+                return this.commentField;
             }
             set
             {
-                this._Comment = value;
-                this._metadataChanged = true;
+                this.commentField = value;
+                this.metadataChangedField = true;
             }
         }
 
@@ -3780,7 +3780,7 @@
         {
             get
             {
-                return this._CompressedSize;
+                return this.compressedSizeField;
             }
         }
 
@@ -3830,28 +3830,28 @@
         {
             get
             {
-                return this._CompressionLevel;
+                return this.compressionLevelField;
             }
             set
             {
-                if (((this._CompressionMethod == 8) || (this._CompressionMethod == 0)) && ((value != CompressionLevel.Default) || (this._CompressionMethod != 8)))
+                if (((this.compressionMethodField == 8) || (this.compressionMethodField == 0)) && ((value != CompressionLevel.Default) || (this.compressionMethodField != 8)))
                 {
-                    this._CompressionLevel = value;
-                    if ((value != CompressionLevel.None) || (this._CompressionMethod != 0))
+                    this.compressionLevelField = value;
+                    if ((value != CompressionLevel.None) || (this.compressionMethodField != 0))
                     {
-                        if (this._CompressionLevel == CompressionLevel.None)
+                        if (this.compressionLevelField == CompressionLevel.None)
                         {
-                            this._CompressionMethod = 0;
+                            this.compressionMethodField = 0;
                         }
                         else
                         {
-                            this._CompressionMethod = 8;
+                            this.compressionMethodField = 8;
                         }
-                        if (this._container.ZipFile != null)
+                        if (this.containerField.ZipFile != null)
                         {
-                            this._container.ZipFile.NotifyEntryChanged();
+                            this.containerField.ZipFile.NotifyEntryChanged();
                         }
-                        this._restreamRequiredOnSave = true;
+                        this.restreamRequiredOnSaveField = true;
                     }
                 }
             }
@@ -3928,30 +3928,30 @@
         {
             get
             {
-                return (CompressionMethod) this._CompressionMethod;
+                return (CompressionMethod) this.compressionMethodField;
             }
             set
             {
-                if (value != ((CompressionMethod) this._CompressionMethod))
+                if (value != ((CompressionMethod) this.compressionMethodField))
                 {
                     if (((value != CompressionMethod.None) && (value != CompressionMethod.Deflate)) && (value != CompressionMethod.BZip2))
                     {
                         throw new InvalidOperationException("Unsupported compression method.");
                     }
-                    this._CompressionMethod = (short) value;
-                    if (this._CompressionMethod == 0)
+                    this.compressionMethodField = (short) value;
+                    if (this.compressionMethodField == 0)
                     {
-                        this._CompressionLevel = CompressionLevel.None;
+                        this.compressionLevelField = CompressionLevel.None;
                     }
                     else if (this.CompressionLevel == CompressionLevel.None)
                     {
-                        this._CompressionLevel = CompressionLevel.Default;
+                        this.compressionLevelField = CompressionLevel.Default;
                     }
-                    if (this._container.ZipFile != null)
+                    if (this.containerField.ZipFile != null)
                     {
-                        this._container.ZipFile.NotifyEntryChanged();
+                        this.containerField.ZipFile.NotifyEntryChanged();
                     }
-                    this._restreamRequiredOnSave = true;
+                    this.restreamRequiredOnSaveField = true;
                 }
             }
         }
@@ -4019,7 +4019,7 @@
         {
             get
             {
-                return this._Crc32;
+                return this.crc32Field;
             }
         }
 
@@ -4040,11 +4040,11 @@
         {
             get
             {
-                return this._Ctime;
+                return this.ctimeField;
             }
             set
             {
-                this.SetEntryTimes(value, this._Atime, this._Mtime);
+                this.SetEntryTimes(value, this.atimeField, this.mtimeField);
             }
         }
 
@@ -4121,12 +4121,12 @@
         {
             get
             {
-                return this._emitUnixTimes;
+                return this.emitUnixTimesField;
             }
             set
             {
-                this._emitUnixTimes = value;
-                this._metadataChanged = true;
+                this.emitUnixTimesField = value;
+                this.metadataChangedField = true;
             }
         }
 
@@ -4202,12 +4202,12 @@
         {
             get
             {
-                return this._emitNtfsTimes;
+                return this.emitNtfsTimesField;
             }
             set
             {
-                this._emitNtfsTimes = value;
-                this._metadataChanged = true;
+                this.emitNtfsTimesField = value;
+                this.metadataChangedField = true;
             }
         }
 
@@ -4360,21 +4360,21 @@
         {
             get
             {
-                return this._Encryption;
+                return this.encryptionField;
             }
             set
             {
-                if (value != this._Encryption)
+                if (value != this.encryptionField)
                 {
                     if (value == EncryptionAlgorithm.Unsupported)
                     {
                         throw new InvalidOperationException("You may not set Encryption to that value.");
                     }
-                    this._Encryption = value;
-                    this._restreamRequiredOnSave = true;
-                    if (this._container.ZipFile != null)
+                    this.encryptionField = value;
+                    this.restreamRequiredOnSaveField = true;
+                    if (this.containerField.ZipFile != null)
                     {
-                        this._container.ZipFile.NotifyEntryChanged();
+                        this.containerField.ZipFile.NotifyEntryChanged();
                     }
                 }
             }
@@ -4443,11 +4443,11 @@
         {
             get
             {
-                if (this.__FileDataPosition == -1L)
+                if (this.fileDataPositionField == -1L)
                 {
                     this.SetFdpLoh();
                 }
-                return this.__FileDataPosition;
+                return this.fileDataPositionField;
             }
         }
 
@@ -4526,11 +4526,11 @@
         {
             get
             {
-                return this._FileNameInArchive;
+                return this.fileNameInArchiveField;
             }
             set
             {
-                if (this._container.ZipFile == null)
+                if (this.containerField.ZipFile == null)
                 {
                     throw new ZipException("Cannot rename; this is not supported in ZipOutputStream/ZipInputStream.");
                 }
@@ -4539,13 +4539,13 @@
                     throw new ZipException("The FileName must be non empty and non-null.");
                 }
                 string name = NameInArchive(value, null);
-                if (!(this._FileNameInArchive == name))
+                if (!(this.fileNameInArchiveField == name))
                 {
-                    this._container.ZipFile.RemoveEntry(this);
-                    this._container.ZipFile.InternalAddEntry(name, this);
-                    this._FileNameInArchive = name;
-                    this._container.ZipFile.NotifyEntryChanged();
-                    this._metadataChanged = true;
+                    this.containerField.ZipFile.RemoveEntry(this);
+                    this.containerField.ZipFile.InternalAddEntry(name, this);
+                    this.fileNameInArchiveField = name;
+                    this.containerField.ZipFile.NotifyEntryChanged();
+                    this.metadataChangedField = true;
                 }
             }
         }
@@ -4562,7 +4562,7 @@
         {
             get
             {
-                return !this._skippedDuringSave;
+                return !this.skippedDuringSaveField;
             }
         }
 
@@ -4574,29 +4574,29 @@
             get
             {
                 StringBuilder builder = new StringBuilder();
-                builder.Append(string.Format(CultureInfo.InvariantCulture, "          ZipEntry: {0}\n", this.FileName)).Append(string.Format(CultureInfo.InvariantCulture, "   Version Made By: {0}\n", this._VersionMadeBy)).Append(string.Format(CultureInfo.InvariantCulture, " Needed to extract: {0}\n", this.VersionNeeded));
-                if (this._IsDirectory)
+                builder.Append(string.Format(CultureInfo.InvariantCulture, "          ZipEntry: {0}\n", this.FileName)).Append(string.Format(CultureInfo.InvariantCulture, "   Version Made By: {0}\n", this.versionMadeByField)).Append(string.Format(CultureInfo.InvariantCulture, " Needed to extract: {0}\n", this.VersionNeeded));
+                if (this.isDirectoryField)
                 {
                     builder.Append("        Entry type: directory\n");
                 }
                 else
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "         File type: {0}\n", this._IsText ? "text" : "binary")).Append(string.Format(CultureInfo.InvariantCulture, "       Compression: {0}\n", this.CompressionMethod)).Append(string.Format(CultureInfo.InvariantCulture, "        Compressed: 0x{0:X}\n", this.CompressedSize)).Append(string.Format(CultureInfo.InvariantCulture, "      Uncompressed: 0x{0:X}\n", this.UncompressedSize)).Append(string.Format(CultureInfo.InvariantCulture, "             CRC32: 0x{0:X8}\n", this._Crc32));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "         File type: {0}\n", this.isTextField ? "text" : "binary")).Append(string.Format(CultureInfo.InvariantCulture, "       Compression: {0}\n", this.CompressionMethod)).Append(string.Format(CultureInfo.InvariantCulture, "        Compressed: 0x{0:X}\n", this.CompressedSize)).Append(string.Format(CultureInfo.InvariantCulture, "      Uncompressed: 0x{0:X}\n", this.UncompressedSize)).Append(string.Format(CultureInfo.InvariantCulture, "             CRC32: 0x{0:X8}\n", this.crc32Field));
                 }
-                builder.Append(string.Format(CultureInfo.InvariantCulture, "       Disk Number: {0}\n", this._diskNumber));
-                if (this._RelativeOffsetOfLocalHeader > 0xffffffffL)
+                builder.Append(string.Format(CultureInfo.InvariantCulture, "       Disk Number: {0}\n", this.diskNumberField));
+                if (this.relativeOffsetOfLocalHeaderField > 0xffffffffL)
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "   Relative Offset: 0x{0:X16}\n", this._RelativeOffsetOfLocalHeader));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "   Relative Offset: 0x{0:X16}\n", this.relativeOffsetOfLocalHeaderField));
                 }
                 else
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "   Relative Offset: 0x{0:X8}\n", this._RelativeOffsetOfLocalHeader));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "   Relative Offset: 0x{0:X8}\n", this.relativeOffsetOfLocalHeaderField));
                 }
-                builder.Append(string.Format(CultureInfo.InvariantCulture, "         Bit Field: 0x{0:X4}\n", this._BitField)).Append(string.Format(CultureInfo.InvariantCulture, "        Encrypted?: {0}\n", this._sourceIsEncrypted)).Append(string.Format(CultureInfo.InvariantCulture, "          Timeblob: 0x{0:X8}\n", this._TimeBlob)).Append(string.Format(CultureInfo.InvariantCulture, "              Time: {0}\n", SharedUtilities.PackedToDateTime(this._TimeBlob)));
-                builder.Append(string.Format(CultureInfo.InvariantCulture, "         Is Zip64?: {0}\n", this._InputUsesZip64));
-                if (!string.IsNullOrEmpty(this._Comment))
+                builder.Append(string.Format(CultureInfo.InvariantCulture, "         Bit Field: 0x{0:X4}\n", this.bitFieldField)).Append(string.Format(CultureInfo.InvariantCulture, "        Encrypted?: {0}\n", this.sourceIsEncryptedField)).Append(string.Format(CultureInfo.InvariantCulture, "          Timeblob: 0x{0:X8}\n", this.timeBlobField)).Append(string.Format(CultureInfo.InvariantCulture, "              Time: {0}\n", SharedUtilities.PackedToDateTime(this.timeBlobField)));
+                builder.Append(string.Format(CultureInfo.InvariantCulture, "         Is Zip64?: {0}\n", this.inputUsesZip64Field));
+                if (!string.IsNullOrEmpty(this.commentField))
                 {
-                    builder.Append(string.Format(CultureInfo.InvariantCulture, "           Comment: {0}\n", this._Comment));
+                    builder.Append(string.Format(CultureInfo.InvariantCulture, "           Comment: {0}\n", this.commentField));
                 }
                 builder.Append("\n");
                 return builder.ToString();
@@ -4644,16 +4644,16 @@
         {
             get
             {
-                return this._sourceStream;
+                return this.sourceStreamField;
             }
             set
             {
-                if (this._Source != ZipEntrySource.Stream)
+                if (this.sourceField != ZipEntrySource.Stream)
                 {
                     throw new ZipException("You must not set the input stream for this entry.");
                 }
-                this._sourceWasJitProvided = true;
-                this._sourceStream = value;
+                this.sourceWasJitProvidedField = true;
+                this.sourceStreamField = value;
             }
         }
 
@@ -4692,7 +4692,7 @@
         {
             get
             {
-                return this._sourceWasJitProvided;
+                return this.sourceWasJitProvidedField;
             }
         }
 
@@ -4700,7 +4700,7 @@
         {
             get
             {
-                return (this._restreamRequiredOnSave | this._metadataChanged);
+                return (this.restreamRequiredOnSaveField | this.metadataChangedField);
             }
         }
 
@@ -4712,7 +4712,7 @@
         {
             get
             {
-                return this._IsDirectory;
+                return this.isDirectoryField;
             }
         }
 
@@ -4804,11 +4804,11 @@
         {
             get
             {
-                return this._IsText;
+                return this.isTextField;
             }
             set
             {
-                this._IsText = value;
+                this.isTextField = value;
             }
         }
 
@@ -4953,13 +4953,13 @@
         {
             get
             {
-                return this._LastModified.ToLocalTime();
+                return this.lastModifiedField.ToLocalTime();
             }
             set
             {
-                this._LastModified = (value.Kind == DateTimeKind.Unspecified) ? DateTime.SpecifyKind(value, DateTimeKind.Local) : value.ToLocalTime();
-                this._Mtime = SharedUtilities.AdjustTime_Reverse(this._LastModified).ToUniversalTime();
-                this._metadataChanged = true;
+                this.lastModifiedField = (value.Kind == DateTimeKind.Unspecified) ? DateTime.SpecifyKind(value, DateTimeKind.Local) : value.ToLocalTime();
+                this.mtimeField = SharedUtilities.AdjustTime_Reverse(this.lastModifiedField).ToUniversalTime();
+                this.metadataChangedField = true;
             }
         }
 
@@ -4967,11 +4967,11 @@
         {
             get
             {
-                if (this._LengthOfHeader == 0)
+                if (this.lengthOfHeaderField == 0)
                 {
                     this.SetFdpLoh();
                 }
-                return this._LengthOfHeader;
+                return this.lengthOfHeaderField;
             }
         }
 
@@ -5004,7 +5004,7 @@
         {
             get
             {
-                return this._LocalFileName;
+                return this.localFileNameField;
             }
         }
 
@@ -5156,11 +5156,11 @@
         {
             get
             {
-                return this._Mtime;
+                return this.mtimeField;
             }
             set
             {
-                this.SetEntryTimes(this._Ctime, this._Atime, value);
+                this.SetEntryTimes(this.ctimeField, this.atimeField, value);
             }
         }
 
@@ -5191,7 +5191,7 @@
         {
             get
             {
-                return this._OutputUsesZip64;
+                return this.outputUsesZip64Field;
             }
         }
 
@@ -5333,24 +5333,24 @@
         {
             private get
             {
-                return this._Password;
+                return this.passwordField;
             }
             set
             {
-                this._Password = value;
-                if (this._Password == null)
+                this.passwordField = value;
+                if (this.passwordField == null)
                 {
-                    this._Encryption = EncryptionAlgorithm.None;
+                    this.encryptionField = EncryptionAlgorithm.None;
                 }
                 else
                 {
-                    if (!((this._Source != ZipEntrySource.ZipFile) || this._sourceIsEncrypted))
+                    if (!((this.sourceField != ZipEntrySource.ZipFile) || this.sourceIsEncryptedField))
                     {
-                        this._restreamRequiredOnSave = true;
+                        this.restreamRequiredOnSaveField = true;
                     }
                     if (this.Encryption == EncryptionAlgorithm.None)
                     {
-                        this._Encryption = EncryptionAlgorithm.PkzipWeak;
+                        this.encryptionField = EncryptionAlgorithm.PkzipWeak;
                     }
                 }
             }
@@ -5400,7 +5400,7 @@
         {
             get
             {
-                return this._entryRequiresZip64;
+                return this.entryRequiresZip64Field;
             }
         }
 
@@ -5423,7 +5423,7 @@
         {
             get
             {
-                return this._Source;
+                return this.sourceField;
             }
         }
 
@@ -5442,7 +5442,7 @@
         {
             get
             {
-                return this._timestamp;
+                return this.timestampField;
             }
         }
 
@@ -5463,7 +5463,7 @@
         {
             get
             {
-                return this._UncompressedSize;
+                return this.uncompressedSizeField;
             }
         }
 
@@ -5471,7 +5471,7 @@
         {
             get
             {
-                switch (this._UnsupportedAlgorithmId)
+                switch (this.unsupportedAlgorithmIdField)
                 {
                     case 0x660e:
                         return "PKWare AES128";
@@ -5509,7 +5509,7 @@
                     case 0x6801:
                         return "RC4";
                 }
-                return string.Format(CultureInfo.InvariantCulture, "Unknown (0x{0:X4})", this._UnsupportedAlgorithmId);
+                return string.Format(CultureInfo.InvariantCulture, "Unknown (0x{0:X4})", this.unsupportedAlgorithmIdField);
             }
         }
 
@@ -5517,7 +5517,7 @@
         {
             get
             {
-                switch (this._CompressionMethod)
+                switch (this.compressionMethodField)
                 {
                     case 0x13:
                         return "LZ77";
@@ -5543,7 +5543,7 @@
                     case 14:
                         return "LZMA";
                 }
-                return string.Format(CultureInfo.InvariantCulture, "Unknown (0x{0:X4})", this._CompressionMethod);
+                return string.Format(CultureInfo.InvariantCulture, "Unknown (0x{0:X4})", this.compressionMethodField);
             }
         }
 
@@ -5565,7 +5565,7 @@
         {
             get
             {
-                return (this._Encryption_FromZipFile != EncryptionAlgorithm.None);
+                return (this.encryptionFromZipFileField != EncryptionAlgorithm.None);
             }
         }
 
@@ -5647,7 +5647,7 @@
         {
             get
             {
-                return this._VersionNeeded;
+                return this.versionNeededField;
             }
         }
 

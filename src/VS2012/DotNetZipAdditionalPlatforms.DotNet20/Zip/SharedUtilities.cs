@@ -15,9 +15,9 @@
     /// </summary>
     internal static class SharedUtilities
     {
-        private static Regex doubleDotRegex1 = new Regex(@"^(.*/)?([^/\\.]+/\\.\\./)(.+)$");
-        private static Encoding ibm437 = Encoding.GetEncoding("IBM437");
-        private static Encoding utf8 = Encoding.GetEncoding("UTF-8");
+        private static Regex doubleDotRegex1Field = new Regex(@"^(.*/)?([^/\\.]+/\\.\\./)(.+)$");
+        private static Encoding ibm437Field = Encoding.GetEncoding("IBM437");
+        private static Encoding utf8Field = Encoding.GetEncoding("UTF-8");
 
         private static uint _HRForException(Exception ex1)
         {
@@ -416,7 +416,7 @@
                 path = path.Substring(2);
             }
             path = path.Replace("/./", "/");
-            path = doubleDotRegex1.Replace(path, "$1$3");
+            path = doubleDotRegex1Field.Replace(path, "$1$3");
             return path;
         }
 
@@ -427,7 +427,7 @@
 
         internal static byte[] StringToByteArray(string value)
         {
-            return StringToByteArray(value, ibm437);
+            return StringToByteArray(value, ibm437Field);
         }
 
         internal static byte[] StringToByteArray(string value, Encoding encoding)
@@ -437,7 +437,7 @@
 
         internal static string Utf8StringFromBuffer(byte[] buf)
         {
-            return StringFromBuffer(buf, utf8);
+            return StringFromBuffer(buf, utf8Field);
         }
 
         [Conditional("NETCF")]

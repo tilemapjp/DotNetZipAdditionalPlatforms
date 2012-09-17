@@ -7,8 +7,8 @@
     /// </summary>
     public class ExtractProgressEventArgs : ZipProgressEventArgs
     {
-        private int _entriesExtracted;
-        private string _target;
+        private int entriesExtractedField;
+        private string targetField;
 
         internal ExtractProgressEventArgs()
         {
@@ -31,8 +31,8 @@
         {
             base.EntriesTotal = entriesTotal;
             base.CurrentEntry = entry;
-            this._entriesExtracted = entriesExtracted;
-            this._target = extractLocation;
+            this.entriesExtractedField = entriesExtracted;
+            this.targetField = extractLocation;
         }
 
         internal static ExtractProgressEventArgs AfterExtractEntry(string archiveName, ZipEntry entry, string extractLocation)
@@ -41,7 +41,7 @@
             args2.ArchiveName = archiveName;
             args2.EventType = ZipProgressEventType.Extracting_AfterExtractEntry;
             args2.CurrentEntry = entry;
-            args2._target = extractLocation;
+            args2.targetField = extractLocation;
             return args2;
         }
 
@@ -51,7 +51,7 @@
             args2.ArchiveName = archiveName;
             args2.EventType = ZipProgressEventType.Extracting_BeforeExtractEntry;
             args2.CurrentEntry = entry;
-            args2._target = extractLocation;
+            args2.targetField = extractLocation;
             return args2;
         }
 
@@ -68,14 +68,14 @@
         internal static ExtractProgressEventArgs ExtractAllCompleted(string archiveName, string extractLocation)
         {
             ExtractProgressEventArgs args = new ExtractProgressEventArgs(archiveName, ZipProgressEventType.Extracting_AfterExtractAll);
-            args._target = extractLocation;
+            args.targetField = extractLocation;
             return args;
         }
 
         internal static ExtractProgressEventArgs ExtractAllStarted(string archiveName, string extractLocation)
         {
             ExtractProgressEventArgs args = new ExtractProgressEventArgs(archiveName, ZipProgressEventType.Extracting_BeforeExtractAll);
-            args._target = extractLocation;
+            args.targetField = extractLocation;
             return args;
         }
 
@@ -85,7 +85,7 @@
             args2.ArchiveName = archiveName;
             args2.EventType = ZipProgressEventType.Extracting_ExtractEntryWouldOverwrite;
             args2.CurrentEntry = entry;
-            args2._target = extractLocation;
+            args2.targetField = extractLocation;
             return args2;
         }
 
@@ -98,7 +98,7 @@
         {
             get
             {
-                return this._entriesExtracted;
+                return this.entriesExtractedField;
             }
         }
 
@@ -109,7 +109,7 @@
         {
             get
             {
-                return this._target;
+                return this.targetField;
             }
         }
     }

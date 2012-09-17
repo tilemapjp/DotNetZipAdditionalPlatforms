@@ -23,8 +23,8 @@
     /// </remarks>
     internal class ZipCrypto
     {
-        private uint[] _Keys = new uint[] { 0x12345678, 0x23456789, 0x34567890 };
-        private CRC32 crc32 = new CRC32();
+        private uint[] keysField = new uint[] { 0x12345678, 0x23456789, 0x34567890 };
+        private CRC32 crc32Field = new CRC32();
 
         /// <summary>
         /// The default constructor for ZipCrypto.
@@ -118,9 +118,9 @@
 
         public static ZipCrypto ForRead(string password, ZipEntry e)
         {
-            Stream s = e._archiveStream;
-            e._WeakEncryptionHeader = new byte[12];
-            byte[] buffer = e._WeakEncryptionHeader;
+            Stream s = e.archiveStreamField;
+            e.weakEncryptionHeaderField = new byte[12];
+            byte[] buffer = e.weakEncryptionHeaderField;
             ZipCrypto crypto = new ZipCrypto();
             if (password == null)
             {
@@ -129,13 +129,13 @@
             crypto.InitCipher(password);
             ZipEntry.ReadWeakEncryptionHeader(s, buffer);
             byte[] buffer2 = crypto.DecryptMessage(buffer, buffer.Length);
-            if (buffer2[11] != ((byte) ((e._Crc32 >> 0x18) & 0xff)))
+            if (buffer2[11] != ((byte) ((e.crc32Field >> 0x18) & 0xff)))
             {
-                if ((e._BitField & 8) != 8)
+                if ((e.bitFieldField & 8) != 8)
                 {
                     throw new BadPasswordException("The password did not match.");
                 }
-                if (buffer2[11] != ((byte) ((e._TimeBlob >> 8) & 0xff)))
+                if (buffer2[11] != ((byte) ((e.timeBlobField >> 8) & 0xff)))
                 {
                     throw new BadPasswordException("The password did not match.");
                 }
@@ -215,10 +215,10 @@
 
         private void UpdateKeys(byte byteValue)
         {
-            this._Keys[0] = (uint) this.crc32.ComputeCrc32((int) this._Keys[0], byteValue);
-            this._Keys[1] += (byte) this._Keys[0];
-            this._Keys[1] = (this._Keys[1] * 0x8088405) + 1;
-            this._Keys[2] = (uint) this.crc32.ComputeCrc32((int) this._Keys[2], (byte) (this._Keys[1] >> 0x18));
+            this.keysField[0] = (uint) this.crc32Field.ComputeCrc32((int) this.keysField[0], byteValue);
+            this.keysField[1] += (byte) this.keysField[0];
+            this.keysField[1] = (this.keysField[1] * 0x8088405) + 1;
+            this.keysField[2] = (uint) this.crc32Field.ComputeCrc32((int) this.keysField[2], (byte) (this.keysField[1] >> 0x18));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@
         {
             get
             {
-                ushort num = (ushort) (((ushort) (this._Keys[2] & 0xffff)) | 2);
+                ushort num = (ushort) (((ushort) (this.keysField[2] & 0xffff)) | 2);
                 return (byte) ((num * (num ^ 1)) >> 8);
             }
         }

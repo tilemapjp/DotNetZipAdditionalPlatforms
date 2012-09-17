@@ -40,31 +40,31 @@
     /// <seealso cref="T:BZip2OutputStream" />
     public class ParallelBZip2OutputStream : Stream
     {
-        private int _maxWorkers;
-        private int blockSize100k;
+        private int maxWorkersField;
+        private int blockSize100kField;
         private const int BufferPairsPerCore = 4;
-        private BitWriter bw;
-        private uint combinedCRC;
-        private int currentlyFilling;
-        private TraceBits desiredTrace;
-        private object eLock;
-        private bool emitting;
-        private bool firstWriteDone;
-        private bool handlingException;
-        private int lastFilled;
-        private int lastWritten;
-        private int latestCompressed;
-        private object latestLock;
-        private bool leaveOpen;
-        private AutoResetEvent newlyCompressedBlob;
-        private Stream output;
-        private object outputLock;
-        private volatile Exception pendingException;
-        private List<WorkItem> pool;
-        private Queue<int> toFill;
-        private long totalBytesWrittenIn;
-        private long totalBytesWrittenOut;
-        private Queue<int> toWrite;
+        private BitWriter bitWriterField;
+        private uint combinedCrcField;
+        private int currentlyFillingField;
+        private TraceBits desiredTraceField;
+        private object lockObjectField;
+        private bool emittingField;
+        private bool firstWriteDoneField;
+        private bool handlingExceptionField;
+        private int lastFilledField;
+        private int lastWrittenField;
+        private int latestCompressedField;
+        private object latestLockField;
+        private bool leaveOpenField;
+        private AutoResetEvent newlyCompressedBlobField;
+        private Stream outputStreamField;
+        private object outputLockField;
+        private volatile Exception pendingExceptionField;
+        private List<WorkItem> poolField;
+        private Queue<int> queueToFillField;
+        private long totalBytesWrittenInField;
+        private long totalBytesWrittenOutField;
+        private Queue<int> queueToWriteField;
 
         /// <summary>
         /// Constructs a new <c>ParallelBZip2OutputStream</c>, that sends its
@@ -142,23 +142,23 @@
         /// </param>
         public ParallelBZip2OutputStream(Stream output, int blockSize, bool leaveOpen)
         {
-            this.latestLock = new object();
-            this.eLock = new object();
-            this.outputLock = new object();
-            this.desiredTrace = TraceBits.None | TraceBits.Crc | TraceBits.Write;
+            this.latestLockField = new object();
+            this.lockObjectField = new object();
+            this.outputLockField = new object();
+            this.desiredTraceField = TraceBits.None | TraceBits.Crc | TraceBits.Write;
             if ((blockSize < BZip2.MinBlockSize) || (blockSize > BZip2.MaxBlockSize))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "blockSize={0} is out of range; must be between {1} and {2}", blockSize, BZip2.MinBlockSize, BZip2.MaxBlockSize), "blockSize");
             }
-            this.output = output;
-            if (!this.output.CanWrite)
+            this.outputStreamField = output;
+            if (!this.outputStreamField.CanWrite)
             {
                 throw new ArgumentException("The stream is not writable.", "output");
             }
-            this.bw = new BitWriter(this.output);
-            this.blockSize100k = blockSize;
-            this.leaveOpen = leaveOpen;
-            this.combinedCRC = 0;
+            this.bitWriterField = new BitWriter(this.outputStreamField);
+            this.blockSize100kField = blockSize;
+            this.leaveOpenField = leaveOpen;
+            this.combinedCrcField = 0;
             this.MaxWorkers = 0x10;
             this.EmitHeader();
         }
@@ -174,26 +174,26 @@
         /// </remarks>
         public override void Close()
         {
-            if (this.pendingException != null)
+            if (this.pendingExceptionField != null)
             {
-                this.handlingException = true;
-                Exception pendingException = this.pendingException;
-                this.pendingException = null;
+                this.handlingExceptionField = true;
+                Exception pendingException = this.pendingExceptionField;
+                this.pendingExceptionField = null;
                 throw pendingException;
             }
-            if (!this.handlingException && (this.output != null))
+            if (!this.handlingExceptionField && (this.outputStreamField != null))
             {
-                Stream output = this.output;
+                Stream output = this.outputStreamField;
                 try
                 {
                     this.FlushOutput(true);
                 }
                 finally
                 {
-                    this.output = null;
-                    this.bw = null;
+                    this.outputStreamField = null;
+                    this.bitWriterField = null;
                 }
-                if (!this.leaveOpen)
+                if (!this.leaveOpenField)
                 {
                     output.Close();
                 }
@@ -207,26 +207,26 @@
             try
             {
                 item.Compressor.CompressAndWrite();
-                lock ((obj2 = this.latestLock))
+                lock ((obj2 = this.latestLockField))
                 {
-                    if (item.ordinal > this.latestCompressed)
+                    if (item.ordinalField > this.latestCompressedField)
                     {
-                        this.latestCompressed = item.ordinal;
+                        this.latestCompressedField = item.ordinalField;
                     }
                 }
-                lock (this.toWrite)
+                lock (this.queueToWriteField)
                 {
-                    this.toWrite.Enqueue(item.index);
+                    this.queueToWriteField.Enqueue(item.indexField);
                 }
-                this.newlyCompressedBlob.Set();
+                this.newlyCompressedBlobField.Set();
             }
             catch (Exception exception)
             {
-                lock ((obj2 = this.eLock))
+                lock ((obj2 = this.lockObjectField))
                 {
-                    if (this.pendingException != null)
+                    if (this.pendingExceptionField != null)
                     {
-                        this.pendingException = exception;
+                        this.pendingExceptionField = exception;
                     }
                 }
             }
@@ -235,19 +235,19 @@
         private void EmitHeader()
         {
             byte[] buffer2 = new byte[] { 0x42, 90, 0x68, 0 };
-            buffer2[3] = (byte) (0x30 + this.blockSize100k);
+            buffer2[3] = (byte) (0x30 + this.blockSize100kField);
             byte[] buffer = buffer2;
-            this.output.Write(buffer, 0, buffer.Length);
+            this.outputStreamField.Write(buffer, 0, buffer.Length);
         }
 
         private void EmitPendingBuffers(bool doAll, bool mustWait)
         {
-            if (!this.emitting)
+            if (!this.emittingField)
             {
-                this.emitting = true;
+                this.emittingField = true;
                 if (doAll || mustWait)
                 {
-                    this.newlyCompressedBlob.WaitOne();
+                    this.newlyCompressedBlobField.WaitOne();
                 }
                 do
                 {
@@ -256,32 +256,32 @@
                     int num3 = -1;
                     do
                     {
-                        if (Monitor.TryEnter(this.toWrite, millisecondsTimeout))
+                        if (Monitor.TryEnter(this.queueToWriteField, millisecondsTimeout))
                         {
                             num3 = -1;
                             try
                             {
-                                if (this.toWrite.Count > 0)
+                                if (this.queueToWriteField.Count > 0)
                                 {
-                                    num3 = this.toWrite.Dequeue();
+                                    num3 = this.queueToWriteField.Dequeue();
                                 }
                             }
                             finally
                             {
-                                Monitor.Exit(this.toWrite);
+                                Monitor.Exit(this.queueToWriteField);
                             }
                             if (num3 >= 0)
                             {
-                                WorkItem item = this.pool[num3];
-                                if (item.ordinal != (this.lastWritten + 1))
+                                WorkItem item = this.poolField[num3];
+                                if (item.ordinalField != (this.lastWrittenField + 1))
                                 {
-                                    lock (this.toWrite)
+                                    lock (this.queueToWriteField)
                                     {
-                                        this.toWrite.Enqueue(num3);
+                                        this.queueToWriteField.Enqueue(num3);
                                     }
                                     if (num == num3)
                                     {
-                                        this.newlyCompressedBlob.WaitOne();
+                                        this.newlyCompressedBlobField.WaitOne();
                                         num = -1;
                                     }
                                     else if (num == -1)
@@ -293,9 +293,9 @@
                                 {
                                     int num4;
                                     num = -1;
-                                    BitWriter bw = item.bw;
+                                    BitWriter bw = item.bitWriterField;
                                     bw.Flush();
-                                    MemoryStream ms = item.ms;
+                                    MemoryStream ms = item.memoryStreamField;
                                     ms.Seek(0L, SeekOrigin.Begin);
                                     int num5 = -1;
                                     long num6 = 0L;
@@ -305,21 +305,21 @@
                                         num5 = num4;
                                         for (int i = 0; i < num4; i++)
                                         {
-                                            this.bw.WriteByte(buffer[i]);
+                                            this.bitWriterField.WriteByte(buffer[i]);
                                         }
                                         num6 += num4;
                                     }
                                     if (bw.NumRemainingBits > 0)
                                     {
-                                        this.bw.WriteBits(bw.NumRemainingBits, bw.RemainingBits);
+                                        this.bitWriterField.WriteBits(bw.NumRemainingBits, bw.RemainingBits);
                                     }
-                                    this.combinedCRC = (this.combinedCRC << 1) | (this.combinedCRC >> 0x1f);
-                                    this.combinedCRC ^= item.Compressor.Crc32;
-                                    this.totalBytesWrittenOut += num6;
+                                    this.combinedCrcField = (this.combinedCrcField << 1) | (this.combinedCrcField >> 0x1f);
+                                    this.combinedCrcField ^= item.Compressor.Crc32;
+                                    this.totalBytesWrittenOutField += num6;
                                     bw.Reset();
-                                    this.lastWritten = item.ordinal;
-                                    item.ordinal = -1;
-                                    this.toFill.Enqueue(item.index);
+                                    this.lastWrittenField = item.ordinalField;
+                                    item.ordinalField = -1;
+                                    this.queueToFillField.Enqueue(item.indexField);
                                     if (millisecondsTimeout == -1)
                                     {
                                         millisecondsTimeout = 0;
@@ -334,24 +334,24 @@
                     }
                     while (num3 >= 0);
                 }
-                while (doAll && (this.lastWritten != this.latestCompressed));
+                while (doAll && (this.lastWrittenField != this.latestCompressedField));
                 if (doAll)
                 {
                 }
-                this.emitting = false;
+                this.emittingField = false;
             }
         }
 
         private void EmitTrailer()
         {
-            this.bw.WriteByte(0x17);
-            this.bw.WriteByte(0x72);
-            this.bw.WriteByte(0x45);
-            this.bw.WriteByte(0x38);
-            this.bw.WriteByte(80);
-            this.bw.WriteByte(0x90);
-            this.bw.WriteInt(this.combinedCRC);
-            this.bw.FinishAndPad();
+            this.bitWriterField.WriteByte(0x17);
+            this.bitWriterField.WriteByte(0x72);
+            this.bitWriterField.WriteByte(0x45);
+            this.bitWriterField.WriteByte(0x38);
+            this.bitWriterField.WriteByte(80);
+            this.bitWriterField.WriteByte(0x90);
+            this.bitWriterField.WriteInt(this.combinedCrcField);
+            this.bitWriterField.FinishAndPad();
         }
 
         /// <summary>
@@ -359,23 +359,23 @@
         /// </summary>
         public override void Flush()
         {
-            if (this.output != null)
+            if (this.outputStreamField != null)
             {
                 this.FlushOutput(false);
-                this.bw.Flush();
-                this.output.Flush();
+                this.bitWriterField.Flush();
+                this.outputStreamField.Flush();
             }
         }
 
         private void FlushOutput(bool lastInput)
         {
-            if (!this.emitting)
+            if (!this.emittingField)
             {
-                if (this.currentlyFilling >= 0)
+                if (this.currentlyFillingField >= 0)
                 {
-                    WorkItem wi = this.pool[this.currentlyFilling];
+                    WorkItem wi = this.poolField[this.currentlyFillingField];
                     this.CompressOne(wi);
-                    this.currentlyFilling = -1;
+                    this.currentlyFillingField = -1;
                 }
                 if (lastInput)
                 {
@@ -391,21 +391,21 @@
 
         private void InitializePoolOfWorkItems()
         {
-            this.toWrite = new Queue<int>();
-            this.toFill = new Queue<int>();
-            this.pool = new List<WorkItem>();
+            this.queueToWriteField = new Queue<int>();
+            this.queueToFillField = new Queue<int>();
+            this.poolField = new List<WorkItem>();
             int num = BufferPairsPerCore * Environment.ProcessorCount;
             num = Math.Min(num, this.MaxWorkers);
             for (int i = 0; i < num; i++)
             {
-                this.pool.Add(new WorkItem(i, this.blockSize100k));
-                this.toFill.Enqueue(i);
+                this.poolField.Add(new WorkItem(i, this.blockSize100kField));
+                this.queueToFillField.Enqueue(i);
             }
-            this.newlyCompressedBlob = new AutoResetEvent(false);
-            this.currentlyFilling = -1;
-            this.lastFilled = -1;
-            this.lastWritten = -1;
-            this.latestCompressed = -1;
+            this.newlyCompressedBlobField = new AutoResetEvent(false);
+            this.currentlyFillingField = -1;
+            this.lastFilledField = -1;
+            this.lastWrittenField = -1;
+            this.latestCompressedField = -1;
         }
 
         /// <summary>
@@ -443,9 +443,9 @@
         [Conditional("Trace")]
         private void TraceOutput(TraceBits bits, string format, params object[] varParams)
         {
-            if ((bits & this.desiredTrace) != TraceBits.None)
+            if ((bits & this.desiredTraceField) != TraceBits.None)
             {
-                lock (this.outputLock)
+                lock (this.outputLockField)
                 {
                     int hashCode = Thread.CurrentThread.GetHashCode();
                     Console.ForegroundColor = (ConsoleColor) ((hashCode % 8) + 10);
@@ -483,15 +483,15 @@
         public override void Write(byte[] buffer, int offset, int count)
         {
             bool mustWait = false;
-            if (this.output == null)
+            if (this.outputStreamField == null)
             {
                 throw new IOException("the stream is not open");
             }
-            if (this.pendingException != null)
+            if (this.pendingExceptionField != null)
             {
-                this.handlingException = true;
-                Exception pendingException = this.pendingException;
-                this.pendingException = null;
+                this.handlingExceptionField = true;
+                Exception pendingException = this.pendingExceptionField;
+                this.pendingExceptionField = null;
                 throw pendingException;
             }
             if (offset < 0)
@@ -510,10 +510,10 @@
             {
                 return;
             }
-            if (!this.firstWriteDone)
+            if (!this.firstWriteDoneField)
             {
                 this.InitializePoolOfWorkItems();
-                this.firstWriteDone = true;
+                this.firstWriteDoneField = true;
             }
             int num = 0;
             int num2 = count;
@@ -521,22 +521,22 @@
             this.EmitPendingBuffers(false, mustWait);
             mustWait = false;
             int currentlyFilling = -1;
-            if (this.currentlyFilling >= 0)
+            if (this.currentlyFillingField >= 0)
             {
-                currentlyFilling = this.currentlyFilling;
+                currentlyFilling = this.currentlyFillingField;
             }
             else
             {
-                if (this.toFill.Count == 0)
+                if (this.queueToFillField.Count == 0)
                 {
                     mustWait = true;
                     goto Label_01E0;
                 }
-                currentlyFilling = this.toFill.Dequeue();
-                this.lastFilled++;
+                currentlyFilling = this.queueToFillField.Dequeue();
+                this.lastFilledField++;
             }
-            WorkItem state = this.pool[currentlyFilling];
-            state.ordinal = this.lastFilled;
+            WorkItem state = this.poolField[currentlyFilling];
+            state.ordinalField = this.lastFilledField;
             int num4 = state.Compressor.Fill(buffer, offset, num2);
             if (num4 != num2)
             {
@@ -544,12 +544,12 @@
                 {
                     throw new Exception("Cannot enqueue workitem");
                 }
-                this.currentlyFilling = -1;
+                this.currentlyFillingField = -1;
                 offset += num4;
             }
             else
             {
-                this.currentlyFilling = currentlyFilling;
+                this.currentlyFillingField = currentlyFilling;
             }
             num2 -= num4;
             num += num4;
@@ -558,7 +558,7 @@
             {
                 goto Label_00FA;
             }
-            this.totalBytesWrittenIn += num;
+            this.totalBytesWrittenInField += num;
         }
 
         /// <summary>
@@ -568,7 +568,7 @@
         {
             get
             {
-                return this.blockSize100k;
+                return this.blockSize100kField;
             }
         }
 
@@ -582,7 +582,7 @@
         {
             get
             {
-                return this.totalBytesWrittenOut;
+                return this.totalBytesWrittenOutField;
             }
         }
 
@@ -624,11 +624,11 @@
         {
             get
             {
-                if (this.output == null)
+                if (this.outputStreamField == null)
                 {
                     throw new ObjectDisposedException("BZip2Stream");
                 }
-                return this.output.CanWrite;
+                return this.outputStreamField.CanWrite;
             }
         }
 
@@ -708,7 +708,7 @@
         {
             get
             {
-                return this._maxWorkers;
+                return this.maxWorkersField;
             }
             set
             {
@@ -716,7 +716,7 @@
                 {
                     throw new ArgumentException("MaxWorkers", "Value must be 4 or greater.");
                 }
-                this._maxWorkers = value;
+                this.maxWorkersField = value;
             }
         }
 
@@ -732,7 +732,7 @@
         {
             get
             {
-                return this.totalBytesWrittenIn;
+                return this.totalBytesWrittenInField;
             }
             set
             {

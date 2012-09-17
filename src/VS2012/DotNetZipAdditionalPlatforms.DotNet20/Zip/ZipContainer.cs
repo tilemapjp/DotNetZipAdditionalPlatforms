@@ -7,28 +7,28 @@
 
     internal class ZipContainer
     {
-        private ZipFile _zf;
-        private ZipInputStream _zis;
-        private ZipOutputStream _zos;
+        private ZipFile zipFileField;
+        private ZipInputStream zipInputStreamField;
+        private ZipOutputStream zipOutputStreamField;
 
         public ZipContainer(object o)
         {
-            this._zf = o as ZipFile;
-            this._zos = o as ZipOutputStream;
-            this._zis = o as ZipInputStream;
+            this.zipFileField = o as ZipFile;
+            this.zipOutputStreamField = o as ZipOutputStream;
+            this.zipInputStreamField = o as ZipInputStream;
         }
 
         public Encoding AlternateEncoding
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.AlternateEncoding;
+                    return this.zipFileField.AlternateEncoding;
                 }
-                if (this._zos != null)
+                if (this.zipOutputStreamField != null)
                 {
-                    return this._zos.AlternateEncoding;
+                    return this.zipOutputStreamField.AlternateEncoding;
                 }
                 return null;
             }
@@ -38,13 +38,13 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.AlternateEncodingUsage;
+                    return this.zipFileField.AlternateEncodingUsage;
                 }
-                if (this._zos != null)
+                if (this.zipOutputStreamField != null)
                 {
-                    return this._zos.AlternateEncodingUsage;
+                    return this.zipOutputStreamField.AlternateEncodingUsage;
                 }
                 return ZipOption.Default;
             }
@@ -54,11 +54,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.BufferSize;
+                    return this.zipFileField.BufferSize;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
                     throw new NotSupportedException();
                 }
@@ -70,15 +70,15 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.CodecBufferSize;
+                    return this.zipFileField.CodecBufferSize;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
-                    return this._zis.CodecBufferSize;
+                    return this.zipInputStreamField.CodecBufferSize;
                 }
-                return this._zos.CodecBufferSize;
+                return this.zipOutputStreamField.CodecBufferSize;
             }
         }
 
@@ -86,11 +86,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
                     return ZipFile.DefaultEncoding;
                 }
-                if (this._zos != null)
+                if (this.zipOutputStreamField != null)
                 {
                     return ZipOutputStream.DefaultEncoding;
                 }
@@ -102,15 +102,15 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.Name;
+                    return this.zipFileField.Name;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
                     throw new NotSupportedException();
                 }
-                return this._zos.Name;
+                return this.zipOutputStreamField.Name;
             }
         }
 
@@ -118,11 +118,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.ParallelDeflateMaxBufferPairs;
+                    return this.zipFileField.ParallelDeflateMaxBufferPairs;
                 }
-                return this._zos.ParallelDeflateMaxBufferPairs;
+                return this.zipOutputStreamField.ParallelDeflateMaxBufferPairs;
             }
         }
 
@@ -130,25 +130,25 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.ParallelDeflater;
+                    return this.zipFileField.parallelDeflaterField;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
                     return null;
                 }
-                return this._zos.ParallelDeflater;
+                return this.zipOutputStreamField.parallelDeflaterField;
             }
             set
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    this._zf.ParallelDeflater = value;
+                    this.zipFileField.parallelDeflaterField = value;
                 }
-                else if (this._zos != null)
+                else if (this.zipOutputStreamField != null)
                 {
-                    this._zos.ParallelDeflater = value;
+                    this.zipOutputStreamField.parallelDeflaterField = value;
                 }
             }
         }
@@ -157,11 +157,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.ParallelDeflateThreshold;
+                    return this.zipFileField.ParallelDeflateThreshold;
                 }
-                return this._zos.ParallelDeflateThreshold;
+                return this.zipOutputStreamField.ParallelDeflateThreshold;
             }
         }
 
@@ -169,15 +169,15 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf._Password;
+                    return this.zipFileField.passwordField;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
-                    return this._zis._Password;
+                    return this.zipInputStreamField.passwordField;
                 }
-                return this._zos._password;
+                return this.zipOutputStreamField.passwordField;
             }
         }
 
@@ -185,11 +185,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.ReadStream;
+                    return this.zipFileField.ReadStream;
                 }
-                return this._zis.ReadStream;
+                return this.zipInputStreamField.ReadStream;
             }
         }
 
@@ -197,11 +197,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.Strategy;
+                    return this.zipFileField.Strategy;
                 }
-                return this._zos.Strategy;
+                return this.zipOutputStreamField.Strategy;
             }
         }
 
@@ -209,11 +209,11 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf.UseZip64WhenSaving;
+                    return this.zipFileField.UseZip64WhenSaving;
                 }
-                return this._zos.EnableZip64;
+                return this.zipOutputStreamField.EnableZip64;
             }
         }
 
@@ -221,15 +221,15 @@
         {
             get
             {
-                if (this._zf != null)
+                if (this.zipFileField != null)
                 {
-                    return this._zf._zip64;
+                    return this.zipFileField.zip64Field;
                 }
-                if (this._zis != null)
+                if (this.zipInputStreamField != null)
                 {
                     throw new NotSupportedException();
                 }
-                return this._zos._zip64;
+                return this.zipOutputStreamField.zip64Field;
             }
         }
 
@@ -237,7 +237,7 @@
         {
             get
             {
-                return this._zf;
+                return this.zipFileField;
             }
         }
 
@@ -245,7 +245,7 @@
         {
             get
             {
-                return this._zos;
+                return this.zipOutputStreamField;
             }
         }
     }

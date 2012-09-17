@@ -7,16 +7,16 @@
 
     internal class ZipSegmentedStream : Stream
     {
-        private string _baseDir;
-        private string _baseName;
-        private uint _currentDiskNumber;
-        private string _currentName;
-        private string _currentTempName;
-        private bool _exceptionPending = false;
-        private Stream _innerStream;
-        private uint _maxDiskNumber;
-        private int _maxSegmentSize;
-        private RwMode rwMode;
+        private string baseDirField;
+        private string baseNameField;
+        private uint currentDiskNumberField;
+        private string currentNameField;
+        private string currentTempNameField;
+        private bool exceptionPendingField = false;
+        private Stream innerStreamField;
+        private uint maxDiskNumberField;
+        private int maxSegmentSizeField;
+        private RwMode rwModeField;
 
         private ZipSegmentedStream()
         {
@@ -26,50 +26,50 @@
         {
             if (diskNumber >= 0x63)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new OverflowException("The number of zip segments would exceed 99.");
             }
-            return string.Format(CultureInfo.InvariantCulture, "{0}.z{1:D2}", Path.Combine(Path.GetDirectoryName(this._baseName), Path.GetFileNameWithoutExtension(this._baseName)), diskNumber + 1);
+            return string.Format(CultureInfo.InvariantCulture, "{0}.z{1:D2}", Path.Combine(Path.GetDirectoryName(this.baseNameField), Path.GetFileNameWithoutExtension(this.baseNameField)), diskNumber + 1);
         }
 
         private void _SetReadStream()
         {
-            if (this._innerStream != null)
+            if (this.innerStreamField != null)
             {
-                this._innerStream.Dispose();
+                this.innerStreamField.Dispose();
             }
-            if ((this.CurrentSegment + 1) == this._maxDiskNumber)
+            if ((this.CurrentSegment + 1) == this.maxDiskNumberField)
             {
-                this._currentName = this._baseName;
+                this.currentNameField = this.baseNameField;
             }
-            this._innerStream = File.OpenRead(this.CurrentName);
+            this.innerStreamField = File.OpenRead(this.CurrentName);
         }
 
         private void _SetWriteStream(uint increment)
         {
-            if (this._innerStream != null)
+            if (this.innerStreamField != null)
             {
-                this._innerStream.Dispose();
+                this.innerStreamField.Dispose();
                 if (File.Exists(this.CurrentName))
                 {
                     File.Delete(this.CurrentName);
                 }
-                File.Move(this._currentTempName, this.CurrentName);
+                File.Move(this.currentTempNameField, this.CurrentName);
             }
             if (increment > 0)
             {
                 this.CurrentSegment += increment;
             }
-            SharedUtilities.CreateAndOpenUniqueTempFile(this._baseDir, out this._innerStream, out this._currentTempName);
+            SharedUtilities.CreateAndOpenUniqueTempFile(this.baseDirField, out this.innerStreamField, out this.currentTempNameField);
             if (this.CurrentSegment == 0)
             {
-                this._innerStream.Write(BitConverter.GetBytes(0x8074b50), 0, 4);
+                this.innerStreamField.Write(BitConverter.GetBytes(0x8074b50), 0, 4);
             }
         }
 
         public uint ComputeSegment(int length)
         {
-            if ((this._innerStream.Position + length) > this._maxSegmentSize)
+            if ((this.innerStreamField.Position + length) > this.maxSegmentSizeField)
             {
                 return (this.CurrentSegment + 1);
             }
@@ -80,10 +80,10 @@
         {
             try
             {
-                if (this._innerStream != null)
+                if (this.innerStreamField != null)
                 {
-                    this._innerStream.Dispose();
-                    if ((this.rwMode == RwMode.Write) && this._exceptionPending)
+                    this.innerStreamField.Dispose();
+                    if ((this.rwModeField == RwMode.Write) && this.exceptionPendingField)
                     {
                     }
                 }
@@ -96,16 +96,16 @@
 
         public override void Flush()
         {
-            this._innerStream.Flush();
+            this.innerStreamField.Flush();
         }
 
         public static ZipSegmentedStream ForReading(string name, uint initialDiskNumber, uint maxDiskNumber)
         {
             ZipSegmentedStream stream2 = new ZipSegmentedStream();
-            stream2.rwMode = RwMode.ReadOnly;
+            stream2.rwModeField = RwMode.ReadOnly;
             stream2.CurrentSegment = initialDiskNumber;
-            stream2._maxDiskNumber = maxDiskNumber;
-            stream2._baseName = name;
+            stream2.maxDiskNumberField = maxDiskNumber;
+            stream2.baseNameField = name;
             ZipSegmentedStream stream = stream2;
             stream._SetReadStream();
             return stream;
@@ -141,15 +141,15 @@
         public static ZipSegmentedStream ForWriting(string name, int maxSegmentSize)
         {
             ZipSegmentedStream stream2 = new ZipSegmentedStream();
-            stream2.rwMode = RwMode.Write;
+            stream2.rwModeField = RwMode.Write;
             stream2.CurrentSegment = 0;
-            stream2._baseName = name;
-            stream2._maxSegmentSize = maxSegmentSize;
-            stream2._baseDir = Path.GetDirectoryName(name);
+            stream2.baseNameField = name;
+            stream2.maxSegmentSizeField = maxSegmentSize;
+            stream2.baseDirField = Path.GetDirectoryName(name);
             ZipSegmentedStream stream = stream2;
-            if (stream._baseDir == "")
+            if (stream.baseDirField == "")
             {
-                stream._baseDir = ".";
+                stream.baseDirField = ".";
             }
             stream._SetWriteStream(0);
             return stream;
@@ -164,21 +164,21 @@
         /// <returns>the number of bytes actually read</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (this.rwMode != RwMode.ReadOnly)
+            if (this.rwModeField != RwMode.ReadOnly)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("Stream Error: Cannot Read.");
             }
-            int num = this._innerStream.Read(buffer, offset, count);
+            int num = this.innerStreamField.Read(buffer, offset, count);
             int num2 = num;
             while (num2 != count)
             {
-                if (this._innerStream.Position != this._innerStream.Length)
+                if (this.innerStreamField.Position != this.innerStreamField.Length)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new ZipException(string.Format(CultureInfo.InvariantCulture, "Read error in file {0}", this.CurrentName));
                 }
-                if ((this.CurrentSegment + 1) == this._maxDiskNumber)
+                if ((this.CurrentSegment + 1) == this.maxDiskNumberField)
                 {
                     return num;
                 }
@@ -186,7 +186,7 @@
                 this._SetReadStream();
                 offset += num2;
                 count -= num2;
-                num2 = this._innerStream.Read(buffer, offset, count);
+                num2 = this.innerStreamField.Read(buffer, offset, count);
                 num += num2;
             }
             return num;
@@ -194,22 +194,22 @@
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return this._innerStream.Seek(offset, origin);
+            return this.innerStreamField.Seek(offset, origin);
         }
 
         public override void SetLength(long value)
         {
-            if (this.rwMode != RwMode.Write)
+            if (this.rwModeField != RwMode.Write)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException();
             }
-            this._innerStream.SetLength(value);
+            this.innerStreamField.SetLength(value);
         }
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}[{1}][{2}], pos=0x{3:X})", new object[] { "ZipSegmentedStream", this.CurrentName, this.rwMode.ToString(), this.Position });
+            return string.Format(CultureInfo.InvariantCulture, "{0}[{1}][{2}], pos=0x{3:X})", new object[] { "ZipSegmentedStream", this.CurrentName, this.rwModeField.ToString(), this.Position });
         }
 
         public long TruncateBackward(uint diskNumber, long offset)
@@ -218,19 +218,19 @@
             {
                 throw new ArgumentOutOfRangeException("diskNumber");
             }
-            if (this.rwMode != RwMode.Write)
+            if (this.rwModeField != RwMode.Write)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new ZipException("bad state.");
             }
             if (diskNumber != this.CurrentSegment)
             {
-                if (this._innerStream != null)
+                if (this.innerStreamField != null)
                 {
-                    this._innerStream.Dispose();
-                    if (File.Exists(this._currentTempName))
+                    this.innerStreamField.Dispose();
+                    if (File.Exists(this.currentTempNameField))
                     {
-                        File.Delete(this._currentTempName);
+                        File.Delete(this.currentTempNameField);
                     }
                 }
                 for (uint i = this.CurrentSegment - 1; i > diskNumber; i--)
@@ -246,8 +246,8 @@
                 {
                     try
                     {
-                        this._currentTempName = SharedUtilities.InternalGetTempFileName();
-                        File.Move(this.CurrentName, this._currentTempName);
+                        this.currentTempNameField = SharedUtilities.InternalGetTempFileName();
+                        File.Move(this.CurrentName, this.currentTempNameField);
                         break;
                     }
                     catch (IOException)
@@ -258,9 +258,9 @@
                         }
                     }
                 }
-                this._innerStream = new FileStream(this._currentTempName, FileMode.Open);
+                this.innerStreamField = new FileStream(this.currentTempNameField, FileMode.Open);
             }
-            return this._innerStream.Seek(offset, SeekOrigin.Begin);
+            return this.innerStreamField.Seek(offset, SeekOrigin.Begin);
         }
 
         /// <summary>
@@ -271,34 +271,34 @@
         /// <param name="count">the number of bytes to write</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (this.rwMode != RwMode.Write)
+            if (this.rwModeField != RwMode.Write)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("Stream Error: Cannot Write.");
             }
             if (!this.ContiguousWrite)
             {
-                while ((this._innerStream.Position + count) > this._maxSegmentSize)
+                while ((this.innerStreamField.Position + count) > this.maxSegmentSizeField)
                 {
-                    int num = this._maxSegmentSize - ((int) this._innerStream.Position);
-                    this._innerStream.Write(buffer, offset, num);
+                    int num = this.maxSegmentSizeField - ((int) this.innerStreamField.Position);
+                    this.innerStreamField.Write(buffer, offset, num);
                     this._SetWriteStream(1);
                     count -= num;
                     offset += num;
                 }
             }
-            else if ((this._innerStream.Position + count) > this._maxSegmentSize)
+            else if ((this.innerStreamField.Position + count) > this.maxSegmentSizeField)
             {
                 this._SetWriteStream(1);
             }
-            this._innerStream.Write(buffer, offset, count);
+            this.innerStreamField.Write(buffer, offset, count);
         }
 
         public override bool CanRead
         {
             get
             {
-                return (((this.rwMode == RwMode.ReadOnly) && (this._innerStream != null)) && this._innerStream.CanRead);
+                return (((this.rwModeField == RwMode.ReadOnly) && (this.innerStreamField != null)) && this.innerStreamField.CanRead);
             }
         }
 
@@ -306,7 +306,7 @@
         {
             get
             {
-                return ((this._innerStream != null) && this._innerStream.CanSeek);
+                return ((this.innerStreamField != null) && this.innerStreamField.CanSeek);
             }
         }
 
@@ -314,7 +314,7 @@
         {
             get
             {
-                return (((this.rwMode == RwMode.Write) && (this._innerStream != null)) && this._innerStream.CanWrite);
+                return (((this.rwModeField == RwMode.Write) && (this.innerStreamField != null)) && this.innerStreamField.CanWrite);
             }
         }
 
@@ -335,11 +335,11 @@
         {
             get
             {
-                if (this._currentName == null)
+                if (this.currentNameField == null)
                 {
-                    this._currentName = this._NameForSegment(this.CurrentSegment);
+                    this.currentNameField = this._NameForSegment(this.CurrentSegment);
                 }
-                return this._currentName;
+                return this.currentNameField;
             }
         }
 
@@ -347,12 +347,12 @@
         {
             get
             {
-                return this._currentDiskNumber;
+                return this.currentDiskNumberField;
             }
             private set
             {
-                this._currentDiskNumber = value;
-                this._currentName = null;
+                this.currentDiskNumberField = value;
+                this.currentNameField = null;
             }
         }
 
@@ -360,7 +360,7 @@
         {
             get
             {
-                return this._currentTempName;
+                return this.currentTempNameField;
             }
         }
 
@@ -368,7 +368,7 @@
         {
             get
             {
-                return this._innerStream.Length;
+                return this.innerStreamField.Length;
             }
         }
 
@@ -376,11 +376,11 @@
         {
             get
             {
-                return this._innerStream.Position;
+                return this.innerStreamField.Position;
             }
             set
             {
-                this._innerStream.Position = value;
+                this.innerStreamField.Position = value;
             }
         }
 

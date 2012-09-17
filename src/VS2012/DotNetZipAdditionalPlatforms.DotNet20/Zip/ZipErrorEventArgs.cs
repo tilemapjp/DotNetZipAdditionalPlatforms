@@ -7,7 +7,7 @@
     /// </summary>
     public class ZipErrorEventArgs : ZipProgressEventArgs
     {
-        private Exception _exc;
+        private Exception exceptionField;
 
         private ZipErrorEventArgs()
         {
@@ -19,7 +19,7 @@
             args2.EventType = ZipProgressEventType.Error_Saving;
             args2.ArchiveName = archiveName;
             args2.CurrentEntry = entry;
-            args2._exc = exception;
+            args2.exceptionField = exception;
             return args2;
         }
 
@@ -30,7 +30,7 @@
         {
             get
             {
-                return this._exc;
+                return this.exceptionField;
             }
         }
 

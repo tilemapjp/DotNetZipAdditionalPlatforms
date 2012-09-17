@@ -73,21 +73,21 @@
     /// </remarks>
     public class ZipInputStream : Stream
     {
-        private bool _closed;
-        private ZipContainer _container;
-        private CrcCalculatorStream _crcStream;
-        private ZipEntry _currentEntry;
-        private long _endOfEntry;
-        private bool _exceptionPending;
-        private bool _findRequired;
-        private bool _firstEntry;
-        private Stream _inputStream;
-        private bool _leaveUnderlyingStreamOpen;
-        private long _LeftToRead;
-        private string _name;
-        private bool _needSetup;
-        internal string _Password;
-        private Encoding _provisionalAlternateEncoding;
+        private bool closedField;
+        private ZipContainer containerField;
+        private CrcCalculatorStream crcStreamField;
+        private ZipEntry currentEntryField;
+        private long endOfEntryField;
+        private bool exceptionPendingField;
+        private bool findRequiredField;
+        private bool firstEntryField;
+        private Stream inputStreamField;
+        private bool leaveUnderlyingStreamOpenField;
+        private long leftToReadField;
+        private string nameField;
+        private bool needSetupField;
+        internal string passwordField;
+        private Encoding provisionalAlternateEncodingField;
 
         /// <summary>
         /// Create a <c>ZipInputStream</c>, wrapping it around an existing stream.
@@ -321,16 +321,16 @@
 
         private void _Init(Stream stream, bool leaveOpen, string name)
         {
-            this._inputStream = stream;
-            if (!this._inputStream.CanRead)
+            this.inputStreamField = stream;
+            if (!this.inputStreamField.CanRead)
             {
                 throw new ZipException("The stream must be readable.");
             }
-            this._container = new ZipContainer(this);
-            this._provisionalAlternateEncoding = Encoding.GetEncoding("IBM437");
-            this._leaveUnderlyingStreamOpen = leaveOpen;
-            this._findRequired = true;
-            this._name = name ?? "(stream)";
+            this.containerField = new ZipContainer(this);
+            this.provisionalAlternateEncodingField = Encoding.GetEncoding("IBM437");
+            this.leaveUnderlyingStreamOpenField = leaveOpen;
+            this.findRequiredField = true;
+            this.nameField = name ?? "(stream)";
         }
 
         /// <summary>
@@ -366,20 +366,20 @@
         /// </param>
         protected override void Dispose(bool disposing)
         {
-            if (!this._closed)
+            if (!this.closedField)
             {
                 if (disposing)
                 {
-                    if (this._exceptionPending)
+                    if (this.exceptionPendingField)
                     {
                         return;
                     }
-                    if (!this._leaveUnderlyingStreamOpen)
+                    if (!this.leaveUnderlyingStreamOpenField)
                     {
-                        this._inputStream.Dispose();
+                        this.inputStreamField.Dispose();
                     }
                 }
-                this._closed = true;
+                this.closedField = true;
             }
         }
 
@@ -425,24 +425,24 @@
         /// </returns>
         public ZipEntry GetNextEntry()
         {
-            if (this._findRequired)
+            if (this.findRequiredField)
             {
-                if (SharedUtilities.FindSignature(this._inputStream, 0x4034b50) == -1L)
+                if (SharedUtilities.FindSignature(this.inputStreamField, 0x4034b50) == -1L)
                 {
                     return null;
                 }
-                this._inputStream.Seek(-4L, SeekOrigin.Current);
+                this.inputStreamField.Seek(-4L, SeekOrigin.Current);
             }
-            else if (this._firstEntry)
+            else if (this.firstEntryField)
             {
-                this._inputStream.Seek(this._endOfEntry, SeekOrigin.Begin);
+                this.inputStreamField.Seek(this.endOfEntryField, SeekOrigin.Begin);
             }
-            this._currentEntry = ZipEntry.ReadEntry(this._container, !this._firstEntry);
-            this._endOfEntry = this._inputStream.Position;
-            this._firstEntry = true;
-            this._needSetup = true;
-            this._findRequired = false;
-            return this._currentEntry;
+            this.currentEntryField = ZipEntry.ReadEntry(this.containerField, !this.firstEntryField);
+            this.endOfEntryField = this.inputStreamField.Position;
+            this.firstEntryField = true;
+            this.needSetupField = true;
+            this.findRequiredField = false;
+            return this.currentEntryField;
         }
 
         /// <summary>
@@ -468,27 +468,27 @@
         /// <returns>the number of bytes read, after decryption and decompression.</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (this._closed)
+            if (this.closedField)
             {
-                this._exceptionPending = true;
+                this.exceptionPendingField = true;
                 throw new InvalidOperationException("The stream has been closed.");
             }
-            if (this._needSetup)
+            if (this.needSetupField)
             {
                 this.SetupStream();
             }
-            if (this._LeftToRead == 0L)
+            if (this.leftToReadField == 0L)
             {
                 return 0;
             }
-            int num = (this._LeftToRead > count) ? count : ((int) this._LeftToRead);
-            int num2 = this._crcStream.Read(buffer, offset, num);
-            this._LeftToRead -= num2;
-            if (this._LeftToRead == 0L)
+            int num = (this.leftToReadField > count) ? count : ((int) this.leftToReadField);
+            int num2 = this.crcStreamField.Read(buffer, offset, num);
+            this.leftToReadField -= num2;
+            if (this.leftToReadField == 0L)
             {
-                int crc = this._crcStream.Crc;
-                this._currentEntry.VerifyCrcAfterExtract(crc);
-                this._inputStream.Seek(this._endOfEntry, SeekOrigin.Begin);
+                int crc = this.crcStreamField.Crc;
+                this.currentEntryField.VerifyCrcAfterExtract(crc);
+                this.inputStreamField.Seek(this.endOfEntryField, SeekOrigin.Begin);
             }
             return num2;
         }
@@ -516,8 +516,8 @@
         /// <returns>The new position</returns>
         public override long Seek(long offset, SeekOrigin origin)
         {
-            this._findRequired = true;
-            return this._inputStream.Seek(offset, origin);
+            this.findRequiredField = true;
+            return this.inputStreamField.Seek(offset, origin);
         }
 
         /// <summary>
@@ -531,9 +531,9 @@
 
         private void SetupStream()
         {
-            this._crcStream = this._currentEntry.InternalOpenReader(this._Password);
-            this._LeftToRead = this._crcStream.Length;
-            this._needSetup = false;
+            this.crcStreamField = this.currentEntryField.InternalOpenReader(this.passwordField);
+            this.leftToReadField = this.crcStreamField.Length;
+            this.needSetupField = false;
         }
 
         /// <summary>Provides a string representation of the instance.</summary>
@@ -545,7 +545,7 @@
         /// <returns>a string representation of the instance.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "ZipInputStream::{0}(leaveOpen({1})))", this._name, this._leaveUnderlyingStreamOpen);
+            return string.Format(CultureInfo.InvariantCulture, "ZipInputStream::{0}(leaveOpen({1})))", this.nameField, this.leaveUnderlyingStreamOpenField);
         }
 
         /// <summary>
@@ -577,7 +577,7 @@
         {
             get
             {
-                return this._inputStream.CanSeek;
+                return this.inputStreamField.CanSeek;
             }
         }
 
@@ -613,7 +613,7 @@
         {
             get
             {
-                return this._inputStream.Length;
+                return this.inputStreamField.Length;
             }
         }
 
@@ -672,12 +672,12 @@
         {
             set
             {
-                if (this._closed)
+                if (this.closedField)
                 {
-                    this._exceptionPending = true;
+                    this.exceptionPendingField = true;
                     throw new InvalidOperationException("The stream has been closed.");
                 }
-                this._Password = value;
+                this.passwordField = value;
             }
         }
 
@@ -691,7 +691,7 @@
         {
             get
             {
-                return this._inputStream.Position;
+                return this.inputStreamField.Position;
             }
             set
             {
@@ -755,11 +755,11 @@
         {
             get
             {
-                return this._provisionalAlternateEncoding;
+                return this.provisionalAlternateEncodingField;
             }
             set
             {
-                this._provisionalAlternateEncoding = value;
+                this.provisionalAlternateEncodingField = value;
             }
         }
 
@@ -767,7 +767,7 @@
         {
             get
             {
-                return this._inputStream;
+                return this.inputStreamField;
             }
         }
     }

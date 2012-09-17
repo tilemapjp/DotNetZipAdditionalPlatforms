@@ -38,54 +38,54 @@
     /// </remarks>
     internal class WinZipAesCipherStream : Stream
     {
-        internal RijndaelManaged _aesCipher;
-        private bool _finalBlock;
-        private byte[] _iobuf;
-        private long _length;
-        internal HMACSHA1 _mac;
-        private CryptoMode _mode;
-        private int _nonce;
-        private object _outputLock;
-        private WinZipAesCrypto _params;
-        private int _pendingCount;
-        private byte[] _PendingWriteBlock;
-        private Stream _s;
-        private long _totalBytesXferred;
-        internal ICryptoTransform _xform;
+        internal RijndaelManaged aesCipherField;
+        private bool finalBlockField;
+        private byte[] iobufField;
+        private long lengthField;
+        internal HMACSHA1 macField;
+        private CryptoMode modeField;
+        private int nonceField;
+        private object outputLockField;
+        private WinZipAesCrypto paramsField;
+        private int pendingCountField;
+        private byte[] pendingWriteBlockField;
+        private Stream streamField;
+        private long totalBytesXferredField;
+        internal ICryptoTransform xformField;
         private const int BLOCK_SIZE_IN_BYTES = 0x10;
-        private byte[] counter;
-        private byte[] counterOut;
+        private byte[] counterField;
+        private byte[] counterOutField;
 
         internal WinZipAesCipherStream(Stream s, WinZipAesCrypto cryptoParams, CryptoMode mode)
         {
-            this.counter = new byte[0x10];
-            this.counterOut = new byte[0x10];
-            this._outputLock = new object();
-            this._params = cryptoParams;
-            this._s = s;
-            this._mode = mode;
-            this._nonce = 1;
-            if (this._params == null)
+            this.counterField = new byte[0x10];
+            this.counterOutField = new byte[0x10];
+            this.outputLockField = new object();
+            this.paramsField = cryptoParams;
+            this.streamField = s;
+            this.modeField = mode;
+            this.nonceField = 1;
+            if (this.paramsField == null)
             {
                 throw new BadPasswordException("Supply a password to use AES encryption.");
             }
-            int num = this._params.KeyBytes.Length * 8;
+            int num = this.paramsField.KeyBytes.Length * 8;
             if (((num != 0x100) && (num != 0x80)) && (num != 0xc0))
             {
                 throw new ArgumentOutOfRangeException("keysize", "size of key must be 128, 192, or 256");
             }
-            this._mac = new HMACSHA1(this._params.MacIv);
-            this._aesCipher = new RijndaelManaged();
-            this._aesCipher.BlockSize = 0x80;
-            this._aesCipher.KeySize = num;
-            this._aesCipher.Mode = CipherMode.ECB;
-            this._aesCipher.Padding = PaddingMode.None;
+            this.macField = new HMACSHA1(this.paramsField.MacIv);
+            this.aesCipherField = new RijndaelManaged();
+            this.aesCipherField.BlockSize = 0x80;
+            this.aesCipherField.KeySize = num;
+            this.aesCipherField.Mode = CipherMode.ECB;
+            this.aesCipherField.Padding = PaddingMode.None;
             byte[] rgbIV = new byte[0x10];
-            this._xform = this._aesCipher.CreateEncryptor(this._params.KeyBytes, rgbIV);
-            if (this._mode == CryptoMode.Encrypt)
+            this.xformField = this.aesCipherField.CreateEncryptor(this.paramsField.KeyBytes, rgbIV);
+            if (this.modeField == CryptoMode.Encrypt)
             {
-                this._iobuf = new byte[0x800];
-                this._PendingWriteBlock = new byte[0x10];
+                this.iobufField = new byte[0x800];
+                this.pendingWriteBlockField = new byte[0x10];
             }
         }
 
@@ -98,7 +98,7 @@
         /// <param name="length">The maximum number of bytes to read from the stream.</param>
         internal WinZipAesCipherStream(Stream s, WinZipAesCrypto cryptoParams, long length, CryptoMode mode) : this(s, cryptoParams, mode)
         {
-            this._length = length;
+            this.lengthField = length;
         }
 
         /// <summary>
@@ -106,14 +106,14 @@
         /// </summary>
         public override void Close()
         {
-            if (this._pendingCount > 0)
+            if (this.pendingCountField > 0)
             {
                 this.WriteTransformFinalBlock();
-                this._s.Write(this._PendingWriteBlock, 0, this._pendingCount);
-                this._totalBytesXferred += this._pendingCount;
-                this._pendingCount = 0;
+                this.streamField.Write(this.pendingWriteBlockField, 0, this.pendingCountField);
+                this.totalBytesXferredField += this.pendingCountField;
+                this.pendingCountField = 0;
             }
-            this._s.Close();
+            this.streamField.Close();
         }
 
         /// <summary>
@@ -121,12 +121,12 @@
         /// </summary>
         public override void Flush()
         {
-            this._s.Flush();
+            this.streamField.Flush();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (this._mode == CryptoMode.Encrypt)
+            if (this.modeField == CryptoMode.Encrypt)
             {
                 throw new NotSupportedException();
             }
@@ -147,18 +147,18 @@
                 throw new ArgumentException("The buffer is too small");
             }
             int num = count;
-            if (this._totalBytesXferred >= this._length)
+            if (this.totalBytesXferredField >= this.lengthField)
             {
                 return 0;
             }
-            long num2 = this._length - this._totalBytesXferred;
+            long num2 = this.lengthField - this.totalBytesXferredField;
             if (num2 < count)
             {
                 num = (int) num2;
             }
-            int num3 = this._s.Read(buffer, offset, num);
+            int num3 = this.streamField.Read(buffer, offset, num);
             this.ReadTransformBlocks(buffer, offset, num);
-            this._totalBytesXferred += num3;
+            this.totalBytesXferredField += num3;
             return num3;
         }
 
@@ -175,23 +175,23 @@
 
         private int ReadTransformOneBlock(byte[] buffer, int offset, int last)
         {
-            if (this._finalBlock)
+            if (this.finalBlockField)
             {
                 throw new NotSupportedException();
             }
             int num = last - offset;
             int inputCount = (num > 0x10) ? 0x10 : num;
-            Array.Copy(BitConverter.GetBytes(this._nonce++), 0, this.counter, 0, 4);
-            if (((inputCount == num) && (this._length > 0L)) && ((this._totalBytesXferred + last) == this._length))
+            Array.Copy(BitConverter.GetBytes(this.nonceField++), 0, this.counterField, 0, 4);
+            if (((inputCount == num) && (this.lengthField > 0L)) && ((this.totalBytesXferredField + last) == this.lengthField))
             {
-                this._mac.TransformFinalBlock(buffer, offset, inputCount);
-                this.counterOut = this._xform.TransformFinalBlock(this.counter, 0, 0x10);
-                this._finalBlock = true;
+                this.macField.TransformFinalBlock(buffer, offset, inputCount);
+                this.counterOutField = this.xformField.TransformFinalBlock(this.counterField, 0, 0x10);
+                this.finalBlockField = true;
             }
             else
             {
-                this._mac.TransformBlock(buffer, offset, inputCount, null, 0);
-                this._xform.TransformBlock(this.counter, 0, 0x10, this.counterOut, 0);
+                this.macField.TransformBlock(buffer, offset, inputCount, null, 0);
+                this.xformField.TransformBlock(this.counterField, 0, 0x10, this.counterOutField, 0);
             }
             this.XorInPlace(buffer, offset, inputCount);
             return inputCount;
@@ -216,7 +216,7 @@
         [Conditional("Trace")]
         private void TraceOutput(string format, params object[] varParams)
         {
-            lock (this._outputLock)
+            lock (this.outputLockField)
             {
                 int hashCode = Thread.CurrentThread.GetHashCode();
                 Console.ForegroundColor = (ConsoleColor) ((hashCode % 8) + 8);
@@ -228,11 +228,11 @@
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (this._finalBlock)
+            if (this.finalBlockField)
             {
                 throw new InvalidOperationException("The final block has already been transformed.");
             }
-            if (this._mode == CryptoMode.Decrypt)
+            if (this.modeField == CryptoMode.Decrypt)
             {
                 throw new NotSupportedException();
             }
@@ -254,46 +254,46 @@
             }
             if (count != 0)
             {
-                if ((count + this._pendingCount) <= 0x10)
+                if ((count + this.pendingCountField) <= 0x10)
                 {
-                    Buffer.BlockCopy(buffer, offset, this._PendingWriteBlock, this._pendingCount, count);
-                    this._pendingCount += count;
+                    Buffer.BlockCopy(buffer, offset, this.pendingWriteBlockField, this.pendingCountField, count);
+                    this.pendingCountField += count;
                 }
                 else
                 {
                     int num = count;
                     int srcOffset = offset;
-                    if (this._pendingCount != 0)
+                    if (this.pendingCountField != 0)
                     {
-                        int num3 = 0x10 - this._pendingCount;
+                        int num3 = 0x10 - this.pendingCountField;
                         if (num3 > 0)
                         {
-                            Buffer.BlockCopy(buffer, offset, this._PendingWriteBlock, this._pendingCount, num3);
+                            Buffer.BlockCopy(buffer, offset, this.pendingWriteBlockField, this.pendingCountField, num3);
                             num -= num3;
                             srcOffset += num3;
                         }
-                        this.WriteTransformOneBlock(this._PendingWriteBlock, 0);
-                        this._s.Write(this._PendingWriteBlock, 0, 0x10);
-                        this._totalBytesXferred += 0x10L;
-                        this._pendingCount = 0;
+                        this.WriteTransformOneBlock(this.pendingWriteBlockField, 0);
+                        this.streamField.Write(this.pendingWriteBlockField, 0, 0x10);
+                        this.totalBytesXferredField += 0x10L;
+                        this.pendingCountField = 0;
                     }
                     int num4 = (num - 1) / 0x10;
-                    this._pendingCount = num - (num4 * 0x10);
-                    Buffer.BlockCopy(buffer, (srcOffset + num) - this._pendingCount, this._PendingWriteBlock, 0, this._pendingCount);
-                    num -= this._pendingCount;
-                    this._totalBytesXferred += num;
+                    this.pendingCountField = num - (num4 * 0x10);
+                    Buffer.BlockCopy(buffer, (srcOffset + num) - this.pendingCountField, this.pendingWriteBlockField, 0, this.pendingCountField);
+                    num -= this.pendingCountField;
+                    this.totalBytesXferredField += num;
                     if (num4 > 0)
                     {
                         do
                         {
-                            int length = this._iobuf.Length;
+                            int length = this.iobufField.Length;
                             if (length > num)
                             {
                                 length = num;
                             }
-                            Buffer.BlockCopy(buffer, srcOffset, this._iobuf, 0, length);
-                            this.WriteTransformBlocks(this._iobuf, 0, length);
-                            this._s.Write(this._iobuf, 0, length);
+                            Buffer.BlockCopy(buffer, srcOffset, this.iobufField, 0, length);
+                            this.WriteTransformBlocks(this.iobufField, 0, length);
+                            this.streamField.Write(this.iobufField, 0, length);
                             num -= length;
                             srcOffset += length;
                         }
@@ -316,34 +316,34 @@
 
         private void WriteTransformFinalBlock()
         {
-            if (this._pendingCount == 0)
+            if (this.pendingCountField == 0)
             {
                 throw new InvalidOperationException("No bytes available.");
             }
-            if (this._finalBlock)
+            if (this.finalBlockField)
             {
                 throw new InvalidOperationException("The final block has already been transformed.");
             }
-            Array.Copy(BitConverter.GetBytes(this._nonce++), 0, this.counter, 0, 4);
-            this.counterOut = this._xform.TransformFinalBlock(this.counter, 0, 0x10);
-            this.XorInPlace(this._PendingWriteBlock, 0, this._pendingCount);
-            this._mac.TransformFinalBlock(this._PendingWriteBlock, 0, this._pendingCount);
-            this._finalBlock = true;
+            Array.Copy(BitConverter.GetBytes(this.nonceField++), 0, this.counterField, 0, 4);
+            this.counterOutField = this.xformField.TransformFinalBlock(this.counterField, 0, 0x10);
+            this.XorInPlace(this.pendingWriteBlockField, 0, this.pendingCountField);
+            this.macField.TransformFinalBlock(this.pendingWriteBlockField, 0, this.pendingCountField);
+            this.finalBlockField = true;
         }
 
         private void WriteTransformOneBlock(byte[] buffer, int offset)
         {
-            Array.Copy(BitConverter.GetBytes(this._nonce++), 0, this.counter, 0, 4);
-            this._xform.TransformBlock(this.counter, 0, 0x10, this.counterOut, 0);
+            Array.Copy(BitConverter.GetBytes(this.nonceField++), 0, this.counterField, 0, 4);
+            this.xformField.TransformBlock(this.counterField, 0, 0x10, this.counterOutField, 0);
             this.XorInPlace(buffer, offset, 0x10);
-            this._mac.TransformBlock(buffer, offset, 0x10, null, 0);
+            this.macField.TransformBlock(buffer, offset, 0x10, null, 0);
         }
 
         private void XorInPlace(byte[] buffer, int offset, int count)
         {
             for (int i = 0; i < count; i++)
             {
-                buffer[offset + i] = (byte) (this.counterOut[i] ^ buffer[offset + i]);
+                buffer[offset + i] = (byte) (this.counterOutField[i] ^ buffer[offset + i]);
             }
         }
 
@@ -354,7 +354,7 @@
         {
             get
             {
-                if (this._mode != CryptoMode.Decrypt)
+                if (this.modeField != CryptoMode.Decrypt)
                 {
                     return false;
                 }
@@ -380,7 +380,7 @@
         {
             get
             {
-                return (this._mode == CryptoMode.Encrypt);
+                return (this.modeField == CryptoMode.Encrypt);
             }
         }
 
@@ -391,17 +391,17 @@
         {
             get
             {
-                if (!this._finalBlock)
+                if (!this.finalBlockField)
                 {
-                    if (this._totalBytesXferred != 0L)
+                    if (this.totalBytesXferredField != 0L)
                     {
                         throw new BadStateException("The final hash has not been computed.");
                     }
                     byte[] buffer = new byte[0];
-                    this._mac.ComputeHash(buffer);
+                    this.macField.ComputeHash(buffer);
                 }
                 byte[] destinationArray = new byte[10];
-                Array.Copy(this._mac.Hash, 0, destinationArray, 0, 10);
+                Array.Copy(this.macField.Hash, 0, destinationArray, 0, 10);
                 return destinationArray;
             }
         }
